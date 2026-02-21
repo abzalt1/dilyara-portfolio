@@ -1,0 +1,78 @@
+{
+  "photos": [
+    { "src": "./img/IMG_6542.JPG", "category": "beauty", "alt": "Beauty model portrait" },
+    { "src": "./img/IMG_6544.JPG", "category": "beauty", "alt": "Beauty close up" },
+    { "src": "./img/IMG_6541.JPG", "category": "beauty", "alt": "Beauty shot" },
+    { "src": "./img/IMG_8593.JPG", "category": "casual", "alt": "Casual style" },
+    { "src": "./img/IMG_8595.JPG", "category": "casual", "alt": "Casual look" },
+    { "src": "./img/IMG_4673.JPG", "category": "casual", "alt": "Casual look" },
+    { "src": "./img/IMG_4659.jpg", "category": "casual", "alt": "Casual look" },
+    { "src": "./img/IMG_4680.jpg", "category": "casual", "alt": "Casual look" },
+    { "src": "./img/IMG_4688.jpg", "category": "casual", "alt": "Casual look" },
+    { "src": "./img/IMG_4691.jpg", "category": "casual", "alt": "Casual look" },
+    { "src": "./img/IMG_8558.JPG", "category": "casual", "alt": "casual model photo" },
+    { "src": "./img/IMG_8555.JPG", "category": "casual", "alt": "casual model photo" },
+    { "src": "./img/IMG_8563.JPG", "category": "casual", "alt": "casual model photo" },
+    { "src": "./img/IMG_8565.JPG", "category": "casual", "alt": "casual model photo" },
+    { "src": "./img/IMG_4923.JPG", "category": "casual", "alt": "Casual look" },
+    { "src": "./img/IMG_8620.JPG", "category": "casual", "alt": "casual model photo" },
+    { "src": "./img/IMG_8713.JPG", "category": "casual", "alt": "casual model photo" },
+    { "src": "./img/IMG_8715.JPG", "category": "casual", "alt": "casual model photo" },
+    { "src": "./img/IMG_9232.jpg", "category": "casual", "alt": "casual model photo" },
+    { "src": "./img/IMG_9234.jpg", "category": "casual", "alt": "casual model photo" },
+    { "src": "./img/IMG_9237.jpg", "category": "casual", "alt": "casual model photo" },
+    { "src": "./img/IMG_9239.jpg", "category": "casual", "alt": "casual model photo" },
+    { "src": "./img/IMG_9246.jpg", "category": "casual", "alt": "casual model photo" },
+    { "src": "./img/IMG_9249.jpg", "category": "casual", "alt": "casual model photo" },
+    { "src": "./img/IMG_9281.jpg", "category": "casual", "alt": "casual model photo" },
+    { "src": "./img/IMG_9282.jpg", "category": "casual", "alt": "casual model photo" },
+    { "src": "./img/IMG_9284.jpg", "category": "casual", "alt": "casual model photo" },
+    { "src": "./img/IMG_6793.jpg", "category": "commercial", "alt": "Commercial shoot" },
+    { "src": "./img/IMG_6794.jpg", "category": "commercial", "alt": "Commercial posing" },
+    { "src": "./img/IMG_6795.jpg", "category": "commercial", "alt": "Commercial photography" },
+    { "src": "./img/IMG_1738.JPG", "category": "streetwear", "alt": "Streetwear fashion" },
+    { "src": "./img/IMG_4001.jpg", "category": "streetwear", "alt": "Street style" },
+    { "src": "./img/IMG_2078.JPEG", "category": "streetwear", "alt": "Urban fashion" },
+    { "src": "./img/IMG_2084.JPEG", "category": "streetwear", "alt": "Urban look" },
+    { "src": "./img/IMG_2088.JPEG", "category": "streetwear", "alt": "Urban look" },
+    { "src": "./img/IMG_6636.JPG", "category": "food", "alt": "Food and beverage model" },
+    { "src": "./img/IMG_6639.JPG", "category": "food", "alt": "Lifestyle food shot" }
+  ],
+  "videos": [
+    {
+      "category": "beauty",
+      "src": "",
+      "link": "https://instagram.com/bydilyara",
+      "label": "Beauty Reel 01",
+      "poster": "./img/beauty-poster.jpg"
+    },
+    {
+      "category": "commercial ugc",
+      "src": "./video/IMG_6449.mp4",
+      "link": "https://instagram.com/bydilyara",
+      "label": "Commercial Reel 01",
+      "poster": "./img/preview1.jpg"
+    },
+    {
+      "category": "streetwear",
+      "src": "./video/IMG_6449.mp4",
+      "link": "https://instagram.com/bydilyara",
+      "label": "Streetwear Reel 01",
+      "poster": "./img/street-poster.jpg"
+    },
+    {
+      "category": "food",
+      "src": "",
+      "link": "https://instagram.com/bydilyara",
+      "label": "Food & Bev Reel 01",
+      "poster": "./img/food-poster.jpg"
+    },
+    {
+      "category": "acting",
+      "src": "",
+      "link": "https://instagram.com/bydilyara",
+      "label": "Acting Reel 01",
+      "poster": "./img/acting-poster.jpg"
+    }
+  ]
+}

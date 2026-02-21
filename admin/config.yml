@@ -1,0 +1,32 @@
+backend:
+  name: git-gateway
+  branch: main # Или master, проверьте как называется ваша ветка на GitHub
+
+media_folder: "img" # Куда физически загружать картинки
+public_folder: "./img" # Как писать путь к картинке в JSON
+
+collections:
+  - name: "settings"
+    label: "Настройки сайта"
+    files:
+      - name: "data"
+        label: "Портфолио (JSON)"
+        file: "data.json" # Мы учим CMS редактировать именно этот файл!
+        fields:
+          - name: "photos"
+            label: "Фотографии"
+            widget: "list"
+            fields:
+              - {label: "Фото", name: "src", widget: "image"}
+              - {label: "Категория", name: "category", widget: "select", options: ["beauty", "streetwear", "commercial", "casual", "ugc", "food", "acting"]}
+              - {label: "Описание (Alt)", name: "alt", widget: "string"}
+          
+          - name: "videos"
+            label: "Видео (Reels)"
+            widget: "list"
+            fields:
+              - {label: "Название", name: "label", widget: "string"}
+              - {label: "Категория", name: "category", widget: "select", options: ["beauty", "streetwear", "commercial", "casual", "ugc", "food", "acting"]}
+              - {label: "Постер (Обложка)", name: "poster", widget: "image"}
+              - {label: "Видео файл (MP4)", name: "src", widget: "file", required: false}
+              - {label: "Ссылка (Instagram)", name: "link", widget: "string", required: false}

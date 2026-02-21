@@ -1,0 +1,440 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DILYARA | MODEL PORTFOLIO</title>
+    
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600&family=Syne:wght@400;700;800&display=swap" rel="stylesheet">
+    
+    <!-- Icons -->
+    <link href="https://cdn.jsdelivr.net/npm/remixicon@3.5.0/fonts/remixicon.css" rel="stylesheet">
+
+    <!-- Netlify Identity (Для входа в админку) -->
+    <script src="https://identity.netlify.com/v1/netlify-identity-widget.js"></script>
+
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Space Grotesk', 'sans-serif'],
+                        display: ['Syne', 'sans-serif'],
+                    },
+                    colors: {
+                        accent: '#ffffff',
+                        dark: '#050505',
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        body { background-color: #050505; color: white; overflow-x: hidden; }
+        .media-item {
+            width: 100%; height: auto; object-fit: cover;
+            transition: all 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+            cursor: pointer; margin-bottom: 16px; border-radius: 4px;
+            filter: grayscale(100%);
+        }
+        .media-item:hover { filter: grayscale(0%); transform: scale(1.02); z-index: 10; }
+        
+        /* Masonry Grid */
+        #photo-grid, #video-grid {
+            column-count: 1; column-gap: 16px;
+        }
+        @media (min-width: 640px) { #photo-grid, #video-grid { column-count: 2; } }
+        @media (min-width: 1024px) { #photo-grid, #video-grid { column-count: 3; } }
+
+        /* Video Thumb */
+        .video-thumb { position: relative; overflow: hidden; }
+        .play-overlay {
+            position: absolute; top: 0; left: 0; right: 0; bottom: 0;
+            background: rgba(0,0,0,0.3); display: flex; align-items: center; justify-content: center;
+            opacity: 0; transition: 0.3s;
+        }
+        .video-thumb:hover .play-overlay { opacity: 1; }
+        .play-overlay i { font-size: 3rem; color: white; }
+        .vid-label {
+            position: absolute; bottom: 10px; left: 10px;
+            font-size: 0.8rem; font-weight: bold; text-transform: uppercase;
+            text-shadow: 0 2px 4px rgba(0,0,0,0.8); pointer-events: none;
+        }
+
+        /* Lightbox */
+        .lightbox {
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(0,0,0,0.95); z-index: 1000;
+            display: none; align-items: center; justify-content: center;
+            opacity: 0; transition: opacity 0.3s;
+        }
+        .lightbox.active { display: flex; opacity: 1; }
+        .lightbox img, .lightbox video {
+            max-width: 90%; max-height: 90vh; box-shadow: 0 0 50px rgba(0,0,0,0.5);
+        }
+        .lb-nav {
+            position: absolute; top: 50%; transform: translateY(-50%);
+            font-size: 3rem; color: white; cursor: pointer; padding: 20px;
+            opacity: 0.5; transition: 0.2s; user-select: none;
+        }
+        .lb-nav:hover { opacity: 1; }
+        .lb-prev { left: 20px; } .lb-next { right: 20px; }
+        .lb-close {
+            position: absolute; top: 20px; right: 30px;
+            font-size: 2.5rem; cursor: pointer; opacity: 0.7;
+        }
+
+        /* Preloader */
+        #preloader {
+            position: fixed; inset: 0; background: #050505; z-index: 9999;
+            display: flex; align-items: center; justify-content: center;
+            transition: opacity 0.5s ease;
+        }
+        .loader-text {
+            font-family: 'Syne', sans-serif; font-weight: 800; font-size: 2rem;
+            letter-spacing: -0.05em; animation: pulse 1.5s infinite;
+        }
+        @keyframes pulse { 0%, 100% { opacity: 0.5; } 50% { opacity: 1; } }
+
+        /* Animations */
+        .reveal-item { opacity: 0; transform: translateY(30px); transition: 0.8s ease; }
+        .reveal-item.visible { opacity: 1; transform: translateY(0); }
+        .empty-state { display: none; text-align: center; padding: 40px; color: #666; width: 100%; }
+    </style>
+</head>
+
+<body class="overflow-hidden">
+
+    <!-- PRELOADER -->
+    <div id="preloader">
+        <div class="loader-text">DILYARA</div>
+    </div>
+
+    <!-- HEADER -->
+    <header class="fixed top-0 left-0 right-0 z-50 mix-blend-difference px-6 py-6 flex justify-between items-center">
+        <div class="text-2xl font-display font-bold tracking-tighter text-white">DILYARA</div>
+        <nav class="hidden md:flex gap-8 text-sm font-medium tracking-widest uppercase text-white">
+            <a href="#photos" class="hover:opacity-50 transition">Photos</a>
+            <a href="#videos" class="hover:opacity-50 transition">Reels</a>
+            <a href="#contact" class="hover:opacity-50 transition">Contact</a>
+        </nav>
+        <a href="#contact" class="border border-white px-5 py-2 rounded-full text-xs uppercase tracking-widest hover:bg-white hover:text-black transition text-white">Book Now</a>
+    </header>
+
+    <!-- HERO -->
+    <section class="h-screen flex flex-col justify-center items-center text-center px-4 relative">
+        <h1 class="text-[12vw] leading-none font-display font-bold tracking-tighter mb-4">MODEL</h1>
+        <p class="text-sm md:text-base uppercase tracking-[0.3em] text-gray-400 max-w-md">
+            Almaty based • Available for travel<br>
+            Commercial • Editorial • Runway
+        </p>
+        <div class="absolute bottom-10 animate-bounce">
+            <i class="ri-arrow-down-line text-2xl"></i>
+        </div>
+    </section>
+
+    <!-- PHOTOS -->
+    <section id="photos" class="px-4 md:px-12 py-20 min-h-screen">
+        <div class="flex flex-col md:flex-row justify-between items-end mb-12 border-b border-gray-800 pb-6">
+            <h2 class="text-4xl md:text-6xl font-display font-bold">SELECTED<br><span class="text-gray-600">WORKS</span></h2>
+            
+            <!-- Filter -->
+            <div class="flex flex-wrap gap-4 mt-6 md:mt-0">
+                <button class="filter-btn active text-xs uppercase tracking-widest border border-white px-4 py-2 rounded-full hover:bg-white hover:text-black transition" data-filter="all">All</button>
+                <button class="filter-btn text-xs uppercase tracking-widest border border-gray-800 text-gray-500 px-4 py-2 rounded-full hover:border-white hover:text-white transition" data-filter="beauty">Beauty</button>
+                <button class="filter-btn text-xs uppercase tracking-widest border border-gray-800 text-gray-500 px-4 py-2 rounded-full hover:border-white hover:text-white transition" data-filter="streetwear">Streetwear</button>
+                <button class="filter-btn text-xs uppercase tracking-widest border border-gray-800 text-gray-500 px-4 py-2 rounded-full hover:border-white hover:text-white transition" data-filter="commercial">Commercial</button>
+                <button class="filter-btn text-xs uppercase tracking-widest border border-gray-800 text-gray-500 px-4 py-2 rounded-full hover:border-white hover:text-white transition" data-filter="casual">Casual</button>
+            </div>
+        </div>
+
+        <div class="mb-4 text-xs uppercase tracking-widest text-gray-500">
+            <i class="ri-camera-fill"></i> <span id="category-title-photo">All</span> Photos
+        </div>
+        
+        <div id="photo-grid">
+            <!-- Photos will be loaded from data.json -->
+            <p id="photo-empty" class="empty-state">Нет фото в этой категории</p>
+        </div>
+    </section>
+
+    <!-- VIDEOS -->
+    <section id="videos" class="px-4 md:px-12 py-20 bg-[#0a0a0a]">
+        <div class="flex flex-col md:flex-row justify-between items-end mb-12 border-b border-gray-800 pb-6">
+            <h2 class="text-4xl md:text-6xl font-display font-bold">REELS &<br><span class="text-gray-600">MOTION</span></h2>
+            
+            <div class="flex flex-wrap gap-4 mt-6 md:mt-0">
+                <button class="filter-btn-vid active text-xs uppercase tracking-widest border border-white px-4 py-2 rounded-full hover:bg-white hover:text-black transition" data-filter="all">All</button>
+                <button class="filter-btn-vid text-xs uppercase tracking-widest border border-gray-800 text-gray-500 px-4 py-2 rounded-full hover:border-white hover:text-white transition" data-filter="acting">Acting</button>
+                <button class="filter-btn-vid text-xs uppercase tracking-widest border border-gray-800 text-gray-500 px-4 py-2 rounded-full hover:border-white hover:text-white transition" data-filter="commercial ugc">UGC/Comm</button>
+            </div>
+        </div>
+
+        <div class="mb-4 text-xs uppercase tracking-widest text-gray-500">
+            <i class="ri-movie-fill"></i> <span id="category-title-video">All</span> Reels
+        </div>
+
+        <div id="video-grid">
+            <!-- Videos will be loaded from data.json -->
+            <p id="video-empty" class="empty-state text-white">Нет видео в этой категории</p>
+        </div>
+    </section>
+
+    <!-- CONTACT -->
+    <section id="contact" class="px-4 md:px-12 py-32 flex flex-col items-center text-center">
+        <h2 class="text-5xl md:text-8xl font-display font-bold mb-8">LET'S WORK</h2>
+        <a href="mailto:dilyara.model@gmail.com" class="text-xl md:text-3xl border-b border-white pb-2 mb-12 hover:text-gray-400 transition">dilyara.model@gmail.com</a>
+        
+        <div class="flex gap-8 text-2xl">
+            <a href="#" class="hover:scale-110 transition"><i class="ri-instagram-line"></i></a>
+            <a href="#" class="hover:scale-110 transition"><i class="ri-telegram-line"></i></a>
+            <a href="#" class="hover:scale-110 transition"><i class="ri-whatsapp-line"></i></a>
+        </div>
+
+        <footer class="mt-20 text-gray-600 text-xs uppercase tracking-widest">
+            &copy; 2023 Dilyara Model Portfolio. All rights reserved.
+        </footer>
+    </section>
+
+    <!-- LIGHTBOX PHOTO -->
+    <div id="lightbox-photo" class="lightbox">
+        <div class="lb-close" id="lb-photo-close">&times;</div>
+        <div class="lb-nav lb-prev" id="lb-photo-prev"><i class="ri-arrow-left-s-line"></i></div>
+        <div class="lb-nav lb-next" id="lb-photo-next"><i class="ri-arrow-right-s-line"></i></div>
+        <img src="" alt="Zoom" id="lb-photo-img">
+    </div>
+
+    <!-- LIGHTBOX VIDEO -->
+    <div id="lightbox-video" class="lightbox">
+        <div class="lb-close" id="lb-video-close">&times;</div>
+        <div class="lb-nav lb-prev" id="lb-video-prev"><i class="ri-arrow-left-s-line"></i></div>
+        <div class="lb-nav lb-next" id="lb-video-next"><i class="ri-arrow-right-s-line"></i></div>
+        <div class="flex flex-col items-center">
+            <video src="" controls id="lb-video-player" class="max-h-[80vh]"></video>
+            <a href="#" target="_blank" id="lb-video-link" class="mt-4 text-white border-b border-white pb-1 text-sm uppercase tracking-widest hover:text-gray-300">Watch on Instagram</a>
+        </div>
+    </div>
+
+    <script>
+        // 1. NETLIFY IDENTITY REDIRECT
+        if (window.netlifyIdentity) {
+            window.netlifyIdentity.on("init", user => {
+                if (!user) {
+                    window.netlifyIdentity.on("login", () => { document.location.href = "/admin/"; });
+                }
+            });
+        }
+
+        // 2. LOAD DATA
+        async function initPortfolio() {
+            try {
+                const response = await fetch('./data.json');
+                if (!response.ok) throw new Error('Failed to load data');
+                const data = await response.json();
+
+                // RENDER PHOTOS
+                const photoGrid = document.getElementById('photo-grid');
+                const photoEmpty = document.getElementById('photo-empty');
+                
+                data.photos.forEach(item => {
+                    const img = document.createElement('img');
+                    img.loading = 'lazy';
+                    img.dataset.category = item.category;
+                    img.src = item.src;
+                    img.className = 'media-item reveal-item';
+                    img.alt = item.alt || 'Portfolio photo';
+                    img.onerror = function() { this.style.display = 'none'; };
+                    
+                    img.addEventListener('click', () => openPhoto(img));
+                    photoGrid.insertBefore(img, photoEmpty);
+                });
+
+                // RENDER VIDEOS
+                const videoGrid = document.getElementById('video-grid');
+                const videoEmpty = document.getElementById('video-empty');
+
+                data.videos.forEach(item => {
+                    const div = document.createElement('div');
+                    div.className = 'media-item video-thumb reveal-item';
+                    div.dataset.category = item.category;
+                    div.dataset.src = item.src || '';
+                    div.dataset.link = item.link || '';
+                    div.dataset.label = item.label || '';
+                    div.dataset.poster = item.poster || '';
+
+                    let innerContent = '';
+                    if (item.src) {
+                        innerContent = `<video src="${item.src}" poster="${item.poster}" muted loop playsinline class="preview-video w-full h-full object-cover"></video>`;
+                    } else {
+                        innerContent = `<img src="${item.poster}" class="w-full h-full object-cover" alt="${item.label}">`;
+                    }
+
+                    div.innerHTML = `
+                        ${innerContent}
+                        <div class="play-overlay"><i class="ri-play-circle-line"></i></div>
+                        <span class="vid-label">${item.label}</span>
+                    `;
+
+                    div.addEventListener('click', () => openVideo(div));
+                    
+                    // Hover autoplay
+                    const previewVideo = div.querySelector('.preview-video');
+                    if (previewVideo) {
+                        div.addEventListener('mouseenter', () => {
+                            previewVideo.muted = true;
+                            previewVideo.play().catch(() => {});
+                        });
+                        div.addEventListener('mouseleave', () => {
+                            previewVideo.pause();
+                            previewVideo.currentTime = 0;
+                        });
+                    }
+
+                    videoGrid.insertBefore(div, videoEmpty);
+                });
+
+                startAnimations();
+
+            } catch (error) {
+                console.error('Error loading portfolio:', error);
+                document.getElementById('preloader').style.display = 'none';
+            }
+        }
+
+        // 3. ANIMATIONS
+        function startAnimations() {
+            const preloader = document.getElementById('preloader');
+            const mediaItems = document.querySelectorAll('.media-item');
+            
+            setTimeout(() => {
+                preloader.classList.add('opacity-0', 'pointer-events-none');
+                document.body.classList.remove('overflow-hidden');
+
+                const mediaObserver = new IntersectionObserver((entries) => {
+                    entries.forEach(entry => {
+                        if (entry.isIntersecting) {
+                            entry.target.classList.add('visible');
+                            mediaObserver.unobserve(entry.target);
+                        }
+                    });
+                }, { threshold: 0.1 });
+                
+                mediaItems.forEach(item => mediaObserver.observe(item));
+            }, 500);
+        }
+
+        // 4. FILTER LOGIC
+        function setupFilters(btnClass, gridId, titleId, emptyId) {
+            const buttons = document.querySelectorAll(btnClass);
+            const grid = document.getElementById(gridId);
+            const title = document.getElementById(titleId);
+            const emptyMsg = document.getElementById(emptyId);
+
+            buttons.forEach(btn => {
+                btn.addEventListener('click', () => {
+                    // Active state
+                    buttons.forEach(b => {
+                        b.classList.remove('active', 'bg-white', 'text-black', 'border-white');
+                        b.classList.add('text-gray-500', 'border-gray-800');
+                    });
+                    btn.classList.remove('text-gray-500', 'border-gray-800');
+                    btn.classList.add('active', 'bg-white', 'text-black', 'border-white');
+
+                    const filter = btn.dataset.filter;
+                    title.innerText = filter === 'all' ? 'All' : filter;
+
+                    const items = grid.querySelectorAll('.media-item');
+                    let hasVisible = false;
+
+                    items.forEach(item => {
+                        const cats = item.dataset.category.split(' ');
+                        if (filter === 'all' || cats.includes(filter)) {
+                            item.style.display = 'block';
+                            setTimeout(() => item.classList.add('visible'), 50);
+                            hasVisible = true;
+                        } else {
+                            item.style.display = 'none';
+                            item.classList.remove('visible');
+                        }
+                    });
+
+                    emptyMsg.style.display = hasVisible ? 'none' : 'block';
+                });
+            });
+        }
+
+        setupFilters('.filter-btn', 'photo-grid', 'category-title-photo', 'photo-empty');
+        setupFilters('.filter-btn-vid', 'video-grid', 'category-title-video', 'video-empty');
+
+        // 5. LIGHTBOX LOGIC
+        const lbPhoto = document.getElementById('lightbox-photo');
+        const lbPhotoImg = document.getElementById('lb-photo-img');
+        let currentPhotoIndex = 0;
+        let visiblePhotos = [];
+
+        function openPhoto(img) {
+            visiblePhotos = Array.from(document.querySelectorAll('#photo-grid .media-item'))
+                .filter(item => item.style.display !== 'none');
+            currentPhotoIndex = visiblePhotos.indexOf(img);
+            updatePhotoLb();
+            lbPhoto.classList.add('active');
+        }
+
+        function updatePhotoLb() {
+            if (visiblePhotos.length > 0) {
+                lbPhotoImg.src = visiblePhotos[currentPhotoIndex].src;
+            }
+        }
+
+        document.getElementById('lb-photo-close').onclick = () => lbPhoto.classList.remove('active');
+        document.getElementById('lb-photo-prev').onclick = (e) => {
+            e.stopPropagation();
+            currentPhotoIndex = (currentPhotoIndex - 1 + visiblePhotos.length) % visiblePhotos.length;
+            updatePhotoLb();
+        };
+        document.getElementById('lb-photo-next').onclick = (e) => {
+            e.stopPropagation();
+            currentPhotoIndex = (currentPhotoIndex + 1) % visiblePhotos.length;
+            updatePhotoLb();
+        };
+
+        // Video Lightbox
+        const lbVideo = document.getElementById('lightbox-video');
+        const lbVideoPlayer = document.getElementById('lb-video-player');
+        const lbVideoLink = document.getElementById('lb-video-link');
+
+        function openVideo(div) {
+            const src = div.dataset.src;
+            const link = div.dataset.link;
+            
+            if (src) {
+                lbVideoPlayer.src = src;
+                lbVideoPlayer.style.display = 'block';
+                lbVideoLink.style.display = 'none';
+            } else {
+                lbVideoPlayer.style.display = 'none';
+                lbVideoLink.href = link;
+                lbVideoLink.style.display = 'block';
+                window.open(link, '_blank'); // Open link immediately if no video file
+                return; 
+            }
+            lbVideo.classList.add('active');
+        }
+        
+        document.getElementById('lb-video-close').onclick = () => {
+            lbVideo.classList.remove('active');
+            lbVideoPlayer.pause();
+        };
+
+        // Init
+        window.addEventListener('load', initPortfolio);
+
+    </script>
+</body>
+</html>
