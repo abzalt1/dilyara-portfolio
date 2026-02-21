@@ -61,6 +61,7 @@
             cursor: zoom-in;
             transition: opacity 0.3s ease, transform 0.3s ease;
             display: block;
+            background-color: #e5e5e5; /* Серый фон пока фото грузится */
         }
         #photo-grid img.media-item:hover { opacity: 0.85; transform: scale(1.02); }
         #photo-grid img.media-item.hidden-item { display: none !important; }
@@ -815,6 +816,7 @@
                 data.photos.forEach(item => {
                     const img = document.createElement('img');
                     img.loading = 'lazy';
+                    img.decoding = 'async'; // Не блокирует прокрутку страницы при загрузке
                     img.dataset.category = item.category;
                     img.src = item.src;
                     img.className = 'media-item reveal-item';
