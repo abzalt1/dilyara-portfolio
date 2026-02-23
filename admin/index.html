@@ -5,9 +5,36 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Content Manager</title>
   <script src="https://identity.netlify.com/v1/netlify-identity-widget.js"></script>
+  <style>
+    /* Лайтбокс для админки */
+    #admin-lightbox {
+      display: none; position: fixed; inset: 0; z-index: 99999;
+      background: rgba(0,0,0,0.9); cursor: zoom-out;
+      align-items: center; justify-content: center;
+    }
+    #admin-lightbox.active { display: flex; }
+    #admin-lightbox img { max-width: 90vw; max-height: 90vh; object-fit: contain; box-shadow: 0 0 20px rgba(0,0,0,0.5); }
+  </style>
 </head>
 <body>
   <!-- Include the script that builds the page and powers Decap CMS -->
   <script src="https://unpkg.com/decap-cms@^3.0.0/dist/decap-cms.js"></script>
+  <script>
+    // Создаем элемент лайтбокса
+    const lb = document.createElement('div');
+    lb.id = 'admin-lightbox';
+    lb.innerHTML = '<img src="">';
+    document.body.appendChild(lb);
+    lb.onclick = () => lb.classList.remove('active');
+
+    // Перехватываем Shift + Click по картинкам
+    document.addEventListener('click', (e) => {
+      if (e.target.tagName === 'IMG' && e.shiftKey) {
+        e.preventDefault(); e.stopPropagation();
+        lb.querySelector('img').src = e.target.src;
+        lb.classList.add('active');
+      }
+    }, true);
+  </script>
 </body>
 </html>
