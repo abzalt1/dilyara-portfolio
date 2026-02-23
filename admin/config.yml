@@ -21,7 +21,7 @@ collections:
             fields:
               - {label: "Фото", name: "src", widget: "image"}
               - {label: "Категория", name: "category", widget: "select", options: ["beauty", "streetwear", "commercial", "casual", "ugc", "food", "acting"]}
-              - {label: "Описание (Alt)", name: "alt", widget: "string"}
+              - {label: "Описание (необязательно)", name: "alt", widget: "string", required: false, hint: "Можно оставить пустым. Нужно только для поиска Google."}
           
           - name: "videos"
             label: "Видео (Reels)"
@@ -32,5 +32,5 @@ collections:
               - {label: "Название", name: "label", widget: "string"}
               - {label: "Категория", name: "category", widget: "select", options: ["beauty", "streetwear", "commercial", "casual", "ugc", "food", "acting"]}
               - {label: "Постер (Обложка)", name: "poster", widget: "image"}
-              - {label: "Видео файл (MP4)", name: "src", widget: "file", required: false}
-              - {label: "Ссылка (Instagram)", name: "link", widget: "string", required: false}
+              - {label: "Видео файл (MP4)", name: "src", widget: "file", required: false, hint: "Загрузите файл ИЛИ вставьте ссылку ниже"}
+              - {label: "Ссылка (Instagram)", name: "link", widget: "string", required: false, hint: "Если нет файла, видео откроется в Instagram"}
