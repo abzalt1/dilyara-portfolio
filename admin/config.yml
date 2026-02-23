@@ -2,8 +2,17 @@ backend:
   name: git-gateway
   branch: main # Или master, проверьте как называется ваша ветка на GitHub
 
-media_folder: "img" # Куда физически загружать картинки
-public_folder: "./img" # Как писать путь к картинке в JSON
+# media_folder удаляем или оставляем пустым, так как файлы будут в облаке
+media_library:
+  name: cloudinary
+  config:
+    cloud_name: dkexmocck
+    api_key: 765755564578894
+    default_transformations:
+      - [
+          { width: 1000, crop: 'limit' }, 
+          { quality: 'auto', fetch_format: 'auto' }
+        ]
 
 collections:
   - name: "settings"
