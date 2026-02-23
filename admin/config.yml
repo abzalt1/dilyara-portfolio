@@ -5,6 +5,9 @@ backend:
 media_folder: "img" # Куда физически загружать картинки
 public_folder: "./img" # Как писать путь к картинке в JSON
 
+media_library:
+  max_file_size: 15000000 # Ограничение 15MB (защита от случайной загрузки "тяжелых" исходников)
+
 collections:
   - name: "settings"
     label: "Настройки сайта"
@@ -16,6 +19,8 @@ collections:
           - name: "photos"
             label: "Фотографии"
             widget: "list"
+            collapsed: true
+            summary: "{{fields.category}} — {{fields.alt}} [{{fields.src}}]"
             fields:
               - {label: "Фото", name: "src", widget: "image"}
               - {label: "Категория", name: "category", widget: "select", options: ["beauty", "streetwear", "commercial", "casual", "ugc", "food", "acting"]}
@@ -24,6 +29,8 @@ collections:
           - name: "videos"
             label: "Видео (Reels)"
             widget: "list"
+            collapsed: true
+            summary: "{{fields.label}} ({{fields.category}})"
             fields:
               - {label: "Название", name: "label", widget: "string"}
               - {label: "Категория", name: "category", widget: "select", options: ["beauty", "streetwear", "commercial", "casual", "ugc", "food", "acting"]}
