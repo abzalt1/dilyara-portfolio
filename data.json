@@ -1,6 +1,12 @@
 {
   "photos": [
     {
+      "src": "https://res.cloudinary.com/dkexmocck/image/upload/w_1600,c_limit,q_auto,f_auto/v1772037506/zhjytmommnik177nnicz.jpg",
+      "thumb": "https://res.cloudinary.com/dkexmocck/image/upload/w_500,c_limit,q_auto,f_auto/v1772037506/zhjytmommnik177nnicz.jpg",
+      "category": "casual",
+      "alt": "IMG 7238"
+    },
+    {
       "src": "https://res.cloudinary.com/dkexmocck/image/upload/w_1600,c_limit,q_auto,f_auto/v1772037422/hwffncfxijtoj4k5l7ut.jpg",
       "thumb": "https://res.cloudinary.com/dkexmocck/image/upload/w_500,c_limit,q_auto,f_auto/v1772037422/hwffncfxijtoj4k5l7ut.jpg",
       "category": "streetwear",
