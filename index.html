@@ -13,6 +13,20 @@
     <meta property="og:description" content="Commercial model based in Almaty. Beauty, Streetwear, UGC.">
     <meta property="og:image" content="./img/IMG_6543.JPG">
 
+    <!-- Schema.org JSON-LD -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "Person",
+      "name": "Dilyara Kunanbayeva",
+      "url": "https://dilyara.kz",
+      "image": "https://dilyara.kz/img/IMG_6543.JPG",
+      "jobTitle": "Commercial Model",
+      "address": { "@type": "PostalAddress", "addressLocality": "Almaty", "addressCountry": "KZ" },
+      "sameAs": [ "https://instagram.com/bydilyara", "https://t.me/xiao_odi" ]
+    }
+    </script>
+
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -41,7 +55,7 @@
             background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)' opacity='0.05'/%3E%3C/svg%3E");
         }
         .lang-active { text-decoration: underline; text-underline-offset: 4px; }
-        .filter-btn { position: relative; transition: opacity 0.3s ease; }
+        .filter-btn { position: relative; transition: all 0.3s ease; padding: 4px 12px; border-radius: 6px; }
         .filter-btn::after {
             content: '';
             position: absolute;
@@ -50,7 +64,9 @@
             background-color: currentColor;
             transition: width 0.3s ease;
         }
-        .filter-btn.active::after, .filter-btn:hover::after { width: 100%; }
+        .filter-btn:hover::after { width: 100%; }
+        .filter-btn.active { background-color: black; color: white; }
+        .filter-btn.active::after { display: none; }
         .filter-btn:hover { opacity: 0.7; }
 
         .media-item { transition: opacity 0.3s ease, transform 0.3s ease; }
@@ -85,7 +101,7 @@
         #photo-grid .photo-thumb .zoom-overlay {
             position: absolute; inset: 0;
             background: rgba(0,0,0,0.3);
-            display: flex; align-items: center; justify-content: center;
+            display: flex; flex-direction: column; align-items: center; justify-content: center;
             opacity: 0; transition: opacity 0.3s ease;
         }
         #photo-grid .photo-thumb:hover .zoom-overlay { opacity: 1; }
@@ -94,6 +110,13 @@
             transform: scale(0.8); transition: transform 0.3s ease;
         }
         #photo-grid .photo-thumb:hover .zoom-overlay i { transform: scale(1); }
+        #photo-grid .photo-thumb .zoom-overlay .photo-cat {
+            margin-top: 0.5rem;
+            color: white; font-size: 0.75rem; font-weight: bold;
+            text-transform: uppercase; letter-spacing: 0.2em;
+            transform: translateY(10px); transition: transform 0.3s ease;
+        }
+        #photo-grid .photo-thumb:hover .zoom-overlay .photo-cat { transform: translateY(0); }
         #photo-grid .photo-thumb.hidden-item { display: none !important; }
         #photo-grid .empty-state { grid-column: 1 / -1; }
 
@@ -153,8 +176,33 @@
         #video-grid .video-thumb:hover .mute-btn { opacity: 1; }
         #video-grid .video-thumb .mute-btn:hover { transform: scale(1.1); background: rgba(0,0,0,0.8); }
 
+        #video-grid .video-thumb .reels-icon {
+            position: absolute;
+            top: 10px; right: 10px;
+            color: white; font-size: 1.2rem;
+            z-index: 15;
+            filter: drop-shadow(0 2px 4px rgba(0,0,0,0.5));
+            transition: opacity 0.2s;
+            pointer-events: none;
+        }
+        #video-grid .video-thumb:hover .reels-icon { opacity: 0; }
+
         /* Скрываем затемнение и иконку Play, когда видео воспроизводится */
         #video-grid .video-thumb.playing .play-overlay { opacity: 0; }
+
+        /* Loader для видео в сетке */
+        #video-grid .grid-video-loader {
+            position: absolute;
+            top: 50%; left: 50%;
+            width: 32px; height: 32px;
+            border: 3px solid rgba(255,255,255,0.2);
+            border-top: 3px solid white;
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+            z-index: 15;
+            display: none; /* Hidden by default */
+            pointer-events: none;
+        }
 
         #video-grid .video-thumb .vid-label {
             position: absolute;
@@ -176,8 +224,8 @@
             position: fixed;
             inset: 0;
             background: rgba(0,0,0,0.9);
-            backdrop-filter: blur(10px);
-            -webkit-backdrop-filter: blur(10px);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
             z-index: 9999;
             align-items: center;
             justify-content: center;
@@ -194,7 +242,10 @@
         }
         #lightbox-img.zoomed {
             transform: scale(1.75);
-            cursor: zoom-out;
+            cursor: grab;
+        }
+        #lightbox-img.zoomed:active {
+            cursor: grabbing;
         }
 
         /* ── ВИДЕО ЛАЙТБОКС ── */
@@ -203,8 +254,8 @@
             position: fixed;
             inset: 0;
             background: rgba(0,0,0,0.9);
-            backdrop-filter: blur(10px);
-            -webkit-backdrop-filter: blur(10px);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
             z-index: 9999;
             align-items: center;
             justify-content: center;
@@ -216,6 +267,14 @@
             width: min(420px, 90vw);
             cursor: default;
         }
+        /* Адаптация для горизонтальных видео (YouTube/Vimeo) */
+        #video-lightbox-inner.landscape {
+            width: min(800px, 90vw);
+        }
+        #video-lightbox-inner.portrait iframe {
+            aspect-ratio: 9 / 16;
+        }
+
         #video-lightbox-inner video {
             width: 100%;
             aspect-ratio: 9 / 16;
@@ -223,29 +282,12 @@
             background: #000;
             display: block;
         }
-        /* Если нет видеофайла — показываем заглушку */
-        #video-lightbox-placeholder {
+        #video-lightbox-inner iframe {
             width: 100%;
-            aspect-ratio: 9 / 16;
+            aspect-ratio: 16 / 9;
             background: #111;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            gap: 1rem;
+            display: block;
         }
-        #video-lightbox-placeholder i { font-size: 4rem; color: white; opacity: 0.3; }
-        #video-lightbox-placeholder a {
-            font-size: 0.75rem;
-            font-weight: bold;
-            letter-spacing: 0.2em;
-            text-transform: uppercase;
-            color: white;
-            border: 1px solid rgba(255,255,255,0.3);
-            padding: 0.6rem 1.2rem;
-            transition: border-color 0.2s;
-        }
-        #video-lightbox-placeholder a:hover { border-color: white; }
         #video-lightbox-title {
             margin-top: 0.75rem;
             font-size: 0.65rem;
@@ -383,6 +425,27 @@
             font-size: 11px; font-family: monospace; border-radius: 4px;
             resize: none; outline: none;
         }
+
+        /* Анимация языковой панели */
+        #lang-switcher {
+            opacity: 0;
+            transform: translateY(-20px);
+            transition: opacity 1s ease, transform 1s ease, background-color 0.3s;
+        }
+        #lang-switcher.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* Параллакс обертка */
+        .parallax-wrapper {
+            width: 100%;
+            height: 125%;
+            position: absolute;
+            top: -12.5%;
+            left: 0;
+            will-change: transform;
+        }
     </style>
 </head>
 
@@ -392,9 +455,8 @@
         <div class="text-white font-display font-bold text-xl tracking-[0.3em] uppercase animate-pulse">Loading</div>
     </div>
 
-    <nav class="fixed top-0 w-full z-50 px-6 py-6 flex flex-col md:flex-row gap-4 md:gap-0 justify-between items-center mix-blend-exclusion text-white pointer-events-none">
-        <div onclick="window.scrollTo({top: 0, behavior: 'smooth'})" class="text-xs font-bold tracking-[0.1em] uppercase font-display pointer-events-auto cursor-pointer">Dilyara Kunanbayeva</div>
-        <div class="flex gap-4 text-xs font-bold uppercase pointer-events-auto">
+    <nav class="absolute top-0 w-full z-50 px-6 py-6 flex flex-col md:flex-row gap-4 md:gap-0 justify-end items-center text-white pointer-events-none">
+        <div id="lang-switcher" class="flex gap-4 text-sm font-bold uppercase pointer-events-auto drop-shadow-md bg-black/30 backdrop-blur-sm px-4 py-2 rounded-full hover:bg-black/60">
             <button onclick="setLang('en')" id="btn-en" class="hover:opacity-70 transition-opacity">EN</button>
             <button onclick="setLang('kk')" id="btn-kk" class="hover:opacity-70 transition-opacity">KK</button>
             <button onclick="setLang('ru')" id="btn-ru" class="lang-active hover:opacity-70 transition-opacity">RU</button>
@@ -419,11 +481,11 @@
 
     <section id="about" class="grid grid-cols-1 md:grid-cols-12 gap-12 p-6 md:p-12 mt-12 max-w-[1600px] mx-auto">
         <div class="md:col-span-6 md:sticky md:top-24">
-            <h3 class="font-display font-extrabold text-6xl md:text-7xl uppercase mb-6 leading-[0.9]" data-i18n="about_title">О модели</h3>
-            <p class="text-base md:text-lg leading-relaxed mb-8 font-normal max-w-md" data-i18n="about_text">
+            <h3 class="font-display font-extrabold text-6xl md:text-7xl uppercase mb-6 leading-[0.9] fade-in-up" data-i18n="about_title">О модели</h3>
+            <p class="text-base md:text-lg leading-relaxed mb-8 font-normal max-w-md fade-in-up" data-i18n="about_text">
                 В моделинге с 2025 года. Специализация: beauty, наружная реклама, street-style. Активно снимаюсь в Reels, Shorts и рекламных интеграциях. Профессионально создаю UGC-контент.
             </p>
-            <div class="mb-8">
+            <div class="mb-8 fade-in-up">
                 <p class="text-xs font-bold uppercase tracking-widest mb-4 border-b border-black pb-2">Trusted By</p>
                 <div class="grid grid-cols-3 gap-y-4 gap-x-4 opacity-80">
                     <div class="font-display font-bold text-lg md:text-xl uppercase">1fit</div>
@@ -460,7 +522,7 @@
         </div>
     </section>
 
-    <div class="mt-24 border-t-2 border-b-2 border-black bg-white">
+    <div id="filters-section" class="mt-24 border-t-2 border-b-2 border-black bg-white fade-in-up">
         <div class="text-center py-4 border-b border-gray-200">
             <span class="text-xs font-bold uppercase tracking-[0.3em]" data-i18n="select_category">Выберите категорию</span>
         </div>
@@ -486,7 +548,7 @@
     <section id="portfolio-view" class="min-h-screen grid grid-cols-1 md:grid-cols-2">
 
         <div class="border-r border-black p-6 md:p-12">
-            <h3 class="font-display font-bold text-4xl uppercase mb-8 flex items-center gap-4">
+            <h3 class="font-display font-bold text-4xl uppercase mb-8 flex items-center gap-4 fade-in-up">
                 <i class="ri-camera-fill"></i> <span id="category-title-photo">All</span> Photos
             </h3>
             <div id="photo-grid">
@@ -496,7 +558,7 @@
         </div>
 
         <div class="bg-black text-white p-6 md:p-12">
-            <h3 class="font-display font-bold text-4xl uppercase mb-8 flex items-center gap-4">
+            <h3 class="font-display font-bold text-4xl uppercase mb-8 flex items-center gap-4 fade-in-up">
                 <i class="ri-movie-fill"></i> <span id="category-title-video">All</span> Reels
             </h3>
             <div id="video-grid">
@@ -527,7 +589,7 @@
         <span class="lb-counter" id="lb-video-counter"></span>
     </div>
 
-    <footer id="booking" class="bg-white text-black border-t-2 border-black">
+    <footer id="booking" class="bg-white text-black border-t-2 border-black fade-in-up">
         <div class="overflow-hidden border-b-2 border-black py-4 bg-black text-white">
             <div class="animate-marquee">
                 <span class="text-4xl md:text-6xl font-display font-bold uppercase px-6">Dilyara Kunanbayeva</span>
@@ -545,13 +607,18 @@
             <div>
                 <h2 class="font-display font-black text-6xl md:text-9xl uppercase mb-8 leading-none tracking-tighter" data-i18n="booking">Контакты</h2>
                 <div class="space-y-4">
-                    <a href="https://t.me/xiao_odi" target="_blank" class="text-2xl md:text-4xl font-display font-bold uppercase hover:underline flex items-center gap-4">Telegram ↗</a>
+                    <a href="tg://resolve?domain=xiao_odi" class="text-2xl md:text-4xl font-display font-bold uppercase hover:underline flex items-center gap-4">Telegram ↗</a>
                     <a href="https://instagram.com/bydilyara" target="_blank" class="text-2xl md:text-4xl font-display font-bold uppercase hover:underline flex items-center gap-4">Instagram ↗</a>
                 </div>
             </div>
-            <div class="flex flex-col justify-end items-start md:items-end">
-                <p class="text-xs font-bold uppercase tracking-[0.2em] mb-4">Email</p>
-                <a href="mailto:contact@dilyara.kz" class="text-2xl font-bold uppercase border-b-2 border-black pb-1">contact@dilyara.kz</a>
+            <div class="flex flex-col justify-end items-start">
+                <p class="text-xs font-bold uppercase tracking-[0.2em] mb-6" data-i18n="booking_req_title">Direct Booking</p>
+                <p class="text-sm mb-6 max-w-xs opacity-70" data-i18n="booking_req_text">
+                    For inquiries and collaboration please contact me via Telegram.
+                </p>
+                <a href="tg://resolve?domain=xiao_odi" class="bg-black text-white px-8 py-4 text-xs font-bold uppercase tracking-widest hover:bg-gray-800 transition-colors w-full md:w-auto flex items-center justify-center gap-3">
+                    <svg viewBox="0 0 24 24" fill="currentColor" class="w-5 h-5"><path d="M20.665 3.717l-17.73 6.837c-1.21.486-1.203 1.161-.222 1.462l4.552 1.42 10.532-6.645c.498-.303.953-.14.579.192l-8.533 7.701h-.002l.002.001-.314 4.692c.46 0 .663-.211.921-.46l2.211-2.15 4.599 3.397c.848.467 1.457.227 1.668-.785l3.019-14.228c.309-1.239-.473-1.8-1.282-1.434z"/></svg> <span data-i18n="booking_req_btn">Write on Telegram</span>
+                </a>
             </div>
         </div>
         <div class="max-w-[1600px] mx-auto mt-12 pt-8 border-t border-gray-200 flex justify-between text-[10px] uppercase font-bold">
@@ -560,6 +627,10 @@
         </div>
         </div>
     </footer>
+
+    <a id="telegram-float" href="tg://resolve?domain=xiao_odi" class="fixed bottom-8 left-8 bg-black text-white w-12 h-12 flex items-center justify-center rounded-full shadow-lg z-50 transition-all duration-300 hover:scale-110 hover:bg-gray-800 transform translate-y-0 opacity-100" title="Contact on Telegram">
+        <svg viewBox="0 0 24 24" fill="currentColor" class="w-7 h-7 translate-x-[-2px] translate-y-[1px]"><path d="M20.665 3.717l-17.73 6.837c-1.21.486-1.203 1.161-.222 1.462l4.552 1.42 10.532-6.645c.498-.303.953-.14.579.192l-8.533 7.701h-.002l.002.001-.314 4.692c.46 0 .663-.211.921-.46l2.211-2.15 4.599 3.397c.848.467 1.457.227 1.668-.785l3.019-14.228c.309-1.239-.473-1.8-1.282-1.434z"/></svg>
+    </a>
 
     <button id="back-to-top" class="fixed bottom-8 right-8 bg-black text-white w-12 h-12 flex items-center justify-center rounded-full shadow-lg z-50 opacity-0 pointer-events-none transition-all duration-300 hover:scale-110" onclick="window.scrollTo({top: 0, behavior: 'smooth'})">
         <i class="ri-arrow-up-line text-xl"></i>
@@ -597,19 +668,28 @@
                 role: "Коммерческая модель", location: "Алматы, Казахстан",
                 about_title: "О модели",
                 about_text: "В моделинге с 2025 года. Специализация: beauty, наружная реклама, street-style. Активно снимаюсь в Reels, Shorts и рекламных интеграциях. Профессионально создаю UGC-контент.",
-                select_category: "Выберите категорию", booking: "Контакты"
+                select_category: "Выберите категорию", booking: "Контакты",
+                booking_req_title: "Прямая связь",
+                booking_req_text: "Для обсуждения проектов и сотрудничества пишите в Telegram.",
+                booking_req_btn: "Написать в Telegram"
             },
             en: {
                 role: "Commercial Model", location: "Based in Almaty",
                 about_title: "About Model",
                 about_text: "Modeling since 2025. Specializing in beauty, outdoor advertising, street-style. Active in Reels, Shorts, and ad integrations. Professional UGC content creator.",
-                select_category: "Select Category", booking: "Booking"
+                select_category: "Select Category", booking: "Booking",
+                booking_req_title: "Direct Booking",
+                booking_req_text: "For inquiries and collaboration please contact me via Telegram.",
+                booking_req_btn: "Write on Telegram"
             },
             kk: {
                 role: "Коммерциялық модель", location: "Алматы, Қазақстан",
                 about_title: "Модель туралы",
                 about_text: "2025 жылдан бері модельдингте. Мамандануы: beauty, сыртқы жарнама, street-style. Reels, Shorts және жарнамалық интеграцияларда белсендімін. Кәсіби UGC контент жасаймын.",
-                select_category: "Санатты таңдаңыз", booking: "Байланыс"
+                select_category: "Санатты таңдаңыз", booking: "Байланыс",
+                booking_req_title: "Тікелей байланыс",
+                booking_req_text: "Жобалар мен ынтымақтастықты талқылау үшін Telegram-ға жазыңыз.",
+                booking_req_btn: "Telegram-ға жазу"
             }
         };
         function setLang(lang) {
@@ -639,7 +719,7 @@
         };
 
         function filterContent(category) {
-            document.getElementById('portfolio-view').scrollIntoView({ behavior: 'smooth' });
+            document.getElementById('filters-section').scrollIntoView({ behavior: 'smooth' });
             document.getElementById('category-title-photo').innerText = titleMap[category] || 'Portfolio';
             document.getElementById('category-title-video').innerText = titleMap[category] || 'Portfolio';
 
@@ -676,6 +756,10 @@
 
         // 3. ФОТО ЛАЙТБОКС
         let photoIndex = 0;
+        let isPanning = false;
+        let startCoords = { x: 0, y: 0 };
+        let translateCoords = { x: 0, y: 0 };
+        let wasDragged = false;
 
         function getVisiblePhotos() {
             return [...document.querySelectorAll('#photo-grid .media-item:not(.hidden-item) img')];
@@ -688,6 +772,8 @@
             const loader = document.getElementById('photo-loader');
             
             lbImg.classList.remove('zoomed');
+            lbImg.style.transform = '';
+            translateCoords = { x: 0, y: 0 };
             loader.style.display = 'block';
             lbImg.style.opacity = '0.5';
 
@@ -698,7 +784,7 @@
         function openPhoto(img) {
             const photos = getVisiblePhotos();
             photoIndex = photos.indexOf(img);
-            setLightboxImage(img.src);
+            setLightboxImage(img.dataset.fullSrc || img.src);
             document.getElementById('lightbox').classList.add('open');
             document.body.style.overflow = 'hidden';
             updatePhotoCounter(photos);
@@ -706,7 +792,9 @@
         }
         function closePhoto(skipHistory = false) {
             document.getElementById('lightbox').classList.remove('open');
-            document.getElementById('lightbox-img').classList.remove('zoomed');
+            const img = document.getElementById('lightbox-img');
+            img.classList.remove('zoomed');
+            img.style.transform = '';
             document.getElementById('photo-loader').style.display = 'none';
             document.body.style.overflow = '';
             if (skipHistory !== true) {
@@ -716,7 +804,8 @@
         function photoGo(dir) {
             const photos = getVisiblePhotos();
             photoIndex = (photoIndex + dir + photos.length) % photos.length;
-            setLightboxImage(photos[photoIndex].src);
+            const img = photos[photoIndex];
+            setLightboxImage(img.dataset.fullSrc || img.src);
             updatePhotoCounter(photos);
             history.replaceState(null, null, '#photo-' + photos[photoIndex].dataset.id);
         }
@@ -727,9 +816,47 @@
         document.getElementById('lightbox').addEventListener('click', function(e) {
             if (e.target === this) closePhoto();
         });
-        document.getElementById('lightbox-img').addEventListener('click', function(e) {
+        
+        const lbImg = document.getElementById('lightbox-img');
+        
+        lbImg.addEventListener('mousedown', (e) => {
+            if (!lbImg.classList.contains('zoomed')) return;
+            isPanning = true;
+            wasDragged = false;
+            startCoords.x = e.clientX - translateCoords.x;
+            startCoords.y = e.clientY - translateCoords.y;
+            lbImg.style.transition = 'none';
+            e.preventDefault();
+        });
+
+        window.addEventListener('mousemove', (e) => {
+            if (!isPanning) return;
+            e.preventDefault();
+            const x = e.clientX - startCoords.x;
+            const y = e.clientY - startCoords.y;
+            if (Math.abs(x - translateCoords.x) > 2 || Math.abs(y - translateCoords.y) > 2) wasDragged = true;
+            translateCoords = { x, y };
+            lbImg.style.transform = `translate(${x}px, ${y}px) scale(2.5)`;
+        });
+
+        window.addEventListener('mouseup', () => {
+            if (isPanning) {
+                isPanning = false;
+                lbImg.style.transition = 'transform 0.3s ease, opacity 0.3s ease';
+            }
+        });
+
+        lbImg.addEventListener('click', function(e) {
             e.stopPropagation();
-            this.classList.toggle('zoomed');
+            if (wasDragged) return;
+            
+            if (this.classList.contains('zoomed')) {
+                this.classList.remove('zoomed');
+                this.style.transform = '';
+                translateCoords = { x: 0, y: 0 };
+            } else {
+                this.classList.add('zoomed');
+            }
         });
 
         // SHARE BUTTON
@@ -776,6 +903,7 @@
         function closeVideo(skipHistory = false) {
             const v = document.querySelector('#video-lightbox-inner video');
             if (v) { v.pause(); v.src = ''; }
+            document.getElementById('video-lightbox-inner').innerHTML = ''; // Очищаем iframe
             document.getElementById('video-lightbox').classList.remove('open');
             document.body.style.overflow = '';
             if (skipHistory !== true) {
@@ -786,6 +914,7 @@
             const videos = getVisibleVideos();
             const v = document.querySelector('#video-lightbox-inner video');
             if (v) { v.pause(); v.src = ''; }
+            document.getElementById('video-lightbox-inner').innerHTML = '';
             videoIndex = (videoIndex + dir + videos.length) % videos.length;
             renderVideoLightbox(videos[videoIndex]);
             updateVideoCounter(videos);
@@ -793,16 +922,18 @@
         }
         function renderVideoLightbox(thumb) {
             const src    = thumb.getAttribute('data-src') || '';
-            const link   = thumb.getAttribute('data-link') || '';
+            const videoUrl = thumb.getAttribute('data-video-url') || '';
             const label  = thumb.getAttribute('data-label') || '';
             const poster = thumb.getAttribute('data-poster') || '';
             const inner  = document.getElementById('video-lightbox-inner');
 
             if (src) {
+                inner.classList.remove('landscape');
+                inner.classList.remove('portrait');
                 inner.innerHTML = `
                     <div class="video-loader"></div>
                     <video controls autoplay playsinline ${poster ? 'poster="'+poster+'"' : ''}>
-                        <source src="${src}" type="video/mp4">
+                        <source src="${src}">
                     </video>
                     ${label ? '<div id="video-lightbox-title">' + label + '</div>' : ''}
                 `;
@@ -819,15 +950,33 @@
                 video.addEventListener('playing', hideLoader);
                 
                 if (video.readyState < 3) showLoader();
-            } else {
-                inner.innerHTML = `
-                    <div id="video-lightbox-placeholder">
-                        <i class="ri-video-line"></i>
-                        <p style="color:white;opacity:0.3;font-size:0.7rem;letter-spacing:0.15em;text-transform:uppercase;">${label}</p>
-                        ${link ? '<a href="'+link+'" target="_blank">Смотреть в Instagram ↗</a>' : ''}
-                    </div>
-                    ${label ? '<div id="video-lightbox-title">' + label + '</div>' : ''}
-                `;
+            } else if (videoUrl) {
+                // Определяем YouTube или Vimeo
+                let embedSrc = '';
+                let isVertical = false;
+
+                const shortsMatch = videoUrl.match(/youtube\.com\/shorts\/([a-zA-Z0-9_-]{11})/);
+                const ytMatch = videoUrl.match(/(?:https?:\/\/)?(?:www\.)?(?:youtube\.com\/(?:[^\/\n\s]+\/\S+\/|(?:v|e(?:mbed)?)\/|\S*?[?&]v=)|youtu\.be\/)([a-zA-Z0-9_-]{11})/);
+                const vimeoMatch = videoUrl.match(/(?:https?:\/\/)?(?:www\.)?vimeo\.com\/(?:channels\/(?:\w+\/)?|groups\/(?:[^\/]*)\/videos\/|album\/(?:\d+)\/video\/|video\/|)(\d+)(?:$|\/|\?)/);
+
+                if (shortsMatch) {
+                    embedSrc = `https://www.youtube.com/embed/${shortsMatch[1]}?autoplay=1&rel=0&modestbranding=1&loop=1&playlist=${shortsMatch[1]}`;
+                    isVertical = true;
+                } else if (ytMatch) {
+                    embedSrc = `https://www.youtube.com/embed/${ytMatch[1]}?autoplay=1&rel=0&modestbranding=1`;
+                } else if (vimeoMatch) {
+                    embedSrc = `https://player.vimeo.com/video/${vimeoMatch[1]}?autoplay=1`;
+                }
+
+                if (embedSrc) {
+                    if (isVertical) { inner.classList.remove('landscape'); inner.classList.add('portrait'); }
+                    else { inner.classList.add('landscape'); inner.classList.remove('portrait'); }
+
+                    inner.innerHTML = `
+                        <iframe src="${embedSrc}" frameborder="0" allow="autoplay; fullscreen; picture-in-picture" allowfullscreen></iframe>
+                        ${label ? '<div id="video-lightbox-title">' + label + '</div>' : ''}
+                    `;
+                }
             }
         }
 
@@ -854,15 +1003,26 @@
         });
 
         // Свайпы для мобильных (Touch Events)
-        let touchStartX = 0;
-        let touchEndX = 0;
-
         function handleSwipe(el, callback) {
-            el.addEventListener('touchstart', e => touchStartX = e.changedTouches[0].screenX, {passive: true});
+            let touchStartX = 0;
+            let touchStartY = 0;
+
+            el.addEventListener('touchstart', e => {
+                touchStartX = e.changedTouches[0].screenX;
+                touchStartY = e.changedTouches[0].screenY;
+            }, {passive: true});
+
             el.addEventListener('touchend', e => {
-                touchEndX = e.changedTouches[0].screenX;
-                if (touchEndX < touchStartX - 50) callback(1);  // Swipe Left -> Next
-                if (touchEndX > touchStartX + 50) callback(-1); // Swipe Right -> Prev
+                const touchEndX = e.changedTouches[0].screenX;
+                const touchEndY = e.changedTouches[0].screenY;
+                const diffX = touchEndX - touchStartX;
+                const diffY = touchEndY - touchStartY;
+
+                // Горизонтальный свайп (защита от случайных вертикальных скроллов)
+                if (Math.abs(diffX) > 50 && Math.abs(diffY) < 30) {
+                    if (diffX < 0) callback(1);  // Swipe Left -> Next
+                    if (diffX > 0) callback(-1); // Swipe Right -> Prev
+                }
             }, {passive: true});
         }
 
@@ -881,7 +1041,7 @@
         });
 
         // 5. АНИМАЦИЯ ПАРАМЕТРОВ
-        const observerOptions = { threshold: 0.2 };
+        const observerOptions = { threshold: 0.1 };
         const observer = new IntersectionObserver((entries) => {
             entries.forEach(entry => {
                 if (entry.isIntersecting) {
@@ -890,16 +1050,16 @@
                 }
             });
         }, observerOptions);
-        
-        const paramsBlock = document.getElementById('model-params');
-        if (paramsBlock) observer.observe(paramsBlock);
+
+        document.querySelectorAll('.fade-in-up').forEach(el => observer.observe(el));
 
         // 6. ПАРАЛЛАКС ХЕДЕРА
         window.addEventListener('scroll', () => {
             const headerImg = document.getElementById('header-img');
             if (headerImg) {
-                headerImg.style.transform = `translateY(${window.scrollY * 0.1}px)`;
-                headerImg.style.filter = `grayscale(100%) contrast(1.25) blur(${Math.min(window.scrollY * 0.04, 20)}px)`;
+                const scroll = window.scrollY;
+                headerImg.style.transform = `translateY(${scroll * 0.1}px)`;
+                headerImg.style.filter = `grayscale(100%) contrast(1.25) blur(${Math.min(scroll * 0.04, 20)}px) brightness(${Math.max(0.2, 1 - scroll / 600)})`;
             }
         });
 
@@ -911,6 +1071,23 @@
             } else {
                 backToTop.classList.add('opacity-0', 'pointer-events-none');
             }
+        });
+
+        // 10. TELEGRAM BUTTON AUTO-HIDE
+        const tgBtn = document.getElementById('telegram-float');
+        let scrollTimeout;
+
+        window.addEventListener('scroll', () => {
+            if (!tgBtn) return;
+            // Скрываем кнопку (уводим вниз и делаем прозрачной)
+            tgBtn.classList.add('translate-y-24', 'opacity-0', 'pointer-events-none');
+            
+            clearTimeout(scrollTimeout);
+            
+            // Показываем обратно через 500мс после остановки скролла
+            scrollTimeout = setTimeout(() => {
+                tgBtn.classList.remove('translate-y-24', 'opacity-0', 'pointer-events-none');
+            }, 500);
         });
 
         // 8. LOAD DATA & INIT
@@ -932,7 +1109,8 @@
                     const img = document.createElement('img');
                     img.loading = 'lazy';
                     img.decoding = 'async'; // Не блокирует прокрутку страницы при загрузке
-                    img.src = item.src;
+                    img.src = item.thumb || item.src;
+                    img.dataset.fullSrc = item.src;
                     img.alt = item.alt;
                     img.dataset.id = index;
                     img.onerror = function() {
@@ -940,8 +1118,12 @@
                         checkEmpty('photo-grid', 'photo-empty');
                     };
                     
-                    div.innerHTML = `<div class="zoom-overlay"><i class="ri-zoom-in-line"></i></div>`;
-                    div.prepend(img);
+                    const wrapper = document.createElement('div');
+                    wrapper.className = 'parallax-wrapper';
+                    wrapper.appendChild(img);
+
+                    div.innerHTML = `<div class="zoom-overlay"><i class="ri-zoom-in-line"></i><span class="photo-cat">${item.category}</span></div>`;
+                    div.prepend(wrapper);
                     div.addEventListener('click', () => openPhoto(img));
                     
                     photoGrid.insertBefore(div, photoEmpty);
@@ -965,28 +1147,28 @@
                     });
                 }, { rootMargin: '200px' });
 
-                // Observer для автовоспроизведения видео при скролле
+                // Observer для автоплея при скролле (Mobile experience)
                 const videoAutoplayObserver = new IntersectionObserver((entries) => {
                     entries.forEach(entry => {
-                        const video = entry.target.querySelector('video');
-                        if (!video) return;
+                        const video = entry.target;
+                        const thumb = video.closest('.video-thumb');
+                        // Если видео видно более чем на 50%
                         if (entry.isIntersecting) {
                             video.muted = true;
-                            video.play().then(() => entry.target.classList.add('playing')).catch(() => {});
+                            video.play().then(() => thumb && thumb.classList.add('playing')).catch(() => {});
                         } else {
                             video.pause();
-                            video.currentTime = 0;
-                            entry.target.classList.remove('playing');
+                            if (thumb) thumb.classList.remove('playing');
                         }
                     });
-                }, { threshold: 0.9 });
+                }, { threshold: 0.5 });
 
                 if (data.videos) data.videos.forEach((item, index) => {
                     const div = document.createElement('div');
                     div.className = 'media-item video-thumb reveal-item';
                     div.dataset.category = item.category;
                     div.dataset.src = item.src || '';
-                    div.dataset.link = item.link || '';
+                    div.dataset.videoUrl = item.video_url || '';
                     div.dataset.label = item.label || '';
                     div.dataset.poster = item.poster || '';
                     div.dataset.id = index;
@@ -1003,8 +1185,10 @@
 
                     div.innerHTML = `
                         ${innerContent}
+                        <div class="grid-video-loader"></div>
                         <div class="play-overlay"><i class="ri-play-circle-line"></i></div>
                         ${muteBtnHtml}
+                        <div class="reels-icon"><i class="ri-movie-fill"></i></div>
                         <span class="vid-label">${(item.label || '').split(' ')[0]}</span>
                     `;
 
@@ -1012,8 +1196,19 @@
                     div.addEventListener('click', () => openVideo(div));
                     const previewVideo = div.querySelector('.preview-video');
                     if (previewVideo) {
-                        videoAutoplayObserver.observe(div);
                         videoLazyLoadObserver.observe(previewVideo);
+                        videoAutoplayObserver.observe(previewVideo);
+
+                        const loader = div.querySelector('.grid-video-loader');
+                        if (loader) {
+                            previewVideo.addEventListener('loadstart', () => {
+                                if (previewVideo.readyState < 3) loader.style.display = 'block';
+                            });
+                            previewVideo.addEventListener('waiting', () => loader.style.display = 'block');
+                            previewVideo.addEventListener('playing', () => loader.style.display = 'none');
+                            previewVideo.addEventListener('canplay', () => loader.style.display = 'none');
+                            previewVideo.addEventListener('stalled', () => loader.style.display = 'block');
+                        }
                         
                         // Mute button logic
                         const muteBtn = div.querySelector('.mute-btn');
@@ -1031,6 +1226,7 @@
 
                 // START ANIMATIONS
                 startAnimations();
+                startParallax();
 
                 // Проверка пустых состояний
                 checkEmpty('photo-grid', 'photo-empty');
@@ -1063,6 +1259,7 @@
             setTimeout(() => {
                 preloader.classList.add('opacity-0', 'pointer-events-none');
                 document.body.classList.remove('overflow-hidden');
+                document.getElementById('lang-switcher').classList.add('visible');
 
                 const mediaObserver = new IntersectionObserver((entries) => {
                     entries.forEach(entry => {
@@ -1074,6 +1271,25 @@
                 }, { threshold: 0.1 });
                 mediaItems.forEach(item => mediaObserver.observe(item));
             }, 500);
+        }
+
+        function startParallax() {
+            function loop() {
+                const thumbs = document.querySelectorAll('.photo-thumb');
+                thumbs.forEach(thumb => {
+                    const wrapper = thumb.querySelector('.parallax-wrapper');
+                    if (!wrapper) return;
+                    
+                    const rect = thumb.getBoundingClientRect();
+                    if (rect.top < window.innerHeight && rect.bottom > 0) {
+                        const speed = 0.1;
+                        const offset = (rect.top - window.innerHeight / 2) * speed;
+                        wrapper.style.transform = `translateY(${offset}px)`;
+                    }
+                });
+                requestAnimationFrame(loop);
+            }
+            requestAnimationFrame(loop);
         }
 
         // Run init

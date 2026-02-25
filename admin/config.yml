@@ -2,17 +2,17 @@ backend:
   name: git-gateway
   branch: main # Или master, проверьте как называется ваша ветка на GitHub
 
-# media_folder удаляем или оставляем пустым, так как файлы будут в облаке
+media_folder: "img" # Обязательное поле для CMS, даже если файлы в облаке
+public_folder: "./img"
+
 media_library:
   name: cloudinary
   config:
     cloud_name: dkexmocck
     api_key: 765755564578894
+    insert_transformation: true # Позволяет вставлять обрезанную версию (URL с параметрами)
     default_transformations:
-      - [
-          { width: 1000, crop: 'limit' }, 
-          { quality: 'auto', fetch_format: 'auto' }
-        ]
+      - [ { width: 1000, crop: 'limit', quality: 'auto', fetch_format: 'auto' } ]
 
 collections:
   - name: "settings"
@@ -42,4 +42,4 @@ collections:
               - {label: "Категория", name: "category", widget: "select", options: ["beauty", "streetwear", "commercial", "casual", "ugc", "food", "acting"]}
               - {label: "Постер (Обложка)", name: "poster", widget: "image"}
               - {label: "Видео файл (MP4)", name: "src", widget: "file", required: false, hint: "Загрузите файл ИЛИ вставьте ссылку ниже"}
-              - {label: "Ссылка (Instagram)", name: "link", widget: "string", required: false, hint: "Если нет файла, видео откроется в Instagram"}
+              - {label: "Ссылка (YouTube/Vimeo)", name: "video_url", widget: "string", required: false, hint: "Если нет файла, вставьте ссылку на YouTube или Vimeo"}
