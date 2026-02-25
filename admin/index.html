@@ -48,13 +48,13 @@
 
     <!-- MAIN ACTIONS -->
     <div class="grid grid-cols-1 md:grid-cols-2 gap-6" id="main-menu">
-      <button onclick="document.getElementById('bulk-upload-input').click()" class="btn-action glass h-64 rounded-2xl flex flex-col items-center justify-center gap-4 group hover:bg-white/10">
-        <div class="w-20 h-20 rounded-full bg-blue-500/20 flex items-center justify-center group-hover:scale-110 transition">
+      <button id="bulk-upload-zone" onclick="document.getElementById('bulk-upload-input').click()" class="btn-action glass h-64 rounded-2xl flex flex-col items-center justify-center gap-4 group hover:bg-white/10 transition-all duration-200">
+        <div class="w-20 h-20 rounded-full bg-blue-500/20 flex items-center justify-center group-hover:scale-110 transition pointer-events-none">
           <i class="ri-upload-cloud-2-line text-4xl text-blue-400"></i>
         </div>
-        <div class="text-center">
+        <div class="text-center pointer-events-none">
           <h3 class="text-xl font-bold uppercase">Upload Photos</h3>
-          <p class="text-gray-400 text-xs mt-1">Быстрая загрузка</p>
+          <p class="text-gray-400 text-xs mt-1">Click or Drag & Drop</p>
         </div>
       </button>
 
@@ -68,13 +68,13 @@
         </div>
       </button>
 
-      <button onclick="document.getElementById('new-video-upload-input').click()" class="btn-action glass h-64 rounded-2xl flex flex-col items-center justify-center gap-4 group hover:bg-white/10">
-        <div class="w-20 h-20 rounded-full bg-pink-500/20 flex items-center justify-center group-hover:scale-110 transition">
+      <button id="new-video-zone" onclick="document.getElementById('new-video-upload-input').click()" class="btn-action glass h-64 rounded-2xl flex flex-col items-center justify-center gap-4 group hover:bg-white/10 transition-all duration-200">
+        <div class="w-20 h-20 rounded-full bg-pink-500/20 flex items-center justify-center group-hover:scale-110 transition pointer-events-none">
           <i class="ri-upload-cloud-2-line text-4xl text-pink-400"></i>
         </div>
-        <div class="text-center">
+        <div class="text-center pointer-events-none">
           <h3 class="text-xl font-bold uppercase">Upload Video</h3>
-          <p class="text-gray-400 text-xs mt-1">Загрузить MP4</p>
+          <p class="text-gray-400 text-xs mt-1">Click or Drag & Drop MP4</p>
         </div>
       </button>
 
@@ -266,6 +266,7 @@
         fetchData(); // Загружаем данные сразу при входе
         initSortable(); // Инициализируем сортировку
         initVideoSortable();
+        initDragAndDrop(); // Инициализируем Drag & Drop
       });
     }
 
@@ -476,7 +477,7 @@
              
              <select onchange="updateVideoField(${index}, 'category', this.value)" class="w-full bg-black border border-gray-700 rounded px-2 py-1 text-xs text-white focus:border-pink-500 outline-none">
                 ${['beauty','streetwear','commercial','casual','ugc','food','acting'].map(c => 
-                  `<option value="${c}" ${video.category.includes(c) ? 'selected' : ''}>${c.charAt(0).toUpperCase() + c.slice(1)}</option>`
+                  `<option value="${c}" ${video.category === c ? 'selected' : ''}>${c.charAt(0).toUpperCase() + c.slice(1)}</option>`
                 ).join('')}
              </select>
 
@@ -730,10 +731,13 @@
 
     // --- NEW VIDEO UPLOAD (DASHBOARD) ---
     async function handleNewVideoUpload(e) {
+      if (!e.target.files[0]) return;
       const file = e.target.files[0];
-      if (!file) return;
       e.target.value = ''; // Сброс
+      processNewVideo(file);
+    }
 
+    async function processNewVideo(file) {
       const loaderText = document.getElementById('loader-text');
       const progressContainer = document.getElementById('upload-progress-container');
       const progressBar = document.getElementById('upload-progress-bar');
@@ -811,12 +815,13 @@
     async function handleBulkUpload(e) {
       const files = Array.from(e.target.files);
       if (files.length === 0) return;
-      
       e.target.value = ''; // Сброс инпута
-      
+      startBulkUpload(files);
+    }
+
+    function startBulkUpload(files) {
       cropQueue = files;
       croppedPhotos = [];
-      
       processCropQueue();
     }
 
@@ -935,7 +940,7 @@
     }
 
     async function fetchInstagramPoster(index) {
-      const link = currentData.videos[index].link;
+      const link = currentData.videos[index].video_url;
       if (!link) return alert('Сначала вставьте ссылку на Instagram!');
       
       showStatus('Поиск и загрузка обложки...', 'video-status-msg');
@@ -1062,6 +1067,35 @@
            saveData(currentData, 'Updated poster from video frame', 'video-status-msg');
         } catch (e) { console.error(e); alert('Ошибка: ' + e.message); showLoader(false); }
       }, 'image/jpeg', 0.9);
+    }
+
+    // --- DRAG & DROP INITIALIZATION ---
+    function initDragAndDrop() {
+        const photoZone = document.getElementById('bulk-upload-zone');
+        const videoZone = document.getElementById('new-video-zone');
+
+        setupZone(photoZone, (files) => startBulkUpload(files));
+        setupZone(videoZone, (files) => {
+            if (files.length > 0) processNewVideo(files[0]);
+        });
+    }
+
+    function setupZone(zone, callback) {
+        if (!zone) return;
+        
+        // Предотвращаем стандартное поведение браузера (открытие файла)
+        ['dragenter', 'dragover', 'dragleave', 'drop'].forEach(eventName => {
+            zone.addEventListener(eventName, (e) => { e.preventDefault(); e.stopPropagation(); }, false);
+        });
+
+        // Визуальная подсветка
+        zone.addEventListener('dragover', () => zone.classList.add('border-2', 'border-dashed', 'border-white', 'bg-white/10'));
+        zone.addEventListener('dragleave', () => zone.classList.remove('border-2', 'border-dashed', 'border-white', 'bg-white/10'));
+        zone.addEventListener('drop', (e) => {
+            zone.classList.remove('border-2', 'border-dashed', 'border-white', 'bg-white/10');
+            const files = Array.from(e.dataTransfer.files);
+            if (files.length > 0) callback(files);
+        });
     }
   </script>
 </body>

@@ -42,35 +42,35 @@
     {
       "category": "beauty",
       "src": "",
-      "link": "https://instagram.com/bydilyara",
+      "video_url": "https://instagram.com/bydilyara",
       "label": "Beauty Reel 01",
       "poster": "./img/beauty-poster.jpg"
     },
     {
       "category": "commercial ugc",
       "src": "./video/IMG_6449.mp4",
-      "link": "https://instagram.com/bydilyara",
+      "video_url": "https://instagram.com/bydilyara",
       "label": "Commercial Reel 01",
       "poster": "./img/preview1.jpg"
     },
     {
       "category": "streetwear",
       "src": "./video/",
-      "link": "https://instagram.com/bydilyara",
+      "video_url": "https://instagram.com/bydilyara",
       "label": "Streetwear Reel 01",
       "poster": "./img/street-poster.jpg"
     },
     {
       "category": "food",
       "src": "",
-      "link": "https://instagram.com/bydilyara",
+      "video_url": "https://instagram.com/bydilyara",
       "label": "Food & Bev Reel 01",
       "poster": "./img/food-poster.jpg"
     },
     {
       "category": "acting",
       "src": "",
-      "link": "https://instagram.com/bydilyara",
+      "video_url": "https://instagram.com/bydilyara",
       "label": "Acting Reel 01",
       "poster": "./img/acting-poster.jpg"
     }

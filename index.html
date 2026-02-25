@@ -636,31 +636,6 @@
         <i class="ri-arrow-up-line text-xl"></i>
     </button>
 
-    <!-- ADMIN PANEL (Hidden) -->
-    <div id="admin-panel">
-        <div class="flex justify-between items-center mb-4">
-            <h4 class="font-bold uppercase tracking-widest text-xs text-gray-400">Admin: JSON Generator</h4>
-            <button onclick="document.getElementById('admin-panel').classList.remove('active')" class="text-gray-500 hover:text-white text-xl">&times;</button>
-        </div>
-        <div class="admin-controls">
-            <select id="admin-category">
-                <option value="beauty">Beauty</option>
-                <option value="streetwear">Streetwear</option>
-                <option value="commercial">Commercial</option>
-                <option value="casual">Casual</option>
-                <option value="ugc">UGC</option>
-                <option value="food">Food & Bev</option>
-                <option value="acting">Acting</option>
-            </select>
-            <input type="text" id="admin-alt" placeholder="Описание (alt text)" class="w-64">
-        </div>
-        <div id="drop-zone" class="drop-zone">
-            Перетащите фото сюда (Drag & Drop)
-        </div>
-        <textarea id="code-output" readonly placeholder="Здесь появится JSON код..."></textarea>
-        <p class="text-[10px] text-gray-600 mt-2 uppercase tracking-wider">1. Перетащите фото. 2. Скопируйте. 3. Вставьте в data.json (не забудьте запятую!)</p>
-    </div>
-
     <script>
         // 1. ПЕРЕВОДЫ
         const translations = {
@@ -1295,59 +1270,6 @@
         // Run init
         window.addEventListener('load', initPortfolio);
 
-        // 9. ADMIN PANEL LOGIC
-        // Toggle with Ctrl+Shift+A or URL param ?admin=true
-        if (window.location.search.includes('admin=true')) {
-            document.getElementById('admin-panel').classList.add('active');
-        }
-        document.addEventListener('keydown', (e) => {
-            if (e.ctrlKey && e.shiftKey && e.code === 'KeyA') {
-                document.getElementById('admin-panel').classList.toggle('active');
-            }
-        });
-
-        const dropZone = document.getElementById('drop-zone');
-        const output = document.getElementById('code-output');
-        const catSelect = document.getElementById('admin-category');
-        const altInput = document.getElementById('admin-alt');
-
-        dropZone.addEventListener('dragover', (e) => {
-            e.preventDefault();
-            dropZone.classList.add('dragover');
-        });
-        dropZone.addEventListener('dragleave', () => dropZone.classList.remove('dragover'));
-        dropZone.addEventListener('drop', (e) => {
-            e.preventDefault();
-            dropZone.classList.remove('dragover');
-            
-            const files = Array.from(e.dataTransfer.files);
-            if (files.length === 0) return;
-
-            const category = catSelect.value;
-            const altText = altInput.value || (category + ' model photo');
-            
-            let jsonObjects = [];
-            files.forEach(file => {
-                jsonObjects.push({ src: `./img/${file.name}`, category: category, alt: altText });
-            });
-            
-            // Format as JSON string without outer brackets to easily paste into array
-            output.value = jsonObjects.map(obj => JSON.stringify(obj)).join(',\n');
-            output.select();
-            // Try to copy to clipboard automatically
-            try { document.execCommand('copy'); } catch(err) {}
-            
-            const originalText = dropZone.innerText;
-            dropZone.innerText = `Сгенерирован код для ${files.length} файлов! Скопировано в буфер.`;
-            dropZone.style.color = '#00ff9d';
-            dropZone.style.borderColor = '#00ff9d';
-            
-            setTimeout(() => {
-                dropZone.innerText = "Перетащите фото сюда (Drag & Drop)";
-                dropZone.style.color = '';
-                dropZone.style.borderColor = '';
-            }, 3000);
-        });
     </script>
 </body>
 </html>

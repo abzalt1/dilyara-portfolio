@@ -23,7 +23,7 @@ exports.handler = async (event) => {
         if (!imageUrl) return { statusCode: 404, body: JSON.stringify({ error: 'Image not found' }) };
 
         const timestamp = Math.round(new Date().getTime() / 1000);
-        const paramsToSign = `file=${imageUrl}&timestamp=${timestamp}${api_secret}`;
+        const paramsToSign = `timestamp=${timestamp}${api_secret}`;
         const signature = crypto.createHash('sha1').update(paramsToSign).digest('hex');
 
         const formData = new URLSearchParams();

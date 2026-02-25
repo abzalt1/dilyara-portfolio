@@ -29,6 +29,7 @@ collections:
             summary: "{{fields.category}} — {{fields.alt}} [{{fields.src}}]"
             fields:
               - {label: "Фото", name: "src", widget: "image"}
+              - {label: "Миниатюра", name: "thumb", widget: "hidden"}
               - {label: "Категория", name: "category", widget: "select", options: ["beauty", "streetwear", "commercial", "casual", "ugc", "food", "acting"]}
               - {label: "Описание (необязательно)", name: "alt", widget: "string", required: false, hint: "Можно оставить пустым. Нужно только для поиска Google."}
           
