@@ -1,10 +1,10 @@
 <!doctype html>
 <html lang="ru">
+
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Dilyara Admin</title>
-  <script src="https://cdn.tailwindcss.com"></script>
+  <link href="../style.css" rel="stylesheet">
   <script src="https://identity.netlify.com/v1/netlify-identity-widget.js"></script>
   <script src="https://media-library.cloudinary.com/global/all.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/sortablejs@latest/Sortable.min.js"></script>
@@ -12,25 +12,65 @@
   <script src="https://cdnjs.cloudflare.com/ajax/libs/cropperjs/1.5.13/cropper.min.js"></script>
   <link href="https://cdn.jsdelivr.net/npm/remixicon@3.5.0/fonts/remixicon.css" rel="stylesheet">
   <style>
-    body { background-color: #050505; color: white; font-family: sans-serif; }
-    .loader {
-      border: 3px solid rgba(255,255,255,0.1); border-radius: 50%; border-top: 3px solid white;
-      width: 24px; height: 24px; animation: spin 1s linear infinite; display: inline-block;
+    body {
+      background-color: #050505;
+      color: white;
+      font-family: sans-serif;
     }
-    @keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
-    .glass { background: rgba(255,255,255,0.05); backdrop-filter: blur(10px); border: 1px solid rgba(255,255,255,0.1); }
-    .btn-action { transition: all 0.2s; }
-    .btn-action:hover { transform: translateY(-2px); box-shadow: 0 10px 20px rgba(0,0,0,0.3); }
-    .btn-action:active { transform: translateY(0); }
-    .sortable-ghost { opacity: 0.5; background: #333; }
+
+    .loader {
+      border: 3px solid rgba(255, 255, 255, 0.1);
+      border-radius: 50%;
+      border-top: 3px solid white;
+      width: 24px;
+      height: 24px;
+      animation: spin 1s linear infinite;
+      display: inline-block;
+    }
+
+    @keyframes spin {
+      0% {
+        transform: rotate(0deg);
+      }
+
+      100% {
+        transform: rotate(360deg);
+      }
+    }
+
+    .glass {
+      background: rgba(255, 255, 255, 0.05);
+      backdrop-filter: blur(10px);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+    }
+
+    .btn-action {
+      transition: all 0.2s;
+    }
+
+    .btn-action:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 10px 20px rgba(0, 0, 0, 0.3);
+    }
+
+    .btn-action:active {
+      transform: translateY(0);
+    }
+
+    .sortable-ghost {
+      opacity: 0.5;
+      background: #333;
+    }
   </style>
 </head>
+
 <body class="min-h-screen flex flex-col items-center justify-center p-4">
 
   <!-- LOGIN SCREEN -->
   <div id="login-screen" class="text-center space-y-6">
     <h1 class="text-4xl font-bold tracking-widest uppercase">Dilyara Admin</h1>
-    <button onclick="netlifyIdentity.open()" class="px-8 py-3 bg-white text-black font-bold uppercase tracking-widest hover:bg-gray-200 transition">
+    <button onclick="netlifyIdentity.open()"
+      class="px-8 py-3 bg-white text-black font-bold uppercase tracking-widest hover:bg-gray-200 transition">
       Войти
     </button>
   </div>
@@ -41,15 +81,20 @@
       <h2 class="text-xl font-bold tracking-widest uppercase text-gray-400">Панель управления</h2>
       <div class="flex items-center gap-4">
         <span id="user-email" class="text-sm text-gray-500"></span>
-        <a href="https://app.netlify.com" target="_blank" class="text-xs uppercase tracking-widest text-gray-500 hover:text-white transition border-r border-gray-700 pr-4 mr-2">Users & Settings</a>
-        <button onclick="netlifyIdentity.logout()" class="text-xs uppercase tracking-widest hover:text-red-500 transition">Выйти</button>
+        <a href="https://app.netlify.com" target="_blank"
+          class="text-xs uppercase tracking-widest text-gray-500 hover:text-white transition border-r border-gray-700 pr-4 mr-2">Users
+          & Settings</a>
+        <button onclick="netlifyIdentity.logout()"
+          class="text-xs uppercase tracking-widest hover:text-red-500 transition">Выйти</button>
       </div>
     </div>
 
     <!-- MAIN ACTIONS -->
     <div class="grid grid-cols-1 md:grid-cols-2 gap-6" id="main-menu">
-      <button id="bulk-upload-zone" onclick="document.getElementById('bulk-upload-input').click()" class="btn-action glass h-64 rounded-2xl flex flex-col items-center justify-center gap-4 group hover:bg-white/10 transition-all duration-200">
-        <div class="w-20 h-20 rounded-full bg-blue-500/20 flex items-center justify-center group-hover:scale-110 transition pointer-events-none">
+      <button id="bulk-upload-zone" onclick="document.getElementById('bulk-upload-input').click()"
+        class="btn-action glass h-64 rounded-2xl flex flex-col items-center justify-center gap-4 group hover:bg-white/10 transition-all duration-200">
+        <div
+          class="w-20 h-20 rounded-full bg-blue-500/20 flex items-center justify-center group-hover:scale-110 transition pointer-events-none">
           <i class="ri-upload-cloud-2-line text-4xl text-blue-400"></i>
         </div>
         <div class="text-center pointer-events-none">
@@ -58,8 +103,10 @@
         </div>
       </button>
 
-      <button onclick="showGallery()" class="btn-action glass h-64 rounded-2xl flex flex-col items-center justify-center gap-4 group hover:bg-white/10">
-        <div class="w-20 h-20 rounded-full bg-purple-500/20 flex items-center justify-center group-hover:scale-110 transition">
+      <button onclick="showGallery()"
+        class="btn-action glass h-64 rounded-2xl flex flex-col items-center justify-center gap-4 group hover:bg-white/10">
+        <div
+          class="w-20 h-20 rounded-full bg-purple-500/20 flex items-center justify-center group-hover:scale-110 transition">
           <i class="ri-gallery-line text-4xl text-purple-400"></i>
         </div>
         <div class="text-center">
@@ -68,8 +115,10 @@
         </div>
       </button>
 
-      <button id="new-video-zone" onclick="document.getElementById('new-video-upload-input').click()" class="btn-action glass h-64 rounded-2xl flex flex-col items-center justify-center gap-4 group hover:bg-white/10 transition-all duration-200">
-        <div class="w-20 h-20 rounded-full bg-pink-500/20 flex items-center justify-center group-hover:scale-110 transition pointer-events-none">
+      <button id="new-video-zone" onclick="document.getElementById('new-video-upload-input').click()"
+        class="btn-action glass h-64 rounded-2xl flex flex-col items-center justify-center gap-4 group hover:bg-white/10 transition-all duration-200">
+        <div
+          class="w-20 h-20 rounded-full bg-pink-500/20 flex items-center justify-center group-hover:scale-110 transition pointer-events-none">
           <i class="ri-upload-cloud-2-line text-4xl text-pink-400"></i>
         </div>
         <div class="text-center pointer-events-none">
@@ -78,8 +127,10 @@
         </div>
       </button>
 
-      <button onclick="showVideoGallery()" class="btn-action glass h-64 rounded-2xl flex flex-col items-center justify-center gap-4 group hover:bg-white/10">
-        <div class="w-20 h-20 rounded-full bg-pink-500/20 flex items-center justify-center group-hover:scale-110 transition">
+      <button onclick="showVideoGallery()"
+        class="btn-action glass h-64 rounded-2xl flex flex-col items-center justify-center gap-4 group hover:bg-white/10">
+        <div
+          class="w-20 h-20 rounded-full bg-pink-500/20 flex items-center justify-center group-hover:scale-110 transition">
           <i class="ri-movie-line text-4xl text-pink-400"></i>
         </div>
         <div class="text-center">
@@ -99,13 +150,16 @@
       </div>
 
       <!-- BULK ACTIONS TOOLBAR -->
-      <div id="bulk-actions" class="hidden flex items-center justify-between bg-gray-900 p-4 rounded-lg border border-gray-800 sticky top-0 z-30 shadow-xl backdrop-blur-md bg-opacity-90">
+      <div id="bulk-actions"
+        class="hidden flex items-center justify-between bg-gray-900 p-4 rounded-lg border border-gray-800 sticky top-0 z-30 shadow-xl backdrop-blur-md bg-opacity-90">
         <div class="flex items-center gap-4">
-            <span id="selection-count" class="text-sm font-bold text-white">0 выбрано</span>
-            <button onclick="selectAllPhotos()" class="text-xs text-gray-400 hover:text-white underline">Выбрать все</button>
-            <button onclick="clearSelection()" class="text-xs text-gray-400 hover:text-white underline">Сбросить</button>
+          <span id="selection-count" class="text-sm font-bold text-white">0 выбрано</span>
+          <button onclick="selectAllPhotos()" class="text-xs text-gray-400 hover:text-white underline">Выбрать
+            все</button>
+          <button onclick="clearSelection()" class="text-xs text-gray-400 hover:text-white underline">Сбросить</button>
         </div>
-        <button onclick="deleteSelectedPhotos()" class="bg-red-600 hover:bg-red-500 text-white px-4 py-2 rounded text-xs font-bold uppercase tracking-wider flex items-center gap-2 transition">
+        <button onclick="deleteSelectedPhotos()"
+          class="bg-red-600 hover:bg-red-500 text-white px-4 py-2 rounded text-xs font-bold uppercase tracking-wider flex items-center gap-2 transition">
           <i class="ri-delete-bin-line"></i> Удалить выбранные
         </button>
       </div>
@@ -121,7 +175,8 @@
         <button onclick="hideVideoGallery()" class="flex items-center gap-2 text-gray-400 hover:text-white transition">
           <i class="ri-arrow-left-line"></i> Назад
         </button>
-        <button onclick="addVideo()" class="bg-pink-600 hover:bg-pink-500 text-white px-4 py-2 rounded uppercase text-xs font-bold tracking-wider transition">
+        <button onclick="addVideo()"
+          class="bg-pink-600 hover:bg-pink-500 text-white px-4 py-2 rounded uppercase text-xs font-bold tracking-wider transition">
           + Add New Reel
         </button>
       </div>
@@ -137,9 +192,10 @@
   <div id="global-loader" class="hidden fixed inset-0 bg-black/80 z-50 flex items-center justify-center flex-col gap-4">
     <div class="loader"></div>
     <p id="loader-text" class="text-sm uppercase tracking-widest animate-pulse">Сохранение...</p>
-    
+
     <!-- Progress Bar -->
-    <div id="upload-progress-container" class="hidden w-64 bg-gray-800 rounded-full h-2 border border-gray-700 overflow-hidden">
+    <div id="upload-progress-container"
+      class="hidden w-64 bg-gray-800 rounded-full h-2 border border-gray-700 overflow-hidden">
       <div id="upload-progress-bar" class="bg-pink-600 h-full transition-all duration-200" style="width: 0%"></div>
     </div>
     <p id="upload-progress-text" class="hidden text-xs text-gray-400 font-mono">0%</p>
@@ -151,79 +207,99 @@
   <input type="file" id="new-video-upload-input" class="hidden" accept="video/*" onchange="handleNewVideoUpload(event)">
 
   <!-- VIDEO PREVIEW MODAL -->
-  <div id="video-preview-modal" class="hidden fixed inset-0 z-[60] bg-black/90 flex items-center justify-center backdrop-blur-sm" onclick="closeVideoPreview()">
+  <div id="video-preview-modal"
+    class="hidden fixed inset-0 z-[60] bg-black/90 flex items-center justify-center backdrop-blur-sm"
+    onclick="closeVideoPreview()">
     <div class="relative w-full max-w-[90vw] md:max-w-[400px]" onclick="event.stopPropagation()">
-      <button onclick="closeVideoPreview()" class="absolute -top-12 right-0 text-white/50 hover:text-white text-4xl">&times;</button>
-      <video id="preview-player" controls class="w-full h-auto max-h-[80vh] rounded-lg bg-black shadow-2xl border border-gray-800"></video>
+      <button onclick="closeVideoPreview()"
+        class="absolute -top-12 right-0 text-white/50 hover:text-white text-4xl">&times;</button>
+      <video id="preview-player" controls
+        class="w-full h-auto max-h-[80vh] rounded-lg bg-black shadow-2xl border border-gray-800"></video>
     </div>
   </div>
 
   <!-- FRAME CAPTURE MODAL -->
-  <div id="frame-capture-modal" class="hidden fixed inset-0 z-[70] bg-black/90 flex items-center justify-center backdrop-blur-sm">
-    <div class="relative w-full max-w-5xl bg-gray-900 rounded-xl overflow-hidden flex flex-col md:flex-row shadow-2xl border border-gray-800">
-      <button onclick="closeFrameCapture()" class="absolute top-4 right-4 z-50 text-white bg-black/50 rounded-full w-10 h-10 flex items-center justify-center hover:bg-red-600 transition"><i class="ri-close-line text-xl"></i></button>
-      
+  <div id="frame-capture-modal"
+    class="hidden fixed inset-0 z-[70] bg-black/90 flex items-center justify-center backdrop-blur-sm">
+    <div
+      class="relative w-full max-w-5xl bg-gray-900 rounded-xl overflow-hidden flex flex-col md:flex-row shadow-2xl border border-gray-800">
+      <button onclick="closeFrameCapture()"
+        class="absolute top-4 right-4 z-50 text-white bg-black/50 rounded-full w-10 h-10 flex items-center justify-center hover:bg-red-600 transition"><i
+          class="ri-close-line text-xl"></i></button>
+
       <div class="flex-1 bg-black flex items-center justify-center relative min-h-[300px]">
-         <video id="capture-player" controls class="max-h-[70vh] max-w-full" crossorigin="anonymous"></video>
+        <video id="capture-player" controls class="max-h-[70vh] max-w-full" crossorigin="anonymous"></video>
       </div>
-      
+
       <div class="w-full md:w-72 bg-gray-800 p-6 flex flex-col gap-6 border-l border-gray-700">
-         <div>
-             <h3 class="text-lg font-bold uppercase tracking-wider text-white mb-2">Стоп-кадр</h3>
-             <p class="text-xs text-gray-400 leading-relaxed">1. Найдите нужный момент.<br>2. Поставьте на паузу.<br>3. Нажмите кнопку ниже.</p>
-         </div>
-         
-         <canvas id="capture-canvas" class="hidden w-full h-auto object-contain bg-black rounded border border-gray-600"></canvas>
-         
-         <button onclick="captureCurrentFrame()" class="bg-pink-600 hover:bg-pink-500 text-white py-4 rounded font-bold uppercase tracking-widest text-xs transition shadow-lg flex items-center justify-center gap-2">
-           <i class="ri-camera-line text-lg"></i> Сохранить кадр
-         </button>
+        <div>
+          <h3 class="text-lg font-bold uppercase tracking-wider text-white mb-2">Стоп-кадр</h3>
+          <p class="text-xs text-gray-400 leading-relaxed">1. Найдите нужный момент.<br>2. Поставьте на паузу.<br>3.
+            Нажмите кнопку ниже.</p>
+        </div>
+
+        <canvas id="capture-canvas"
+          class="hidden w-full h-auto object-contain bg-black rounded border border-gray-600"></canvas>
+
+        <button onclick="captureCurrentFrame()"
+          class="bg-pink-600 hover:bg-pink-500 text-white py-4 rounded font-bold uppercase tracking-widest text-xs transition shadow-lg flex items-center justify-center gap-2">
+          <i class="ri-camera-line text-lg"></i> Сохранить кадр
+        </button>
       </div>
     </div>
   </div>
 
   <!-- CROP MODAL -->
-  <div id="crop-modal" class="hidden fixed inset-0 z-[80] bg-black/90 flex items-center justify-center backdrop-blur-sm">
-    <div class="relative w-full max-w-5xl bg-gray-900 rounded-xl overflow-hidden flex flex-col md:flex-row shadow-2xl border border-gray-800">
-      <button onclick="cancelCropping()" class="absolute top-4 right-4 z-50 text-white bg-black/50 rounded-full w-10 h-10 flex items-center justify-center hover:bg-red-600 transition"><i class="ri-close-line text-xl"></i></button>
-      
+  <div id="crop-modal"
+    class="hidden fixed inset-0 z-[80] bg-black/90 flex items-center justify-center backdrop-blur-sm">
+    <div
+      class="relative w-full max-w-5xl bg-gray-900 rounded-xl overflow-hidden flex flex-col md:flex-row shadow-2xl border border-gray-800">
+      <button onclick="cancelCropping()"
+        class="absolute top-4 right-4 z-50 text-white bg-black/50 rounded-full w-10 h-10 flex items-center justify-center hover:bg-red-600 transition"><i
+          class="ri-close-line text-xl"></i></button>
+
       <div class="flex-1 bg-black flex items-center justify-center relative min-h-[300px] p-4">
-         <div class="max-w-full max-h-[70vh]">
-            <img id="crop-image" class="max-h-[70vh]">
-         </div>
+        <div class="max-w-full max-h-[70vh]">
+          <img id="crop-image" class="max-h-[70vh]">
+        </div>
       </div>
-      
+
       <div class="w-full md:w-72 bg-gray-800 p-6 flex flex-col gap-6 border-l border-gray-700">
-         <div>
-             <h3 class="text-lg font-bold uppercase tracking-wider text-white mb-2">Обрезать фото</h3>
-             <p id="crop-queue-status" class="text-xs text-gray-400 leading-relaxed"></p>
-         </div>
-         
-         <div class="space-y-2">
-            <p class="text-xs font-bold uppercase tracking-widest text-gray-400">Категория</p>
-            <select id="crop-category" class="w-full bg-gray-700 text-white border border-gray-600 rounded px-3 py-2 text-xs outline-none focus:border-pink-500 transition">
-                <option value="beauty">Beauty</option>
-                <option value="streetwear">Streetwear</option>
-                <option value="commercial">Commercial</option>
-                <option value="casual" selected>Casual</option>
-                <option value="ugc">UGC</option>
-                <option value="food">Food & Bev</option>
-                <option value="acting">Acting</option>
-            </select>
-         </div>
-         
-         <div class="space-y-2">
-            <p class="text-xs font-bold uppercase tracking-widest text-gray-400">Соотношение</p>
-            <div class="grid grid-cols-3 gap-2">
-                <button onclick="setCropAspectRatio(2/3)" class="bg-gray-700 hover:bg-pink-600 text-white py-2 rounded text-xs transition">2:3</button>
-                <button onclick="setCropAspectRatio(1/1)" class="bg-gray-700 hover:bg-pink-600 text-white py-2 rounded text-xs transition">1:1</button>
-                <button onclick="setCropAspectRatio(NaN)" class="bg-gray-700 hover:bg-pink-600 text-white py-2 rounded text-xs transition">Free</button>
-            </div>
-         </div>
-         
-         <button id="crop-and-upload-btn" onclick="cropAndUpload()" class="mt-auto bg-pink-600 hover:bg-pink-500 text-white py-4 rounded font-bold uppercase tracking-widest text-xs transition shadow-lg flex items-center justify-center gap-2">
-           <i class="ri-crop-line text-lg"></i> Обрезать и загрузить
-         </button>
+        <div>
+          <h3 class="text-lg font-bold uppercase tracking-wider text-white mb-2">Обрезать фото</h3>
+          <p id="crop-queue-status" class="text-xs text-gray-400 leading-relaxed"></p>
+        </div>
+
+        <div class="space-y-2">
+          <p class="text-xs font-bold uppercase tracking-widest text-gray-400">Категория</p>
+          <select id="crop-category"
+            class="w-full bg-gray-700 text-white border border-gray-600 rounded px-3 py-2 text-xs outline-none focus:border-pink-500 transition">
+            <option value="beauty">Beauty</option>
+            <option value="streetwear">Streetwear</option>
+            <option value="commercial">Commercial</option>
+            <option value="casual" selected>Casual</option>
+            <option value="ugc">UGC</option>
+            <option value="food">Food & Bev</option>
+            <option value="acting">Acting</option>
+          </select>
+        </div>
+
+        <div class="space-y-2">
+          <p class="text-xs font-bold uppercase tracking-widest text-gray-400">Соотношение</p>
+          <div class="grid grid-cols-3 gap-2">
+            <button onclick="setCropAspectRatio(2/3)"
+              class="bg-gray-700 hover:bg-pink-600 text-white py-2 rounded text-xs transition">2:3</button>
+            <button onclick="setCropAspectRatio(1/1)"
+              class="bg-gray-700 hover:bg-pink-600 text-white py-2 rounded text-xs transition">1:1</button>
+            <button onclick="setCropAspectRatio(NaN)"
+              class="bg-gray-700 hover:bg-pink-600 text-white py-2 rounded text-xs transition">Free</button>
+          </div>
+        </div>
+
+        <button id="crop-and-upload-btn" onclick="cropAndUpload()"
+          class="mt-auto bg-pink-600 hover:bg-pink-500 text-white py-4 rounded font-bold uppercase tracking-widest text-xs transition shadow-lg flex items-center justify-center gap-2">
+          <i class="ri-crop-line text-lg"></i> Обрезать и загрузить
+        </button>
       </div>
     </div>
   </div>
@@ -291,14 +367,14 @@
         ghostClass: 'sortable-ghost',
         onEnd: function (evt) {
           if (evt.oldIndex === evt.newIndex) return;
-          
+
           // Меняем порядок в массиве
           const item = currentData.photos.splice(evt.oldIndex, 1)[0];
           currentData.photos.splice(evt.newIndex, 0, item);
-          
+
           // Сбрасываем выделение при сортировке, чтобы не перепутать индексы
           clearSelection();
-          
+
           // Сохраняем
           showStatus('Сохранение порядка...');
           saveData(currentData, `Reordered photos`);
@@ -314,10 +390,10 @@
         handle: '.drag-handle', // Перетаскивать только за постер
         onEnd: function (evt) {
           if (evt.oldIndex === evt.newIndex) return;
-          
+
           const item = currentData.videos.splice(evt.oldIndex, 1)[0];
           currentData.videos.splice(evt.newIndex, 0, item);
-          
+
           showStatus('Сохранение порядка видео...', 'video-status-msg');
           saveData(currentData, `Reordered videos`, 'video-status-msg');
         }
@@ -332,7 +408,7 @@
         });
         if (!response.ok) throw new Error('Failed to fetch data');
         const json = await response.json();
-        
+
         fileSha = json.sha;
         // Декодируем Base64 (с поддержкой кириллицы)
         const content = decodeURIComponent(escape(window.atob(json.content)));
@@ -349,7 +425,7 @@
       try {
         // Кодируем в Base64 (с поддержкой кириллицы)
         const content = window.btoa(unescape(encodeURIComponent(JSON.stringify(newData, null, 2))));
-        
+
         const response = await fetch(`/.netlify/git/github/contents/${REPO_FILE_PATH}`, {
           method: 'PUT',
           headers: {
@@ -400,7 +476,7 @@
       document.getElementById('main-menu').classList.remove('hidden');
       document.getElementById('status-msg').innerText = '';
     }
-    
+
     function hideVideoGallery() {
       document.getElementById('video-view').classList.add('hidden');
       document.getElementById('main-menu').classList.remove('hidden');
@@ -410,14 +486,14 @@
     function renderGallery() {
       const grid = document.getElementById('photo-grid');
       grid.innerHTML = '';
-      
+
       if (!currentData || !currentData.photos) return;
 
       currentData.photos.forEach((photo, index) => {
         const isSelected = selectedPhotos.has(index);
         const div = document.createElement('div');
         div.className = `relative group aspect-[2/3] bg-gray-800 rounded-lg overflow-hidden cursor-move transition-all duration-200 ${isSelected ? 'ring-4 ring-pink-600' : ''}`;
-        
+
         // Fix relative paths for admin panel (./img -> ../img)
         let displaySrc = photo.thumb || photo.src;
         if (displaySrc && displaySrc.startsWith('./')) displaySrc = '.' + displaySrc;
@@ -453,17 +529,17 @@
     function renderVideoGallery() {
       const grid = document.getElementById('video-grid');
       grid.innerHTML = '';
-      
+
       if (!currentData || !currentData.videos) return;
 
       currentData.videos.forEach((video, index) => {
         const div = document.createElement('div');
         div.className = 'relative group bg-gray-900 rounded-lg overflow-hidden border border-gray-800 flex flex-col';
-        
+
         // Poster (Drag Handle)
         let posterUrl = video.poster || 'https://via.placeholder.com/300x533/111/555?text=NO+POSTER';
         if (posterUrl.startsWith('./')) posterUrl = '.' + posterUrl;
-        
+
         div.innerHTML = `
           <div class="relative aspect-[9/16] bg-black cursor-move drag-handle group/poster">
              <img src="${posterUrl}" class="w-full h-full object-cover opacity-80 group-hover/poster:opacity-100 transition">
@@ -494,9 +570,9 @@
              </div>
              
              <select onchange="updateVideoField(${index}, 'category', this.value)" class="w-full bg-black border border-gray-700 rounded px-2 py-1 text-xs text-white focus:border-pink-500 outline-none">
-                ${['beauty','streetwear','commercial','casual','ugc','food','acting'].map(c => 
-                  `<option value="${c}" ${video.category === c ? 'selected' : ''}>${c.charAt(0).toUpperCase() + c.slice(1)}</option>`
-                ).join('')}
+                ${['beauty', 'streetwear', 'commercial', 'casual', 'ugc', 'food', 'acting'].map(c =>
+          `<option value="${c}" ${video.category === c ? 'selected' : ''}>${c.charAt(0).toUpperCase() + c.slice(1)}</option>`
+        ).join('')}
              </select>
 
              <div class="flex justify-between items-center mt-auto pt-2 border-t border-gray-800">
@@ -513,7 +589,7 @@
 
     async function deletePhoto(index) {
       if (!confirm('Удалить это фото?')) return;
-      
+
       const photo = currentData.photos[index];
 
       // Удаляем из Cloudinary (если это ссылка на Cloudinary)
@@ -531,7 +607,7 @@
           }
         }
       }
-      
+
       const updatedData = { ...currentData };
       updatedData.photos.splice(index, 1);
       saveData(updatedData, 'Deleted photo via Admin');
@@ -541,9 +617,9 @@
     function togglePhotoSelection(index) {
       if (selectedPhotos.has(index)) selectedPhotos.delete(index);
       else selectedPhotos.add(index);
-      
+
       updateBulkToolbar();
-      
+
       // Обновляем стиль карточки без полной перерисовки
       const grid = document.getElementById('photo-grid');
       const card = grid.children[index];
@@ -569,7 +645,7 @@
     function updateBulkToolbar() {
       const toolbar = document.getElementById('bulk-actions');
       const countSpan = document.getElementById('selection-count');
-      
+
       if (selectedPhotos.size > 0) {
         toolbar.classList.remove('hidden');
         countSpan.innerText = `${selectedPhotos.size} фото выбрано`;
@@ -583,28 +659,28 @@
       if (!confirm(`Вы уверены, что хотите удалить ${selectedPhotos.size} фото?`)) return;
 
       showLoader(true);
-      
+
       // 1. Удаляем из Cloudinary (фоново)
       const indices = Array.from(selectedPhotos);
       indices.forEach(index => {
         const photo = currentData.photos[index];
         if (photo.src.includes('cloudinary.com')) {
-           const parts = photo.src.split('/upload/');
-           if (parts.length === 2) {
-             const match = parts[1].match(/v\d+\/(.+)\.[a-zA-Z0-9]+$/);
-             if (match && match[1]) {
-                fetch('/.netlify/functions/delete-image', {
-                  method: 'POST', body: JSON.stringify({ public_id: match[1] })
-                }).catch(console.error);
-             }
-           }
+          const parts = photo.src.split('/upload/');
+          if (parts.length === 2) {
+            const match = parts[1].match(/v\d+\/(.+)\.[a-zA-Z0-9]+$/);
+            if (match && match[1]) {
+              fetch('/.netlify/functions/delete-image', {
+                method: 'POST', body: JSON.stringify({ public_id: match[1] })
+              }).catch(console.error);
+            }
+          }
         }
       });
 
       // 2. Удаляем из JSON (фильтруем массив)
       const updatedData = { ...currentData };
       updatedData.photos = updatedData.photos.filter((_, index) => !selectedPhotos.has(index));
-      
+
       clearSelection();
       await saveData(updatedData, 'Bulk deleted photos via Admin');
     }
@@ -638,7 +714,7 @@
 
     function updateVideoMedia(index, field) {
       if (!window.cloudinary) return;
-      
+
       // Настройки для постера или видео
       const options = {
         cloud_name: CLOUD_NAME,
@@ -671,7 +747,7 @@
     async function handleFileUpload(e) {
       const file = e.target.files[0];
       if (!file) return;
-      
+
       // Сбрасываем инпут, чтобы можно было выбрать тот же файл повторно
       e.target.value = '';
 
@@ -701,7 +777,7 @@
         progressText.classList.remove('hidden');
         progressBar.style.width = '0%';
         progressText.innerText = '0%';
-        
+
         const resourceType = uploadTargetField === 'src' ? 'video' : 'image';
         const url = `https://api.cloudinary.com/v1_1/${CLOUD_NAME}/${resourceType}/upload`;
 
@@ -725,12 +801,12 @@
           xhr.onerror = () => reject(new Error('Network error'));
           xhr.send(formData);
         });
-        
+
         // Скрываем прогресс
         progressContainer.classList.add('hidden');
         progressText.classList.add('hidden');
         loaderText.innerText = 'Сохранение ссылки...';
-        
+
         // 3. Сохраняем ссылку и обновляем JSON
         currentData.videos[uploadTargetIndex][uploadTargetField] = data.secure_url;
         saveData(currentData, `Uploaded new ${uploadTargetField} via Admin`, 'video-status-msg');
@@ -788,15 +864,15 @@
           const xhr = new XMLHttpRequest();
           xhr.open('POST', url);
           xhr.upload.onprogress = (e) => {
-             if (e.lengthComputable) {
-               const percent = Math.round((e.loaded / e.total) * 100);
-               progressBar.style.width = percent + '%';
-               progressText.innerText = percent + '%';
-             }
+            if (e.lengthComputable) {
+              const percent = Math.round((e.loaded / e.total) * 100);
+              progressBar.style.width = percent + '%';
+              progressText.innerText = percent + '%';
+            }
           };
           xhr.onload = () => {
-             if (xhr.status >= 200 && xhr.status < 300) resolve(JSON.parse(xhr.responseText));
-             else reject(new Error('Upload failed'));
+            if (xhr.status >= 200 && xhr.status < 300) resolve(JSON.parse(xhr.responseText));
+            else reject(new Error('Upload failed'));
           };
           xhr.onerror = () => reject(new Error('Network error'));
           xhr.send(formData);
@@ -804,11 +880,11 @@
 
         // 3. Создаем запись
         const newVideo = {
-            category: 'casual',
-            src: data.secure_url,
-            video_url: '',
-            label: 'New Video',
-            poster: data.secure_url.replace(/\.[^/.]+$/, ".jpg") // Авто-постер из видео
+          category: 'casual',
+          src: data.secure_url,
+          video_url: '',
+          label: 'New Video',
+          poster: data.secure_url.replace(/\.[^/.]+$/, ".jpg") // Авто-постер из видео
         };
 
         const updatedData = { ...currentData };
@@ -844,131 +920,131 @@
     }
 
     function processCropQueue() {
-        if (cropQueue.length === 0) {
-            if (croppedPhotos.length > 0) {
-                finalizeBulkUpload();
-            }
-            return;
+      if (cropQueue.length === 0) {
+        if (croppedPhotos.length > 0) {
+          finalizeBulkUpload();
         }
+        return;
+      }
 
-        const file = cropQueue[0]; // Get the next file
-        openCropModal(file);
+      const file = cropQueue[0]; // Get the next file
+      openCropModal(file);
     }
 
     function openCropModal(file) {
-        const modal = document.getElementById('crop-modal');
-        const image = document.getElementById('crop-image');
-        const queueStatus = document.getElementById('crop-queue-status');
+      const modal = document.getElementById('crop-modal');
+      const image = document.getElementById('crop-image');
+      const queueStatus = document.getElementById('crop-queue-status');
 
-        queueStatus.innerText = `Фото ${croppedPhotos.length + 1} из ${croppedPhotos.length + cropQueue.length}`;
+      queueStatus.innerText = `Фото ${croppedPhotos.length + 1} из ${croppedPhotos.length + cropQueue.length}`;
 
-        const reader = new FileReader();
-        reader.onload = (e) => {
-            image.src = e.target.result;
-            modal.classList.remove('hidden');
+      const reader = new FileReader();
+      reader.onload = (e) => {
+        image.src = e.target.result;
+        modal.classList.remove('hidden');
 
-            if (cropper) cropper.destroy();
-            
-            cropper = new Cropper(image, {
-                aspectRatio: 2 / 3,
-                viewMode: 1,
-                background: false,
-                autoCropArea: 0.9,
-                movable: true,
-                zoomable: true,
-                rotatable: true,
-                scalable: true,
-            });
-        };
-        reader.readAsDataURL(file);
+        if (cropper) cropper.destroy();
+
+        cropper = new Cropper(image, {
+          aspectRatio: 2 / 3,
+          viewMode: 1,
+          background: false,
+          autoCropArea: 0.9,
+          movable: true,
+          zoomable: true,
+          rotatable: true,
+          scalable: true,
+        });
+      };
+      reader.readAsDataURL(file);
     }
 
     async function cropAndUpload() {
-        if (!cropper) return;
+      if (!cropper) return;
 
-        const btn = document.getElementById('crop-and-upload-btn');
-        btn.disabled = true;
-        btn.innerHTML = '<div class="loader"></div>';
+      const btn = document.getElementById('crop-and-upload-btn');
+      btn.disabled = true;
+      btn.innerHTML = '<div class="loader"></div>';
 
-        cropper.getCroppedCanvas({ width: 1600, imageSmoothingQuality: 'high' }).toBlob(async (blob) => {
-            try {
-                const sigRes = await fetch('/.netlify/functions/sign-upload');
-                if (!sigRes.ok) throw new Error('Failed to get signature');
-                const { signature, timestamp } = await sigRes.json();
+      cropper.getCroppedCanvas({ width: 1600, imageSmoothingQuality: 'high' }).toBlob(async (blob) => {
+        try {
+          const sigRes = await fetch('/.netlify/functions/sign-upload');
+          if (!sigRes.ok) throw new Error('Failed to get signature');
+          const { signature, timestamp } = await sigRes.json();
 
-                const formData = new FormData();
-                formData.append('file', blob, cropQueue[0].name);
-                formData.append('api_key', API_KEY);
-                formData.append('timestamp', timestamp);
-                formData.append('signature', signature);
+          const formData = new FormData();
+          formData.append('file', blob, cropQueue[0].name);
+          formData.append('api_key', API_KEY);
+          formData.append('timestamp', timestamp);
+          formData.append('signature', signature);
 
-                const uploadRes = await fetch(`https://api.cloudinary.com/v1_1/${CLOUD_NAME}/image/upload`, { method: 'POST', body: formData });
-                if (!uploadRes.ok) throw new Error(`Failed to upload ${cropQueue[0].name}`);
-                const data = await uploadRes.json();
+          const uploadRes = await fetch(`https://api.cloudinary.com/v1_1/${CLOUD_NAME}/image/upload`, { method: 'POST', body: formData });
+          if (!uploadRes.ok) throw new Error(`Failed to upload ${cropQueue[0].name}`);
+          const data = await uploadRes.json();
 
-                const fullUrl = data.secure_url.replace('/upload/', '/upload/w_1600,c_limit,q_auto,f_auto/');
-                const thumbUrl = data.secure_url.replace('/upload/', '/upload/w_500,c_limit,q_auto,f_auto/');
-                const fileName = cropQueue[0].name.replace(/\.[^/.]+$/, "").replace(/[_-]/g, " ");
-                const category = document.getElementById('crop-category').value;
-                croppedPhotos.push({ src: fullUrl, thumb: thumbUrl, category: category, alt: fileName });
+          const fullUrl = data.secure_url.replace('/upload/', '/upload/w_1600,c_limit,q_auto,f_auto/');
+          const thumbUrl = data.secure_url.replace('/upload/', '/upload/w_500,c_limit,q_auto,f_auto/');
+          const fileName = cropQueue[0].name.replace(/\.[^/.]+$/, "").replace(/[_-]/g, " ");
+          const category = document.getElementById('crop-category').value;
+          croppedPhotos.push({ src: fullUrl, thumb: thumbUrl, category: category, alt: fileName });
 
-                cropQueue.shift();
-                
-                btn.disabled = false;
-                btn.innerHTML = '<i class="ri-crop-line text-lg"></i> Обрезать и загрузить';
+          cropQueue.shift();
 
-                if (cropQueue.length > 0) processCropQueue();
-                else {
-                    document.getElementById('crop-modal').classList.add('hidden');
-                    finalizeBulkUpload();
-                }
-            } catch (error) {
-                console.error(error);
-                alert('Ошибка при обрезке и загрузке: ' + error.message);
-                btn.disabled = false;
-                btn.innerHTML = '<i class="ri-crop-line text-lg"></i> Обрезать и загрузить';
-            }
-        }, 'image/jpeg', 0.9);
+          btn.disabled = false;
+          btn.innerHTML = '<i class="ri-crop-line text-lg"></i> Обрезать и загрузить';
+
+          if (cropQueue.length > 0) processCropQueue();
+          else {
+            document.getElementById('crop-modal').classList.add('hidden');
+            finalizeBulkUpload();
+          }
+        } catch (error) {
+          console.error(error);
+          alert('Ошибка при обрезке и загрузке: ' + error.message);
+          btn.disabled = false;
+          btn.innerHTML = '<i class="ri-crop-line text-lg"></i> Обрезать и загрузить';
+        }
+      }, 'image/jpeg', 0.9);
     }
 
     function finalizeBulkUpload() {
-        if (croppedPhotos.length === 0) return;
+      if (croppedPhotos.length === 0) return;
 
-        const updatedData = { ...currentData };
-        if (!updatedData.photos) updatedData.photos = [];
-        updatedData.photos = [...croppedPhotos, ...updatedData.photos];
-        
-        showLoader(true);
-        document.getElementById('loader-text').innerText = 'Сохранение...';
-        saveData(updatedData, `Added ${croppedPhotos.length} cropped photos via Admin`);
-        
-        croppedPhotos = [];
+      const updatedData = { ...currentData };
+      if (!updatedData.photos) updatedData.photos = [];
+      updatedData.photos = [...croppedPhotos, ...updatedData.photos];
+
+      showLoader(true);
+      document.getElementById('loader-text').innerText = 'Сохранение...';
+      saveData(updatedData, `Added ${croppedPhotos.length} cropped photos via Admin`);
+
+      croppedPhotos = [];
     }
 
     function cancelCropping() {
-        if (cropper) cropper.destroy();
-        cropper = null;
-        cropQueue = [];
-        croppedPhotos = [];
-        document.getElementById('crop-modal').classList.add('hidden');
+      if (cropper) cropper.destroy();
+      cropper = null;
+      cropQueue = [];
+      croppedPhotos = [];
+      document.getElementById('crop-modal').classList.add('hidden');
     }
 
     function setCropAspectRatio(ratio) {
-        if (cropper) cropper.setAspectRatio(ratio);
+      if (cropper) cropper.setAspectRatio(ratio);
     }
 
     async function fetchInstagramPoster(index) {
       const link = currentData.videos[index].video_url;
       if (!link) return alert('Сначала вставьте ссылку на Instagram!');
-      
+
       showStatus('Поиск и загрузка обложки...', 'video-status-msg');
-      
+
       try {
         const res = await fetch('/.netlify/functions/fetch-instagram', {
           method: 'POST',
           body: JSON.stringify({ url: link })
         });
-        
+
         const data = await res.json();
         if (data.url) {
           currentData.videos[index].poster = data.url;
@@ -988,7 +1064,7 @@
       // Для простоты сохраним сразу, но это может быть медленно.
       // Лучше обновим локально, а сохраним по кнопке? 
       // Пользователь просил "ничего лишнего". Сделаем автосохранение.
-      
+
       currentData.photos[index].category = newCategory;
       // Небольшая задержка, чтобы UI не дергался
       showStatus('Изменение категории...');
@@ -1039,7 +1115,7 @@
     function openFrameCapture(index) {
       const video = currentData.videos[index];
       if (!video.src) return alert('Видео файл не найден!');
-      
+
       let src = video.src;
       if (src.startsWith('./')) src = '.' + src;
 
@@ -1060,13 +1136,13 @@
       const player = document.getElementById('capture-player');
       const canvas = document.getElementById('capture-canvas');
       const ctx = canvas.getContext('2d');
-      
+
       if (player.readyState < 2) return alert('Видео еще не загрузилось');
 
       canvas.width = player.videoWidth;
       canvas.height = player.videoHeight;
       ctx.drawImage(player, 0, 0, canvas.width, canvas.height);
-      
+
       canvas.toBlob(async (blob) => {
         if (!blob) return alert('Ошибка создания изображения');
         if (!confirm('Использовать этот кадр как обложку?')) return;
@@ -1076,50 +1152,51 @@
         closeFrameCapture();
 
         try {
-           const sigRes = await fetch('/.netlify/functions/sign-upload');
-           const { signature, timestamp } = await sigRes.json();
-           const formData = new FormData();
-           formData.append('file', blob, 'poster_capture.jpg');
-           formData.append('api_key', API_KEY);
-           formData.append('timestamp', timestamp);
-           formData.append('signature', signature);
-           const uploadRes = await fetch(`https://api.cloudinary.com/v1_1/${CLOUD_NAME}/image/upload`, { method: 'POST', body: formData });
-           const data = await uploadRes.json();
-           const optimizedUrl = data.secure_url.replace('/upload/', '/upload/w_1000,c_limit,q_auto,f_auto/');
-           currentData.videos[captureTargetIndex].poster = optimizedUrl;
-           saveData(currentData, 'Updated poster from video frame', 'video-status-msg');
+          const sigRes = await fetch('/.netlify/functions/sign-upload');
+          const { signature, timestamp } = await sigRes.json();
+          const formData = new FormData();
+          formData.append('file', blob, 'poster_capture.jpg');
+          formData.append('api_key', API_KEY);
+          formData.append('timestamp', timestamp);
+          formData.append('signature', signature);
+          const uploadRes = await fetch(`https://api.cloudinary.com/v1_1/${CLOUD_NAME}/image/upload`, { method: 'POST', body: formData });
+          const data = await uploadRes.json();
+          const optimizedUrl = data.secure_url.replace('/upload/', '/upload/w_1000,c_limit,q_auto,f_auto/');
+          currentData.videos[captureTargetIndex].poster = optimizedUrl;
+          saveData(currentData, 'Updated poster from video frame', 'video-status-msg');
         } catch (e) { console.error(e); alert('Ошибка: ' + e.message); showLoader(false); }
       }, 'image/jpeg', 0.9);
     }
 
     // --- DRAG & DROP INITIALIZATION ---
     function initDragAndDrop() {
-        const photoZone = document.getElementById('bulk-upload-zone');
-        const videoZone = document.getElementById('new-video-zone');
+      const photoZone = document.getElementById('bulk-upload-zone');
+      const videoZone = document.getElementById('new-video-zone');
 
-        setupZone(photoZone, (files) => startBulkUpload(files));
-        setupZone(videoZone, (files) => {
-            if (files.length > 0) processNewVideo(files[0]);
-        });
+      setupZone(photoZone, (files) => startBulkUpload(files));
+      setupZone(videoZone, (files) => {
+        if (files.length > 0) processNewVideo(files[0]);
+      });
     }
 
     function setupZone(zone, callback) {
-        if (!zone) return;
-        
-        // Предотвращаем стандартное поведение браузера (открытие файла)
-        ['dragenter', 'dragover', 'dragleave', 'drop'].forEach(eventName => {
-            zone.addEventListener(eventName, (e) => { e.preventDefault(); e.stopPropagation(); }, false);
-        });
+      if (!zone) return;
 
-        // Визуальная подсветка
-        zone.addEventListener('dragover', () => zone.classList.add('border-2', 'border-dashed', 'border-white', 'bg-white/10'));
-        zone.addEventListener('dragleave', () => zone.classList.remove('border-2', 'border-dashed', 'border-white', 'bg-white/10'));
-        zone.addEventListener('drop', (e) => {
-            zone.classList.remove('border-2', 'border-dashed', 'border-white', 'bg-white/10');
-            const files = Array.from(e.dataTransfer.files);
-            if (files.length > 0) callback(files);
-        });
+      // Предотвращаем стандартное поведение браузера (открытие файла)
+      ['dragenter', 'dragover', 'dragleave', 'drop'].forEach(eventName => {
+        zone.addEventListener(eventName, (e) => { e.preventDefault(); e.stopPropagation(); }, false);
+      });
+
+      // Визуальная подсветка
+      zone.addEventListener('dragover', () => zone.classList.add('border-2', 'border-dashed', 'border-white', 'bg-white/10'));
+      zone.addEventListener('dragleave', () => zone.classList.remove('border-2', 'border-dashed', 'border-white', 'bg-white/10'));
+      zone.addEventListener('drop', (e) => {
+        zone.classList.remove('border-2', 'border-dashed', 'border-white', 'bg-white/10');
+        const files = Array.from(e.dataTransfer.files);
+        if (files.length > 0) callback(files);
+      });
     }
   </script>
 </body>
+
 </html>
