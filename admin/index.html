@@ -232,9 +232,9 @@
     // --- CONFIG ---
     const REPO_FILE_PATH = 'data.json'; // Путь к файлу в репозитории
     const BRANCH = 'main'; // Ваша ветка
-    const CLOUD_NAME = 'dkexmocck';
-    const API_KEY = '765755564578894';
 
+    let CLOUD_NAME = null;
+    let API_KEY = null;
     let currentData = null;
     let fileSha = null;
     let authToken = null;
@@ -256,10 +256,23 @@
       authToken = null;
     });
 
-    function handleLogin(user) {
+    async function handleLogin(user) {
       document.getElementById('login-screen').classList.add('hidden');
       document.getElementById('dashboard').classList.remove('hidden');
       document.getElementById('user-email').innerText = user.email;
+
+      // Загружаем конфиг перед началом работы
+      try {
+        const cfgRes = await fetch('/.netlify/functions/get-config');
+        if (!cfgRes.ok) throw new Error(`Config fetch failed with status ${cfgRes.status}`);
+        const config = await cfgRes.json();
+        CLOUD_NAME = config.cloud_name;
+        API_KEY = config.api_key;
+      } catch (e) {
+        console.error("Failed to load Cloudinary config", e);
+        alert("Критическая ошибка: не удалось загрузить конфигурацию Cloudinary. Админ-панель не будет работать корректно.");
+      }
+
       // Получаем токен для Git Gateway
       user.jwt().then(token => {
         authToken = token;
@@ -405,6 +418,10 @@
         const div = document.createElement('div');
         div.className = `relative group aspect-[2/3] bg-gray-800 rounded-lg overflow-hidden cursor-move transition-all duration-200 ${isSelected ? 'ring-4 ring-pink-600' : ''}`;
         
+        // Fix relative paths for admin panel (./img -> ../img)
+        let displaySrc = photo.thumb || photo.src;
+        if (displaySrc && displaySrc.startsWith('./')) displaySrc = '.' + displaySrc;
+
         div.innerHTML = `
           <!-- Checkbox -->
           <div class="absolute top-2 left-2 z-20">
@@ -413,7 +430,7 @@
                    onclick="event.stopPropagation(); togglePhotoSelection(${index})">
           </div>
 
-          <img src="${photo.thumb || photo.src}" class="w-full h-full object-cover opacity-80 group-hover:opacity-100 transition">
+          <img src="${displaySrc}" class="w-full h-full object-cover opacity-80 group-hover:opacity-100 transition">
           <div class="absolute inset-0 bg-black/50 opacity-0 group-hover:opacity-100 transition flex flex-col items-center justify-center gap-2 p-2">
             <select onchange="updateCategory(${index}, this.value)" class="bg-black text-xs text-white border border-gray-600 rounded px-2 py-1 outline-none">
               <option value="beauty" ${photo.category === 'beauty' ? 'selected' : ''}>Beauty</option>
@@ -444,7 +461,8 @@
         div.className = 'relative group bg-gray-900 rounded-lg overflow-hidden border border-gray-800 flex flex-col';
         
         // Poster (Drag Handle)
-        const posterUrl = video.poster || 'https://via.placeholder.com/300x533/111/555?text=NO+POSTER';
+        let posterUrl = video.poster || 'https://via.placeholder.com/300x533/111/555?text=NO+POSTER';
+        if (posterUrl.startsWith('./')) posterUrl = '.' + posterUrl;
         
         div.innerHTML = `
           <div class="relative aspect-[9/16] bg-black cursor-move drag-handle group/poster">
@@ -996,8 +1014,10 @@
 
     // --- VIDEO PREVIEW ---
     function previewVideo(index) {
-      const src = currentData.videos[index].src;
+      let src = currentData.videos[index].src;
       if (!src) return;
+      if (src.startsWith('./')) src = '.' + src;
+
       const modal = document.getElementById('video-preview-modal');
       const player = document.getElementById('preview-player');
       player.src = src;
@@ -1020,9 +1040,12 @@
       const video = currentData.videos[index];
       if (!video.src) return alert('Видео файл не найден!');
       
+      let src = video.src;
+      if (src.startsWith('./')) src = '.' + src;
+
       captureTargetIndex = index;
       const player = document.getElementById('capture-player');
-      player.src = video.src;
+      player.src = src;
       document.getElementById('frame-capture-modal').classList.remove('hidden');
     }
 
