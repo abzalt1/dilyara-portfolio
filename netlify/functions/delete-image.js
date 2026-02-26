@@ -5,14 +5,21 @@ exports.handler = async (event) => {
     if (event.httpMethod !== 'POST') return { statusCode: 405, body: 'Method Not Allowed' };
 
     try {
-        const { public_id } = JSON.parse(event.body);
+        let body;
+        try {
+            body = JSON.parse(event.body);
+        } catch (e) {
+            return { statusCode: 400, body: JSON.stringify({ error: "Invalid JSON body" }) };
+        }
+
+        const { public_id } = body;
         
         const cloud_name = process.env.CLOUDINARY_CLOUD_NAME;
         const api_key = process.env.CLOUDINARY_API_KEY;
         const api_secret = process.env.CLOUDINARY_API_SECRET;
 
         if (!public_id || !api_secret || !cloud_name) {
-            return { statusCode: 400, body: 'Missing public_id or env vars' };
+            return { statusCode: 400, body: JSON.stringify({ error: 'Missing public_id or env vars' }) };
         }
 
         const timestamp = Math.round(new Date().getTime() / 1000);

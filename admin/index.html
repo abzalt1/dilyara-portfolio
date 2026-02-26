@@ -232,8 +232,9 @@
     // --- CONFIG ---
     const REPO_FILE_PATH = 'data.json'; // Путь к файлу в репозитории
     const BRANCH = 'main'; // Ваша ветка
-    const CLOUD_NAME = 'dkexmocck';
-    const API_KEY = '765755564578894';
+
+    let CLOUD_NAME = null;
+    let API_KEY = null;
 
     let currentData = null;
     let fileSha = null;
@@ -260,6 +261,17 @@
       document.getElementById('login-screen').classList.add('hidden');
       document.getElementById('dashboard').classList.remove('hidden');
       document.getElementById('user-email').innerText = user.email;
+
+      // Load config first
+      fetch('/.netlify/functions/get-config')
+        .then(res => res.json())
+        .then(config => {
+           CLOUD_NAME = config.cloud_name;
+           API_KEY = config.api_key;
+           if (!CLOUD_NAME || !API_KEY) alert('Ошибка: Не найдены ключи Cloudinary в настройках сервера!');
+        })
+        .catch(err => console.error('Failed to load config:', err));
+
       // Получаем токен для Git Gateway
       user.jwt().then(token => {
         authToken = token;
