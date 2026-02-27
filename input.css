@@ -1,9 +1,36 @@
 @import "tailwindcss";
 
 @theme {
-  --font-sans: "Space Grotesk", sans-serif;
-  --font-display: "Syne", sans-serif;
+  --font-sans: "Google Sans", sans-serif;
+  --font-display: "Unbounded", sans-serif;
   --color-black: #050505;
   --color-white: #FFFFFF;
   --color-gray: #F3F3F3;
+
+  /* Scaled text sizes: base = 18px (×1.125 from 16px default) */
+  --text-xs: 0.844rem;
+  --text-xs--line-height: calc(1.125 / 0.844);
+  --text-sm: 0.984rem;
+  --text-sm--line-height: calc(1.406 / 0.984);
+  --text-base: 1.125rem;
+  --text-base--line-height: calc(1.688 / 1.125);
+  --text-lg: 1.266rem;
+  --text-lg--line-height: calc(1.969 / 1.266);
+  --text-xl: 1.406rem;
+  --text-xl--line-height: calc(1.969 / 1.406);
+}
+
+/* Base body styles */
+body {
+  font-weight: 500;
+  font-size: 1.125rem;
+}
+
+/* Utility overrides */
+.font-extralight {
+  font-weight: 200 !important;
+}
+
+.font-medium {
+  font-weight: 500 !important;
 }

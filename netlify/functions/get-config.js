@@ -1,10 +1,14 @@
 exports.handler = async (event) => {
-  // Разрешаем только GET запросы
   if (event.httpMethod !== 'GET') {
     return { statusCode: 405, body: 'Method Not Allowed' };
   }
 
-  // Возвращаем публичные ключи, необходимые для работы UI, из переменных окружения
+  // Проверка авторизации через Netlify Identity JWT
+  const auth = event.headers.authorization;
+  if (!auth || !auth.startsWith('Bearer ')) {
+    return { statusCode: 401, body: JSON.stringify({ error: 'Unauthorized' }) };
+  }
+
   return {
     statusCode: 200,
     body: JSON.stringify({

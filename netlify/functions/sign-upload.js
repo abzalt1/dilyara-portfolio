@@ -1,16 +1,17 @@
 const crypto = require('crypto');
 
 exports.handler = async (event) => {
-  // Разрешаем только GET запросы
   if (event.httpMethod !== 'GET') return { statusCode: 405, body: 'Method Not Allowed' };
 
-  const api_secret = process.env.CLOUDINARY_API_SECRET;
+  // Проверка авторизации через Netlify Identity JWT
+  const auth = event.headers.authorization;
+  if (!auth || !auth.startsWith('Bearer ')) {
+    return { statusCode: 401, body: JSON.stringify({ error: 'Unauthorized' }) };
+  }
 
-  // Генерируем timestamp (время)
+  const api_secret = process.env.CLOUDINARY_API_SECRET;
   const timestamp = Math.round(new Date().getTime() / 1000);
 
-  // Создаем подпись (Signature)
-  // Cloudinary требует подписать параметры: timestamp + api_secret
   const signature = crypto.createHash('sha1')
     .update(`timestamp=${timestamp}${api_secret}`)
     .digest('hex');

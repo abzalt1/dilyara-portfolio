@@ -4,9 +4,15 @@ const crypto = require('crypto');
 exports.handler = async (event) => {
     if (event.httpMethod !== 'POST') return { statusCode: 405, body: 'Method Not Allowed' };
 
+    // Проверка авторизации через Netlify Identity JWT
+    const auth = event.headers.authorization;
+    if (!auth || !auth.startsWith('Bearer ')) {
+        return { statusCode: 401, body: JSON.stringify({ error: 'Unauthorized' }) };
+    }
+
     try {
         const { public_id } = JSON.parse(event.body);
-        
+
         const cloud_name = process.env.CLOUDINARY_CLOUD_NAME;
         const api_key = process.env.CLOUDINARY_API_KEY;
         const api_secret = process.env.CLOUDINARY_API_SECRET;
