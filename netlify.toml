@@ -1,5 +1,5 @@
 [build]
-  command = "npx tailwindcss@4 -i input.css -o style.css --minify"
+  command = "npx @tailwindcss/cli@^4 -i input.css -o style.css --minify"
   publish = "."
   functions = "netlify/functions"
 
