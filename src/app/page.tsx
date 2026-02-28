@@ -69,7 +69,7 @@ export default function Home() {
   const [lang, setLangState] = useState<"ru" | "en" | "kk">("ru");
   const t = translations[lang];
 
-  const [data, setData] = useState<{ photos: any[]; videos: any[] }>({ photos: [], videos: [] });
+  const [data, setData] = useState<{ photos: any[]; videos: any[]; siteImages?: { hero: string; about1: string; about2: string } }>({ photos: [], videos: [] });
   const [activeCategory, setActiveCategory] = useState("all");
   const [availableCategories, setAvailableCategories] = useState<string[]>([]);
   const [photoLimit, setPhotoLimit] = useState(12);
@@ -180,7 +180,7 @@ export default function Home() {
         <div className="absolute inset-0 z-0">
           <img
             id="header-img"
-            src="/img/IMG_6543.jpg"
+            src={data.siteImages?.hero || "/img/IMG_6543.jpg"}
             alt="Header"
             className="w-full h-[120%] absolute -top-[10%] left-0 object-cover object-top opacity-70 grayscale contrast-125 will-change-transform"
           />
@@ -257,10 +257,10 @@ export default function Home() {
         </div>
         <div className="md:col-span-6 grid grid-cols-2 gap-4">
           <div className="aspect-[2/3] overflow-hidden transition-all duration-700">
-            <img src="/img/IMG_7263.jpg" className="w-full h-full object-cover hover:scale-105 transition-transform duration-700" alt="Model" />
+            <img src={data.siteImages?.about1 || "/img/IMG_7263.jpg"} className="w-full h-full object-cover hover:scale-105 transition-transform duration-700" alt="Model" />
           </div>
           <div className="aspect-[2/3] overflow-hidden mt-16 transition-all duration-700">
-            <img src="/img/IMG_8558.jpg" className="w-full h-full object-cover hover:scale-105 transition-transform duration-700" alt="Model" />
+            <img src={data.siteImages?.about2 || "/img/IMG_8558.jpg"} className="w-full h-full object-cover hover:scale-105 transition-transform duration-700" alt="Model" />
           </div>
         </div>
       </section>
@@ -307,11 +307,11 @@ export default function Home() {
             )}
             {photoLimit < filteredPhotos.length && (
               <button
-                 id="load-more-btn"
-                 style={{ display: "block" }}
-                 onClick={() => setPhotoLimit(photoLimit + 12)}
+                id="load-more-btn"
+                style={{ display: "block" }}
+                onClick={() => setPhotoLimit(photoLimit + 12)}
               >
-                 {t.load_more} ({filteredPhotos.length - photoLimit})
+                {t.load_more} ({filteredPhotos.length - photoLimit})
               </button>
             )}
           </div>

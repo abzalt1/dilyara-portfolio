@@ -158,6 +158,7 @@ async function fetchData() {
     const content = decodeURIComponent(escape(window.atob(json.content)));
     currentData = JSON.parse(content);
     console.log('Data loaded:', currentData);
+    renderSiteImages();
   } catch (error) {
     console.error(error);
     showToast('Ошибка загрузки данных', 'error');
@@ -190,6 +191,7 @@ async function saveData(newData, message, statusId = 'status-msg') {
     currentData = newData; // Обновляем локальные данные
     renderGallery();
     renderVideoGallery();
+    renderSiteImages();
     populateCategorySelects();
     showStatus('Сохранено успешно!', statusId);
   } catch (error) {
@@ -214,6 +216,20 @@ function showVideoGallery() {
   document.getElementById('gallery-view').classList.add('hidden');
   document.getElementById('video-view').classList.remove('hidden');
   renderVideoGallery();
+}
+
+function renderSiteImages() {
+  if (!currentData || !currentData.siteImages) return;
+
+  // Fix relative paths for preview
+  const getSrc = (url) => {
+    if (!url) return '';
+    return url.startsWith('./') ? '.' + url : url;
+  };
+
+  document.getElementById('preview-hero').src = getSrc(currentData.siteImages.hero);
+  document.getElementById('preview-about1').src = getSrc(currentData.siteImages.about1);
+  document.getElementById('preview-about2').src = getSrc(currentData.siteImages.about2);
 }
 
 function hideGallery() {
@@ -477,7 +493,19 @@ function updateVideoMedia(index, field) {
 }
 
 // --- DIRECT FILE UPLOAD ---
+let siteImageUploadTarget = null;
+
+function triggerSiteImageUpload(field) {
+  siteImageUploadTarget = field;
+  uploadTargetIndex = null; // Clear gallery index
+  uploadTargetField = 'siteImage';
+  const input = document.getElementById('file-upload-input');
+  input.accept = 'image/*';
+  input.click();
+}
+
 function triggerFileUpload(index, field) {
+  siteImageUploadTarget = null; // Clear site image target
   uploadTargetIndex = index;
   uploadTargetField = field;
   const input = document.getElementById('file-upload-input');
@@ -551,8 +579,14 @@ async function handleFileUpload(e) {
     loaderText.innerText = 'Сохранение ссылки...';
 
     // 3. Сохраняем ссылку и обновляем JSON
-    currentData.videos[uploadTargetIndex][uploadTargetField] = data.secure_url;
-    saveData(currentData, `Uploaded new ${uploadTargetField} via Admin`, 'video-status-msg');
+    if (uploadTargetField === 'siteImage' && siteImageUploadTarget) {
+      if (!currentData.siteImages) currentData.siteImages = {};
+      currentData.siteImages[siteImageUploadTarget] = data.secure_url;
+      saveData(currentData, `Updated site image ${siteImageUploadTarget} via Admin`);
+    } else {
+      currentData.videos[uploadTargetIndex][uploadTargetField] = data.secure_url;
+      saveData(currentData, `Uploaded new ${uploadTargetField} via Admin`, 'video-status-msg');
+    }
 
   } catch (error) {
     console.error(error);

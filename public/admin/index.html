@@ -152,233 +152,293 @@
       </div>
     </div>
 
-    <!-- MAIN ACTIONS -->
-    <div class="grid grid-cols-1 md:grid-cols-2 gap-6" id="main-menu">
-      <button id="bulk-upload-zone" onclick="document.getElementById('bulk-upload-input').click()"
-        class="btn-action glass h-64 rounded-2xl flex flex-col items-center justify-center gap-4 group hover:bg-white/10 transition-all duration-200">
-        <div
-          class="w-20 h-20 rounded-full bg-blue-500/20 flex items-center justify-center group-hover:scale-110 transition pointer-events-none">
-          <i class="ri-upload-cloud-2-line text-4xl text-blue-400"></i>
-        </div>
-        <div class="text-center pointer-events-none">
-          <h3 class="text-xl font-bold uppercase">Upload Photos</h3>
-          <p class="text-gray-400 text-xs mt-1">Click or Drag & Drop</p>
-        </div>
-      </button>
+    <!-- SITE SETTINGS -->
+    <div class="space-y-4">
+      <h3 class="text-sm font-bold uppercase tracking-wider text-gray-500">Главные фото сайта</h3>
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
 
-      <button onclick="showGallery()"
-        class="btn-action glass h-64 rounded-2xl flex flex-col items-center justify-center gap-4 group hover:bg-white/10">
-        <div
-          class="w-20 h-20 rounded-full bg-purple-500/20 flex items-center justify-center group-hover:scale-110 transition">
-          <i class="ri-gallery-line text-4xl text-purple-400"></i>
-        </div>
-        <div class="text-center">
-          <h3 class="text-xl font-bold uppercase">Manage Photos</h3>
-          <p class="text-gray-400 text-xs mt-1">Редактировать фото</p>
-        </div>
-      </button>
-
-      <button id="new-video-zone" onclick="document.getElementById('new-video-upload-input').click()"
-        class="btn-action glass h-64 rounded-2xl flex flex-col items-center justify-center gap-4 group hover:bg-white/10 transition-all duration-200">
-        <div
-          class="w-20 h-20 rounded-full bg-pink-500/20 flex items-center justify-center group-hover:scale-110 transition pointer-events-none">
-          <i class="ri-upload-cloud-2-line text-4xl text-pink-400"></i>
-        </div>
-        <div class="text-center pointer-events-none">
-          <h3 class="text-xl font-bold uppercase">Upload Video</h3>
-          <p class="text-gray-400 text-xs mt-1">Click or Drag & Drop MP4</p>
-        </div>
-      </button>
-
-      <button onclick="showVideoGallery()"
-        class="btn-action glass h-64 rounded-2xl flex flex-col items-center justify-center gap-4 group hover:bg-white/10">
-        <div
-          class="w-20 h-20 rounded-full bg-pink-500/20 flex items-center justify-center group-hover:scale-110 transition">
-          <i class="ri-movie-line text-4xl text-pink-400"></i>
-        </div>
-        <div class="text-center">
-          <h3 class="text-xl font-bold uppercase">Manage Videos</h3>
-          <p class="text-gray-400 text-xs mt-1">Reels & Shorts</p>
-        </div>
-      </button>
-    </div>
-
-    <!-- GALLERY VIEW (Hidden by default) -->
-    <div id="gallery-view" class="hidden space-y-6">
-      <div class="flex items-center justify-between">
-        <button onclick="hideGallery()" class="flex items-center gap-2 text-gray-400 hover:text-white transition">
-          <i class="ri-arrow-left-line"></i> Назад
-        </button>
-        <div id="status-msg" class="text-sm font-mono text-green-400"></div>
-      </div>
-
-      <!-- BULK ACTIONS TOOLBAR -->
-      <div id="bulk-actions"
-        class="hidden flex items-center justify-between flex-wrap gap-3 bg-gray-900 p-4 rounded-lg border border-gray-800 sticky top-0 z-30 shadow-xl backdrop-blur-md bg-opacity-90">
-        <div class="flex items-center gap-4">
-          <span id="selection-count" class="text-sm font-bold text-white">0 выбрано</span>
-          <button onclick="selectAllPhotos()" class="text-xs text-gray-400 hover:text-white underline">Выбрать
-            все</button>
-          <button onclick="clearSelection()" class="text-xs text-gray-400 hover:text-white underline">Сбросить</button>
-        </div>
-        <div class="flex items-center gap-2">
-          <select id="batch-category-select"
-            class="bg-gray-800 text-white border border-gray-700 rounded px-3 py-2 text-xs outline-none"></select>
-          <button onclick="batchChangeCategory()"
-            class="bg-blue-600 hover:bg-blue-500 text-white px-3 py-2 rounded text-xs font-bold uppercase tracking-wider flex items-center gap-1 transition">
-            <i class="ri-folder-transfer-line"></i> Применить
-          </button>
-          <button onclick="deleteSelectedPhotos()"
-            class="bg-red-600 hover:bg-red-500 text-white px-3 py-2 rounded text-xs font-bold uppercase tracking-wider flex items-center gap-1 transition">
-            <i class="ri-delete-bin-line"></i> Удалить
-          </button>
-        </div>
-      </div>
-
-      <div id="photo-grid" class="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-5 gap-4">
-        <!-- Photos will be injected here -->
-      </div>
-    </div>
-
-    <!-- VIDEO GALLERY VIEW -->
-    <div id="video-view" class="hidden space-y-6">
-      <div class="flex items-center justify-between">
-        <button onclick="hideVideoGallery()" class="flex items-center gap-2 text-gray-400 hover:text-white transition">
-          <i class="ri-arrow-left-line"></i> Назад
-        </button>
-        <button onclick="addVideo()"
-          class="bg-pink-600 hover:bg-pink-500 text-white px-4 py-2 rounded uppercase text-xs font-bold tracking-wider transition">
-          + Add New Reel
-        </button>
-      </div>
-      <div id="video-status-msg" class="text-sm font-mono text-green-400 text-center h-5"></div>
-
-      <div id="video-grid" class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
-        <!-- Videos will be injected here -->
-      </div>
-    </div>
-  </div>
-
-  <!-- LOADING OVERLAY -->
-  <div id="global-loader" class="hidden fixed inset-0 bg-black/80 z-50 flex items-center justify-center flex-col gap-4">
-    <div class="loader"></div>
-    <p id="loader-text" class="text-sm uppercase tracking-widest animate-pulse">Сохранение...</p>
-
-    <!-- Progress Bar -->
-    <div id="upload-progress-container"
-      class="hidden w-64 bg-gray-800 rounded-full h-2 border border-gray-700 overflow-hidden">
-      <div id="upload-progress-bar" class="bg-pink-600 h-full transition-all duration-200" style="width: 0%"></div>
-    </div>
-    <p id="upload-progress-text" class="hidden text-xs text-gray-400 font-mono">0%</p>
-  </div>
-
-  <!-- TOAST CONTAINER -->
-  <div id="toast-container"></div>
-
-  <!-- HIDDEN FILE INPUT -->
-  <input type="file" id="file-upload-input" class="hidden" onchange="handleFileUpload(event)">
-  <input type="file" id="bulk-upload-input" class="hidden" multiple accept="image/*" onchange="handleBulkUpload(event)">
-  <input type="file" id="new-video-upload-input" class="hidden" accept="video/*" onchange="handleNewVideoUpload(event)">
-
-  <!-- VIDEO PREVIEW MODAL -->
-  <div id="video-preview-modal"
-    class="hidden fixed inset-0 z-[60] bg-black/90 flex items-center justify-center backdrop-blur-sm"
-    onclick="closeVideoPreview()">
-    <div class="relative w-full max-w-[90vw] md:max-w-[400px]" onclick="event.stopPropagation()">
-      <button onclick="closeVideoPreview()"
-        class="absolute -top-12 right-0 text-white/50 hover:text-white text-4xl">&times;</button>
-      <video id="preview-player" controls
-        class="w-full h-auto max-h-[80vh] rounded-lg bg-black shadow-2xl border border-gray-800"></video>
-    </div>
-  </div>
-
-  <!-- FRAME CAPTURE MODAL -->
-  <div id="frame-capture-modal"
-    class="hidden fixed inset-0 z-[70] bg-black/90 flex items-center justify-center backdrop-blur-sm">
-    <div
-      class="relative w-full max-w-5xl bg-gray-900 rounded-xl overflow-hidden flex flex-col md:flex-row shadow-2xl border border-gray-800">
-      <button onclick="closeFrameCapture()"
-        class="absolute top-4 right-4 z-50 text-white bg-black/50 rounded-full w-10 h-10 flex items-center justify-center hover:bg-red-600 transition"><i
-          class="ri-close-line text-xl"></i></button>
-
-      <div class="flex-1 bg-black flex items-center justify-center relative min-h-[300px]">
-        <video id="capture-player" controls class="max-h-[70vh] max-w-full" crossorigin="anonymous"></video>
-      </div>
-
-      <div class="w-full md:w-72 bg-gray-800 p-6 flex flex-col gap-6 border-l border-gray-700">
-        <div>
-          <h3 class="text-lg font-bold uppercase tracking-wider text-white mb-2">Стоп-кадр</h3>
-          <p class="text-xs text-gray-400 leading-relaxed">1. Найдите нужный момент.<br>2. Поставьте на паузу.<br>3.
-            Нажмите кнопку ниже.</p>
-        </div>
-
-        <canvas id="capture-canvas"
-          class="hidden w-full h-auto object-contain bg-black rounded border border-gray-600"></canvas>
-
-        <button onclick="captureCurrentFrame()"
-          class="bg-pink-600 hover:bg-pink-500 text-white py-4 rounded font-bold uppercase tracking-widest text-xs transition shadow-lg flex items-center justify-center gap-2">
-          <i class="ri-camera-line text-lg"></i> Сохранить кадр
-        </button>
-      </div>
-    </div>
-  </div>
-
-  <!-- CROP MODAL -->
-  <div id="crop-modal"
-    class="hidden fixed inset-0 z-[80] bg-black/90 flex items-center justify-center backdrop-blur-sm">
-    <div
-      class="relative w-full max-w-5xl bg-gray-900 rounded-xl overflow-hidden flex flex-col md:flex-row shadow-2xl border border-gray-800">
-      <button onclick="cancelCropping()"
-        class="absolute top-4 right-4 z-50 text-white bg-black/50 rounded-full w-10 h-10 flex items-center justify-center hover:bg-red-600 transition"><i
-          class="ri-close-line text-xl"></i></button>
-
-      <div class="flex-1 bg-black flex items-center justify-center relative min-h-[300px] p-4">
-        <div class="max-w-full max-h-[70vh]">
-          <img id="crop-image" class="max-h-[70vh]">
-        </div>
-      </div>
-
-      <div class="w-full md:w-72 bg-gray-800 p-6 flex flex-col gap-6 border-l border-gray-700">
-        <div>
-          <h3 class="text-lg font-bold uppercase tracking-wider text-white mb-2">Обрезать фото</h3>
-          <p id="crop-queue-status" class="text-xs text-gray-400 leading-relaxed"></p>
-        </div>
-
-        <div class="space-y-2">
-          <p class="text-xs font-bold uppercase tracking-widest text-gray-400">Категория</p>
-          <select id="crop-category"
-            class="w-full bg-gray-700 text-white border border-gray-600 rounded px-3 py-2 text-xs outline-none focus:border-pink-500 transition">
-            <option value="beauty">Beauty</option>
-            <option value="streetwear">Streetwear</option>
-            <option value="commercial">Commercial</option>
-            <option value="casual" selected>Casual</option>
-            <option value="ugc">UGC</option>
-            <option value="food">Food & Bev</option>
-            <option value="acting">Acting</option>
-          </select>
-        </div>
-
-        <div class="space-y-2">
-          <p class="text-xs font-bold uppercase tracking-widest text-gray-400">Соотношение</p>
-          <div class="grid grid-cols-3 gap-2">
-            <button onclick="setCropAspectRatio(2/3)"
-              class="bg-gray-700 hover:bg-pink-600 text-white py-2 rounded text-xs transition">2:3</button>
-            <button onclick="setCropAspectRatio(1/1)"
-              class="bg-gray-700 hover:bg-pink-600 text-white py-2 rounded text-xs transition">1:1</button>
-            <button onclick="setCropAspectRatio(NaN)"
-              class="bg-gray-700 hover:bg-pink-600 text-white py-2 rounded text-xs transition">Free</button>
+        <!-- Hero Photo -->
+        <div class="bg-gray-900 rounded-lg p-4 border border-gray-800 flex flex-col gap-3 group relative">
+          <p class="text-xs uppercase tracking-widest text-gray-400 font-bold">Главная Обложка</p>
+          <div class="relative w-full aspect-[4/5] bg-black rounded overflow-hidden">
+            <img id="preview-hero" class="w-full h-full object-cover opacity-80" src="">
+            <div
+              class="absolute inset-0 bg-black/50 opacity-0 group-hover:opacity-100 transition flex items-center justify-center">
+              <button onclick="triggerSiteImageUpload('hero')"
+                class="bg-white text-black px-4 py-2 font-bold uppercase text-xs rounded hover:bg-gray-200">
+                Заменить
+              </button>
+            </div>
           </div>
         </div>
 
-        <button id="crop-and-upload-btn" onclick="cropAndUpload()"
-          class="mt-auto bg-pink-600 hover:bg-pink-500 text-white py-4 rounded font-bold uppercase tracking-widest text-xs transition shadow-lg flex items-center justify-center gap-2">
-          <i class="ri-crop-line text-lg"></i> Обрезать и загрузить
-        </button>
+        <!-- About 1 -->
+        <div class="bg-gray-900 rounded-lg p-4 border border-gray-800 flex flex-col gap-3 group relative">
+          <p class="text-xs uppercase tracking-widest text-gray-400 font-bold">О Модели (Фото 1)</p>
+          <div class="relative w-full aspect-[2/3] bg-black rounded overflow-hidden">
+            <img id="preview-about1" class="w-full h-full object-cover opacity-80" src="">
+            <div
+              class="absolute inset-0 bg-black/50 opacity-0 group-hover:opacity-100 transition flex items-center justify-center">
+              <button onclick="triggerSiteImageUpload('about1')"
+                class="bg-white text-black px-4 py-2 font-bold uppercase text-xs rounded hover:bg-gray-200">
+                Заменить
+              </button>
+            </div>
+          </div>
+        </div>
+
+        <!-- About 2 -->
+        <div class="bg-gray-900 rounded-lg p-4 border border-gray-800 flex flex-col gap-3 group relative">
+          <p class="text-xs uppercase tracking-widest text-gray-400 font-bold">О Модели (Фото 2)</p>
+          <div class="relative w-full aspect-[2/3] bg-black rounded overflow-hidden">
+            <img id="preview-about2" class="w-full h-full object-cover opacity-80" src="">
+            <div
+              class="absolute inset-0 bg-black/50 opacity-0 group-hover:opacity-100 transition flex items-center justify-center">
+              <button onclick="triggerSiteImageUpload('about2')"
+                class="bg-white text-black px-4 py-2 font-bold uppercase text-xs rounded hover:bg-gray-200">
+                Заменить
+              </button>
+            </div>
+          </div>
+        </div>
+
       </div>
     </div>
-  </div>
 
-  <script src="admin.js"></script>
+    <!-- MAIN ACTIONS -->
+    <div class="space-y-4 pt-4 border-t border-gray-800">
+      <h3 class="text-sm font-bold uppercase tracking-wider text-gray-500">Управление контентом</h3>
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-6" id="main-menu">
+        <button id="bulk-upload-zone" onclick="document.getElementById('bulk-upload-input').click()"
+          class="btn-action glass h-64 rounded-2xl flex flex-col items-center justify-center gap-4 group hover:bg-white/10 transition-all duration-200">
+          <div
+            class="w-20 h-20 rounded-full bg-blue-500/20 flex items-center justify-center group-hover:scale-110 transition pointer-events-none">
+            <i class="ri-upload-cloud-2-line text-4xl text-blue-400"></i>
+          </div>
+          <div class="text-center pointer-events-none">
+            <h3 class="text-xl font-bold uppercase">Upload Photos</h3>
+            <p class="text-gray-400 text-xs mt-1">Click or Drag & Drop</p>
+          </div>
+        </button>
+
+        <button onclick="showGallery()"
+          class="btn-action glass h-64 rounded-2xl flex flex-col items-center justify-center gap-4 group hover:bg-white/10">
+          <div
+            class="w-20 h-20 rounded-full bg-purple-500/20 flex items-center justify-center group-hover:scale-110 transition">
+            <i class="ri-gallery-line text-4xl text-purple-400"></i>
+          </div>
+          <div class="text-center">
+            <h3 class="text-xl font-bold uppercase">Manage Photos</h3>
+            <p class="text-gray-400 text-xs mt-1">Редактировать фото</p>
+          </div>
+        </button>
+
+        <button id="new-video-zone" onclick="document.getElementById('new-video-upload-input').click()"
+          class="btn-action glass h-64 rounded-2xl flex flex-col items-center justify-center gap-4 group hover:bg-white/10 transition-all duration-200">
+          <div
+            class="w-20 h-20 rounded-full bg-pink-500/20 flex items-center justify-center group-hover:scale-110 transition pointer-events-none">
+            <i class="ri-upload-cloud-2-line text-4xl text-pink-400"></i>
+          </div>
+          <div class="text-center pointer-events-none">
+            <h3 class="text-xl font-bold uppercase">Upload Video</h3>
+            <p class="text-gray-400 text-xs mt-1">Click or Drag & Drop MP4</p>
+          </div>
+        </button>
+
+        <button onclick="showVideoGallery()"
+          class="btn-action glass h-64 rounded-2xl flex flex-col items-center justify-center gap-4 group hover:bg-white/10">
+          <div
+            class="w-20 h-20 rounded-full bg-pink-500/20 flex items-center justify-center group-hover:scale-110 transition">
+            <i class="ri-movie-line text-4xl text-pink-400"></i>
+          </div>
+          <div class="text-center">
+            <h3 class="text-xl font-bold uppercase">Manage Videos</h3>
+            <p class="text-gray-400 text-xs mt-1">Reels & Shorts</p>
+          </div>
+        </button>
+      </div>
+
+      <!-- GALLERY VIEW (Hidden by default) -->
+      <div id="gallery-view" class="hidden space-y-6">
+        <div class="flex items-center justify-between">
+          <button onclick="hideGallery()" class="flex items-center gap-2 text-gray-400 hover:text-white transition">
+            <i class="ri-arrow-left-line"></i> Назад
+          </button>
+          <div id="status-msg" class="text-sm font-mono text-green-400"></div>
+        </div>
+
+        <!-- BULK ACTIONS TOOLBAR -->
+        <div id="bulk-actions"
+          class="hidden flex items-center justify-between flex-wrap gap-3 bg-gray-900 p-4 rounded-lg border border-gray-800 sticky top-0 z-30 shadow-xl backdrop-blur-md bg-opacity-90">
+          <div class="flex items-center gap-4">
+            <span id="selection-count" class="text-sm font-bold text-white">0 выбрано</span>
+            <button onclick="selectAllPhotos()" class="text-xs text-gray-400 hover:text-white underline">Выбрать
+              все</button>
+            <button onclick="clearSelection()"
+              class="text-xs text-gray-400 hover:text-white underline">Сбросить</button>
+          </div>
+          <div class="flex items-center gap-2">
+            <select id="batch-category-select"
+              class="bg-gray-800 text-white border border-gray-700 rounded px-3 py-2 text-xs outline-none"></select>
+            <button onclick="batchChangeCategory()"
+              class="bg-blue-600 hover:bg-blue-500 text-white px-3 py-2 rounded text-xs font-bold uppercase tracking-wider flex items-center gap-1 transition">
+              <i class="ri-folder-transfer-line"></i> Применить
+            </button>
+            <button onclick="deleteSelectedPhotos()"
+              class="bg-red-600 hover:bg-red-500 text-white px-3 py-2 rounded text-xs font-bold uppercase tracking-wider flex items-center gap-1 transition">
+              <i class="ri-delete-bin-line"></i> Удалить
+            </button>
+          </div>
+        </div>
+
+        <div id="photo-grid" class="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-5 gap-4">
+          <!-- Photos will be injected here -->
+        </div>
+      </div>
+
+      <!-- VIDEO GALLERY VIEW -->
+      <div id="video-view" class="hidden space-y-6">
+        <div class="flex items-center justify-between">
+          <button onclick="hideVideoGallery()"
+            class="flex items-center gap-2 text-gray-400 hover:text-white transition">
+            <i class="ri-arrow-left-line"></i> Назад
+          </button>
+          <button onclick="addVideo()"
+            class="bg-pink-600 hover:bg-pink-500 text-white px-4 py-2 rounded uppercase text-xs font-bold tracking-wider transition">
+            + Add New Reel
+          </button>
+        </div>
+        <div id="video-status-msg" class="text-sm font-mono text-green-400 text-center h-5"></div>
+
+        <div id="video-grid" class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
+          <!-- Videos will be injected here -->
+        </div>
+      </div>
+    </div>
+
+    <!-- LOADING OVERLAY -->
+    <div id="global-loader"
+      class="hidden fixed inset-0 bg-black/80 z-50 flex items-center justify-center flex-col gap-4">
+      <div class="loader"></div>
+      <p id="loader-text" class="text-sm uppercase tracking-widest animate-pulse">Сохранение...</p>
+
+      <!-- Progress Bar -->
+      <div id="upload-progress-container"
+        class="hidden w-64 bg-gray-800 rounded-full h-2 border border-gray-700 overflow-hidden">
+        <div id="upload-progress-bar" class="bg-pink-600 h-full transition-all duration-200" style="width: 0%"></div>
+      </div>
+      <p id="upload-progress-text" class="hidden text-xs text-gray-400 font-mono">0%</p>
+    </div>
+
+    <!-- TOAST CONTAINER -->
+    <div id="toast-container"></div>
+
+    <!-- HIDDEN FILE INPUT -->
+    <input type="file" id="file-upload-input" class="hidden" onchange="handleFileUpload(event)">
+    <input type="file" id="bulk-upload-input" class="hidden" multiple accept="image/*"
+      onchange="handleBulkUpload(event)">
+    <input type="file" id="new-video-upload-input" class="hidden" accept="video/*"
+      onchange="handleNewVideoUpload(event)">
+
+    <!-- VIDEO PREVIEW MODAL -->
+    <div id="video-preview-modal"
+      class="hidden fixed inset-0 z-[60] bg-black/90 flex items-center justify-center backdrop-blur-sm"
+      onclick="closeVideoPreview()">
+      <div class="relative w-full max-w-[90vw] md:max-w-[400px]" onclick="event.stopPropagation()">
+        <button onclick="closeVideoPreview()"
+          class="absolute -top-12 right-0 text-white/50 hover:text-white text-4xl">&times;</button>
+        <video id="preview-player" controls
+          class="w-full h-auto max-h-[80vh] rounded-lg bg-black shadow-2xl border border-gray-800"></video>
+      </div>
+    </div>
+
+    <!-- FRAME CAPTURE MODAL -->
+    <div id="frame-capture-modal"
+      class="hidden fixed inset-0 z-[70] bg-black/90 flex items-center justify-center backdrop-blur-sm">
+      <div
+        class="relative w-full max-w-5xl bg-gray-900 rounded-xl overflow-hidden flex flex-col md:flex-row shadow-2xl border border-gray-800">
+        <button onclick="closeFrameCapture()"
+          class="absolute top-4 right-4 z-50 text-white bg-black/50 rounded-full w-10 h-10 flex items-center justify-center hover:bg-red-600 transition"><i
+            class="ri-close-line text-xl"></i></button>
+
+        <div class="flex-1 bg-black flex items-center justify-center relative min-h-[300px]">
+          <video id="capture-player" controls class="max-h-[70vh] max-w-full" crossorigin="anonymous"></video>
+        </div>
+
+        <div class="w-full md:w-72 bg-gray-800 p-6 flex flex-col gap-6 border-l border-gray-700">
+          <div>
+            <h3 class="text-lg font-bold uppercase tracking-wider text-white mb-2">Стоп-кадр</h3>
+            <p class="text-xs text-gray-400 leading-relaxed">1. Найдите нужный момент.<br>2. Поставьте на паузу.<br>3.
+              Нажмите кнопку ниже.</p>
+          </div>
+
+          <canvas id="capture-canvas"
+            class="hidden w-full h-auto object-contain bg-black rounded border border-gray-600"></canvas>
+
+          <button onclick="captureCurrentFrame()"
+            class="bg-pink-600 hover:bg-pink-500 text-white py-4 rounded font-bold uppercase tracking-widest text-xs transition shadow-lg flex items-center justify-center gap-2">
+            <i class="ri-camera-line text-lg"></i> Сохранить кадр
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <!-- CROP MODAL -->
+    <div id="crop-modal"
+      class="hidden fixed inset-0 z-[80] bg-black/90 flex items-center justify-center backdrop-blur-sm">
+      <div
+        class="relative w-full max-w-5xl bg-gray-900 rounded-xl overflow-hidden flex flex-col md:flex-row shadow-2xl border border-gray-800">
+        <button onclick="cancelCropping()"
+          class="absolute top-4 right-4 z-50 text-white bg-black/50 rounded-full w-10 h-10 flex items-center justify-center hover:bg-red-600 transition"><i
+            class="ri-close-line text-xl"></i></button>
+
+        <div class="flex-1 bg-black flex items-center justify-center relative min-h-[300px] p-4">
+          <div class="max-w-full max-h-[70vh]">
+            <img id="crop-image" class="max-h-[70vh]">
+          </div>
+        </div>
+
+        <div class="w-full md:w-72 bg-gray-800 p-6 flex flex-col gap-6 border-l border-gray-700">
+          <div>
+            <h3 class="text-lg font-bold uppercase tracking-wider text-white mb-2">Обрезать фото</h3>
+            <p id="crop-queue-status" class="text-xs text-gray-400 leading-relaxed"></p>
+          </div>
+
+          <div class="space-y-2">
+            <p class="text-xs font-bold uppercase tracking-widest text-gray-400">Категория</p>
+            <select id="crop-category"
+              class="w-full bg-gray-700 text-white border border-gray-600 rounded px-3 py-2 text-xs outline-none focus:border-pink-500 transition">
+              <option value="beauty">Beauty</option>
+              <option value="streetwear">Streetwear</option>
+              <option value="commercial">Commercial</option>
+              <option value="casual" selected>Casual</option>
+              <option value="ugc">UGC</option>
+              <option value="food">Food & Bev</option>
+              <option value="acting">Acting</option>
+            </select>
+          </div>
+
+          <div class="space-y-2">
+            <p class="text-xs font-bold uppercase tracking-widest text-gray-400">Соотношение</p>
+            <div class="grid grid-cols-3 gap-2">
+              <button onclick="setCropAspectRatio(2/3)"
+                class="bg-gray-700 hover:bg-pink-600 text-white py-2 rounded text-xs transition">2:3</button>
+              <button onclick="setCropAspectRatio(1/1)"
+                class="bg-gray-700 hover:bg-pink-600 text-white py-2 rounded text-xs transition">1:1</button>
+              <button onclick="setCropAspectRatio(NaN)"
+                class="bg-gray-700 hover:bg-pink-600 text-white py-2 rounded text-xs transition">Free</button>
+            </div>
+          </div>
+
+          <button id="crop-and-upload-btn" onclick="cropAndUpload()"
+            class="mt-auto bg-pink-600 hover:bg-pink-500 text-white py-4 rounded font-bold uppercase tracking-widest text-xs transition shadow-lg flex items-center justify-center gap-2">
+            <i class="ri-crop-line text-lg"></i> Обрезать и загрузить
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <script src="admin.js"></script>
 </body>
 
 </html>

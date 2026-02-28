@@ -1,4 +1,9 @@
 {
+  "siteImages": {
+    "hero": "/img/IMG_6543.jpg",
+    "about1": "/img/IMG_7263.jpg",
+    "about2": "/img/IMG_8558.jpg"
+  },
   "photos": [
     {
       "src": "https://res.cloudinary.com/dkexmocck/image/upload/w_1600,c_limit,q_auto,f_auto/v1772037506/zhjytmommnik177nnicz.jpg",
