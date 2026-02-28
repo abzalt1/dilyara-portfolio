@@ -84,7 +84,7 @@ async function handleLogin(user) {
 
   // Загружаем конфиг (теперь с авторизацией)
   try {
-    const cfgRes = await fetch('/.netlify/functions/get-config', {
+    const cfgRes = await fetch('/api/get-config', {
       headers: { 'Authorization': `Bearer ${authToken}` }
     });
     if (!cfgRes.ok) throw new Error(`Config fetch failed with status ${cfgRes.status}`);
@@ -340,7 +340,7 @@ async function deletePhoto(index) {
       if (match && match[1]) {
         showStatus('Удаление файла из облака...');
         // Вызываем нашу функцию (не ждем ответа, чтобы не тормозить интерфейс)
-        fetch('/.netlify/functions/delete-image', {
+        fetch('/api/delete-image', {
           method: 'POST', body: JSON.stringify({ public_id: match[1] }),
           headers: { 'Authorization': `Bearer ${authToken}` }
         }).catch(e => console.error('Cloudinary delete error:', e));
@@ -409,7 +409,7 @@ async function deleteSelectedPhotos() {
       if (parts.length === 2) {
         const match = parts[1].match(/v\d+\/(.+)\.[a-zA-Z0-9]+$/);
         if (match && match[1]) {
-          fetch('/.netlify/functions/delete-image', {
+          fetch('/api/delete-image', {
             method: 'POST', body: JSON.stringify({ public_id: match[1] }),
             headers: { 'Authorization': `Bearer ${authToken}` }
           }).catch(console.error);
@@ -502,7 +502,7 @@ async function handleFileUpload(e) {
 
   try {
     // 1. Получаем подпись от нашей функции
-    const sigRes = await fetch('/.netlify/functions/sign-upload', {
+    const sigRes = await fetch('/api/sign-upload', {
       headers: { 'Authorization': `Bearer ${authToken}` }
     });
     if (!sigRes.ok) throw new Error('Failed to get signature');
@@ -584,7 +584,7 @@ async function processNewVideo(file) {
 
   try {
     // 1. Подпись
-    const sigRes = await fetch('/.netlify/functions/sign-upload', {
+    const sigRes = await fetch('/api/sign-upload', {
       headers: { 'Authorization': `Bearer ${authToken}` }
     });
     if (!sigRes.ok) throw new Error('Failed to get signature');
@@ -713,7 +713,7 @@ async function cropAndUpload() {
 
   cropper.getCroppedCanvas({ width: 1600, imageSmoothingQuality: 'high' }).toBlob(async (blob) => {
     try {
-      const sigRes = await fetch('/.netlify/functions/sign-upload', {
+      const sigRes = await fetch('/api/sign-upload', {
         headers: { 'Authorization': `Bearer ${authToken}` }
       });
       if (!sigRes.ok) throw new Error('Failed to get signature');
@@ -787,7 +787,7 @@ async function fetchInstagramPoster(index) {
   showStatus('Поиск и загрузка обложки...', 'video-status-msg');
 
   try {
-    const res = await fetch('/.netlify/functions/fetch-instagram', {
+    const res = await fetch('/api/fetch-instagram', {
       method: 'POST',
       body: JSON.stringify({ url: link }),
       headers: { 'Authorization': `Bearer ${authToken}` }
