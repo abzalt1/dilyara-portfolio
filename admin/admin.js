@@ -64,29 +64,76 @@ function batchChangeCategory() {
 }
 
 // --- AUTHENTICATION ---
-netlifyIdentity.on('init', user => {
-  if (user) handleLogin(user);
+// Check for existing token on load
+document.addEventListener('DOMContentLoaded', () => {
+  const savedToken = localStorage.getItem('admin_token');
+  if (savedToken) {
+    authToken = savedToken;
+    handleAutoLogin();
+  }
 });
-netlifyIdentity.on('login', user => handleLogin(user));
-netlifyIdentity.on('logout', () => {
+
+async function handleCustomLogin(e) {
+  e.preventDefault();
+  const password = document.getElementById('admin-password').value;
+  const btn = document.getElementById('login-btn');
+  const errorMsg = document.getElementById('login-error');
+
+  btn.innerText = 'Вход...';
+  btn.disabled = true;
+  errorMsg.classList.add('hidden');
+
+  try {
+    const res = await fetch('/api/auth', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ password })
+    });
+
+    const data = await res.json();
+
+    if (res.ok) {
+      authToken = data.token;
+      localStorage.setItem('admin_token', authToken);
+      handleAutoLogin();
+    } else {
+      errorMsg.innerText = data.error || 'Ошибка входа';
+      errorMsg.classList.remove('hidden');
+    }
+  } catch (error) {
+    console.error('Login error:', error);
+    errorMsg.innerText = 'Ошибка соединения';
+    errorMsg.classList.remove('hidden');
+  } finally {
+    btn.innerText = 'Войти';
+    btn.disabled = false;
+  }
+}
+
+function handleCustomLogout() {
+  localStorage.removeItem('admin_token');
+  authToken = null;
   document.getElementById('login-screen').classList.remove('hidden');
   document.getElementById('dashboard').classList.add('hidden');
-  authToken = null;
-});
+}
 
-async function handleLogin(user) {
+async function handleAutoLogin() {
   document.getElementById('login-screen').classList.add('hidden');
   document.getElementById('dashboard').classList.remove('hidden');
-  document.getElementById('user-email').innerText = user.email;
-
-  // Получаем JWT токен ПЕРВЫМ — нужен для всех API-вызовов
-  authToken = await user.jwt();
+  document.getElementById('user-email').innerText = 'Admin';
 
   // Загружаем конфиг (теперь с авторизацией)
   try {
     const cfgRes = await fetch('/api/get-config', {
       headers: { 'Authorization': `Bearer ${authToken}` }
     });
+
+    if (cfgRes.status === 401) {
+      // Token expired
+      handleCustomLogout();
+      return;
+    }
+
     if (!cfgRes.ok) throw new Error(`Config fetch failed with status ${cfgRes.status}`);
     const config = await cfgRes.json();
     CLOUD_NAME = config.cloud_name;
@@ -144,19 +191,23 @@ function initVideoSortable() {
   });
 }
 
-// --- GITHUB API (VIA GIT GATEWAY) ---
+// --- DATA LOADING & SAVING VIA GITHUB API ---
 async function fetchData() {
   try {
-    const response = await fetch(`/.netlify/git/github/contents/${REPO_FILE_PATH}?ref=${BRANCH}`, {
+    const response = await fetch(`/api/data`, {
       headers: { 'Authorization': `Bearer ${authToken}` }
     });
+
+    if (response.status === 401) {
+      handleCustomLogout();
+      return;
+    }
+
     if (!response.ok) throw new Error('Failed to fetch data');
     const json = await response.json();
 
-    fileSha = json.sha;
-    // Декодируем Base64 (с поддержкой кириллицы)
-    const content = decodeURIComponent(escape(window.atob(json.content)));
-    currentData = JSON.parse(content);
+    fileSha = json.sha; // Запоминаем SHA для сохранения
+    currentData = json.data;
     console.log('Data loaded:', currentData);
   } catch (error) {
     console.error(error);
@@ -167,31 +218,29 @@ async function fetchData() {
 async function saveData(newData, message, statusId = 'status-msg') {
   showLoader(true);
   try {
-    // Кодируем в Base64 (с поддержкой кириллицы)
-    const content = window.btoa(unescape(encodeURIComponent(JSON.stringify(newData, null, 2))));
-
-    const response = await fetch(`/.netlify/git/github/contents/${REPO_FILE_PATH}`, {
-      method: 'PUT',
+    const response = await fetch(`/api/data`, {
+      method: 'POST',
       headers: {
         'Authorization': `Bearer ${authToken}`,
         'Content-Type': 'application/json'
       },
       body: JSON.stringify({
         message: message,
-        content: content,
-        sha: fileSha,
-        branch: BRANCH
+        content: newData,
+        sha: fileSha
       })
     });
 
     if (!response.ok) throw new Error('Failed to save');
     const json = await response.json();
-    fileSha = json.content.sha; // Обновляем SHA для следующих сохранений
+
+    fileSha = json.newSha; // Обновляем SHA для следующих сохранений
     currentData = newData; // Обновляем локальные данные
+
     renderGallery();
     renderVideoGallery();
     populateCategorySelects();
-    showStatus('Сохранено успешно!', statusId);
+    showStatus('Сохранено на GitHub!', statusId);
   } catch (error) {
     console.error(error);
     showToast('Ошибка сохранения!', 'error');

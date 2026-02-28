@@ -5,7 +5,7 @@
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <link href="../style.css" rel="stylesheet">
-  <script src="https://identity.netlify.com/v1/netlify-identity-widget.js"></script>
+  <script src="https://media-library.cloudinary.com/global/all.js"></script>
   <script src="https://media-library.cloudinary.com/global/all.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/sortablejs@latest/Sortable.min.js"></script>
   <link href="https://cdnjs.cloudflare.com/ajax/libs/cropperjs/1.5.13/cropper.min.css" rel="stylesheet">
@@ -131,12 +131,20 @@
 <body class="min-h-screen flex flex-col items-center justify-center p-4">
 
   <!-- LOGIN SCREEN -->
-  <div id="login-screen" class="text-center space-y-6">
-    <h1 class="text-4xl font-bold tracking-widest uppercase">Dilyara Admin</h1>
-    <button onclick="netlifyIdentity.open()"
-      class="px-8 py-3 bg-white text-black font-bold uppercase tracking-widest hover:bg-gray-200 transition">
-      Войти
-    </button>
+  <div id="login-screen"
+    class="text-center space-y-6 bg-gray-900 border border-gray-800 p-10 rounded-2xl shadow-2xl max-w-sm w-full mx-auto mt-20">
+    <h1 class="text-3xl font-bold tracking-widest uppercase mb-4">Dilyara Admin</h1>
+    <form id="login-form" class="space-y-4" onsubmit="handleCustomLogin(event)">
+      <div>
+        <input type="password" id="admin-password" placeholder="Enter Password" required
+          class="w-full bg-black border border-gray-700 rounded px-4 py-3 text-white focus:border-pink-500 outline-none text-center tracking-widest">
+      </div>
+      <p id="login-error" class="text-red-500 text-xs hidden">Invalid Password</p>
+      <button type="submit" id="login-btn"
+        class="w-full py-3 bg-white text-black font-bold uppercase tracking-widest hover:bg-gray-200 transition rounded flex justify-center items-center">
+        Войти
+      </button>
+    </form>
   </div>
 
   <!-- DASHBOARD -->
@@ -148,7 +156,7 @@
         <a href="https://app.netlify.com" target="_blank"
           class="text-xs uppercase tracking-widest text-gray-500 hover:text-white transition border-r border-gray-700 pr-4 mr-2">Users
           & Settings</a>
-        <button onclick="netlifyIdentity.logout()"
+        <button onclick="handleCustomLogout()"
           class="text-xs uppercase tracking-widest hover:text-red-500 transition">Выйти</button>
       </div>
     </div>
