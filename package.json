@@ -1,8 +1,30 @@
 {
-  "name": "dilyara-portfolio-functions",
-  "version": "1.0.0",
-  "description": "Netlify functions for Dilyara's portfolio",
-  "engines": {
-    "node": ">=18.0.0"
+  "name": "legacy-app",
+  "version": "0.1.0",
+  "private": true,
+  "scripts": {
+    "dev": "npx @tailwindcss/cli@^4 -i ./src/app/globals.css -o ./src/app/out.css && next dev",
+    "build": "npx @tailwindcss/cli@^4 -i ./src/app/globals.css -o ./src/app/out.css --minify && next build",
+    "start": "next start",
+    "lint": "eslint"
+  },
+  "dependencies": {
+    "clsx": "^2.1.1",
+    "framer-motion": "^12.34.3",
+    "next": "^16.1.6",
+    "react": "^19.2.4",
+    "react-dom": "^19.2.4",
+    "tailwind-merge": "^3.5.0"
+  },
+  "devDependencies": {
+    "@tailwindcss/cli": "^4.2.1",
+    "@tailwindcss/postcss": "^4.2.1",
+    "@types/node": "^20",
+    "@types/react": "^19",
+    "@types/react-dom": "^19",
+    "eslint": "^9",
+    "eslint-config-next": "16.1.6",
+    "tailwindcss": "^4.2.1",
+    "typescript": "^5"
   }
 }
