@@ -318,7 +318,7 @@ export default function AdminPage() {
                                                 reader.onload = () => {
                                                     setCropImage({
                                                         src: reader.result as string,
-                                                        aspect: 4 / 5,
+                                                        aspect: 16 / 9,
                                                         onCrop: async (croppedFile) => {
                                                             const url = await uploadFileToCloudinary(croppedFile, "image");
                                                             if (url) {
