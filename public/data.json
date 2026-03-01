@@ -24,22 +24,18 @@
   ],
   "videos": [
     {
-      "category": "beauty",
-      "src": "https://res.cloudinary.com/dkexmocck/video/upload/v1772377556/daqpqmwipcykn1f6a8vm.mov",
-      "video_url": "",
-      "label": "IMG_7508.MOV",
-      "poster": "https://res.cloudinary.com/dkexmocck/video/upload/v1772377556/daqpqmwipcykn1f6a8vm.jpg",
-      "chosen": false,
-      "selected": false
-    },
-    {
-      "category": "commercial",
       "src": "https://res.cloudinary.com/dkexmocck/video/upload/v1772375980/jkots8btvndo1wruy9mu.mp4",
       "video_url": "",
+      "category": "commercial",
       "label": "IMG_8764.MP4",
-      "poster": "https://res.cloudinary.com/dkexmocck/video/upload/v1772375980/jkots8btvndo1wruy9mu.jpg",
-      "chosen": false,
-      "selected": false
+      "poster": "https://res.cloudinary.com/dkexmocck/video/upload/v1772375980/jkots8btvndo1wruy9mu.jpg"
+    },
+    {
+      "src": "https://res.cloudinary.com/dkexmocck/video/upload/v1772377556/daqpqmwipcykn1f6a8vm.mov",
+      "video_url": "",
+      "category": "beauty",
+      "label": "IMG_7508.MOV",
+      "poster": "https://res.cloudinary.com/dkexmocck/video/upload/v1772377556/daqpqmwipcykn1f6a8vm.jpg"
     }
   ]
 }
