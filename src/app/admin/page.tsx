@@ -129,13 +129,16 @@ export default function AdminPage() {
                 }),
             });
 
-            if (!response.ok) throw new Error("Failed to save to GitHub");
+            if (!response.ok) {
+                const errorData = await response.json().catch(() => ({}));
+                throw new Error(errorData.error || errorData.details?.message || "Failed to save to GitHub");
+            }
             const json = await response.json();
             setFileSha(json.newSha);
             setData(newData);
-        } catch (err) {
+        } catch (err: any) {
             console.error("Save error", err);
-            alert("Error saving data");
+            alert(`Ошибка сохранения: ${err.message}`);
         } finally {
             setIsLoading(false);
         }
