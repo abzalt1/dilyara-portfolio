@@ -24,15 +24,6 @@
   ],
   "videos": [
     {
-      "category": "streetwear",
-      "src": "",
-      "video_url": "https://instagram.com/bydilyara",
-      "label": "Streetwear Reel (Placeholder)",
-      "poster": "./img/street-poster.jpg",
-      "chosen": false,
-      "selected": false
-    },
-    {
       "category": "food",
       "src": "",
       "video_url": "https://instagram.com/bydilyara",
