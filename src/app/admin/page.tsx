@@ -216,25 +216,29 @@ export default function AdminPage() {
 
     const handleUploadPhoto = async (file: File) => {
         const url = await uploadFileToCloudinary(file, "image");
-        if (url && data) {
-            const newPhoto = { src: url, thumb: url, category: "casual", alt: file.name };
-            const newData = { ...data, photos: [newPhoto, ...data.photos] };
-            setData(newData);
+        if (url) {
+            setData(prev => {
+                if (!prev) return prev;
+                const newPhoto = { src: url, thumb: url, category: "casual", alt: file.name };
+                return { ...prev, photos: [newPhoto, ...prev.photos] };
+            });
         }
     };
 
     const handleUploadVideo = async (file: File) => {
         const url = await uploadFileToCloudinary(file, "video");
-        if (url && data) {
-            const newVideo = {
-                category: "casual",
-                src: url,
-                video_url: "",
-                label: file.name,
-                poster: url.replace(/\.[^/.]+$/, ".jpg")
-            };
-            const newData = { ...data, videos: [newVideo, ...data.videos] };
-            setData(newData);
+        if (url) {
+            setData(prev => {
+                if (!prev) return prev;
+                const newVideo = {
+                    category: "casual",
+                    src: url,
+                    video_url: "",
+                    label: file.name,
+                    poster: url.replace(/\.[^/.]+$/, ".jpg")
+                };
+                return { ...prev, videos: [newVideo, ...prev.videos] };
+            });
         }
     };
 
@@ -300,11 +304,11 @@ export default function AdminPage() {
     const getImageUrl = (url: string) => url?.startsWith("./") ? url.replace("./", "/") : url;
 
     return (
-        <div className="min-h-screen bg-[#050505] text-white flex justify-center p-8">
-            <div className="w-full max-w-5xl space-y-12 mt-10">
-                <div className="flex justify-between items-center border-b border-gray-800 pb-6 sticky top-0 bg-[#050505]/90 backdrop-blur-md z-40 py-4 mb-4">
+        <div className="min-h-screen bg-[#050505] text-white flex justify-center p-4 md:p-8">
+            <div className="w-full max-w-5xl space-y-8 md:space-y-12 mt-4 md:mt-10">
+                <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center border-b border-gray-800 pb-6 sticky top-0 bg-[#050505]/90 backdrop-blur-md z-40 py-4 mb-4 gap-4">
                     <div className="flex flex-col gap-1">
-                        <h2 className="text-xl font-bold tracking-widest uppercase text-white">Панель управления</h2>
+                        <h2 className="text-lg md:text-xl font-bold tracking-widest uppercase text-white">Панель управления</h2>
                         <div className="flex items-center gap-2">
                             <div className={`w-2 h-2 rounded-full ${isDirty ? 'bg-orange-500 animate-pulse' : 'bg-green-500'}`}></div>
                             <span className="text-[10px] uppercase tracking-widest text-gray-500 font-bold">
