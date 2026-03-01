@@ -112,7 +112,7 @@ export default function AdminPage() {
         setIsAuthenticated(false);
     };
 
-    const saveData = async (newData: PortfolioData, message: string) => {
+    const saveData = async (newData: PortfolioData, message: string, retryCount = 0) => {
         if (!authToken || !fileSha) return;
         setIsLoading(true);
         try {
@@ -131,6 +131,24 @@ export default function AdminPage() {
 
             if (!response.ok) {
                 const errorData = await response.json().catch(() => ({}));
+
+                // If conflict (409) and we haven't retried yet, try to get the latest SHA and retry
+                if (response.status === 409 && retryCount === 0) {
+                    console.log("Conflict detected, retrying with new SHA...");
+                    const dataRes = await fetch("/api/data", {
+                        headers: { "Authorization": `Bearer ${authToken}` }
+                    });
+                    if (dataRes.ok) {
+                        const latest = await dataRes.json();
+                        setFileSha(latest.sha);
+                        // We use the latest data but apply our new change? 
+                        // For simplicity, we'll try to save the same newData with the new SHA.
+                        // In a more complex app, we'd merge, but here newData is the whole state.
+                        setIsLoading(false); // temporary reset to avoid flickering if needed
+                        return saveData(newData, message, retryCount + 1);
+                    }
+                }
+
                 throw new Error(errorData.error || errorData.details?.message || "Failed to save to GitHub");
             }
             const json = await response.json();

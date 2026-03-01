@@ -132,7 +132,8 @@ export async function POST(req: Request) {
         if (!response.ok) {
             const err = await response.json();
             console.error("GitHub API Error (PUT):", err);
-            return NextResponse.json({ error: "Failed to save to GitHub", details: err }, { status: response.status });
+            const errorMessage = err.message || "Failed to save to GitHub";
+            return NextResponse.json({ error: errorMessage, details: err }, { status: response.status });
         }
 
         const responseData = await response.json();
