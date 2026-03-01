@@ -22,15 +22,5 @@
       "selected": false
     }
   ],
-  "videos": [
-    {
-      "category": "acting",
-      "src": "",
-      "video_url": "https://instagram.com/bydilyara",
-      "label": "Acting Reel (Placeholder)",
-      "poster": "./img/acting-poster.jpg",
-      "chosen": false,
-      "selected": false
-    }
-  ]
+  "videos": []
 }
