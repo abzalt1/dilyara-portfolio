@@ -24,6 +24,13 @@
   ],
   "videos": [
     {
+      "category": "casual",
+      "src": "https://res.cloudinary.com/dkexmocck/video/upload/v1772377556/daqpqmwipcykn1f6a8vm.mov",
+      "video_url": "",
+      "label": "IMG_7508.MOV",
+      "poster": "https://res.cloudinary.com/dkexmocck/video/upload/v1772377556/daqpqmwipcykn1f6a8vm.jpg"
+    },
+    {
       "category": "commercial",
       "src": "https://res.cloudinary.com/dkexmocck/video/upload/v1772375980/jkots8btvndo1wruy9mu.mp4",
       "video_url": "",
