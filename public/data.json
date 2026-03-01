@@ -28,7 +28,9 @@
       "src": "https://res.cloudinary.com/dkexmocck/video/upload/v1772377556/daqpqmwipcykn1f6a8vm.mov",
       "video_url": "",
       "label": "IMG_7508.MOV",
-      "poster": "https://res.cloudinary.com/dkexmocck/video/upload/v1772377556/daqpqmwipcykn1f6a8vm.jpg"
+      "poster": "https://res.cloudinary.com/dkexmocck/video/upload/v1772377556/daqpqmwipcykn1f6a8vm.jpg",
+      "chosen": false,
+      "selected": false
     },
     {
       "category": "commercial",
