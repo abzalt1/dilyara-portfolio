@@ -30,6 +30,7 @@ export default function AdminPage() {
     const [authToken, setAuthToken] = useState<string | null>(null);
     const [cloudConfig, setCloudConfig] = useState<CloudinaryConfig | null>(null);
     const [data, setData] = useState<PortfolioData | null>(null);
+    const [originalData, setOriginalData] = useState<PortfolioData | null>(null);
     const [fileSha, setFileSha] = useState<string>("");
 
     // Cropping state
@@ -70,6 +71,7 @@ export default function AdminPage() {
 
             const jsonData = await dataRes.json();
             setData(jsonData.data);
+            setOriginalData(jsonData.data);
             setFileSha(jsonData.sha);
 
         } catch (err) {
@@ -153,6 +155,7 @@ export default function AdminPage() {
             }
             const json = await response.json();
             setFileSha(json.newSha);
+            setOriginalData(newData);
             setData(newData);
         } catch (err: any) {
             console.error("Save error", err);
@@ -216,7 +219,7 @@ export default function AdminPage() {
         if (url && data) {
             const newPhoto = { src: url, thumb: url, category: "casual", alt: file.name };
             const newData = { ...data, photos: [newPhoto, ...data.photos] };
-            await saveData(newData, "Uploaded new photo");
+            setData(newData);
         }
     };
 
@@ -231,33 +234,28 @@ export default function AdminPage() {
                 poster: url.replace(/\.[^/.]+$/, ".jpg")
             };
             const newData = { ...data, videos: [newVideo, ...data.videos] };
-            await saveData(newData, "Uploaded new video");
+            setData(newData);
         }
     };
 
 
     const handlePhotosUpdate = (newPhotos: any[]) => {
         if (!data) return;
-        // Strip SortableJS metadata if any and compare
-        const cleanOld = data.photos.map(({ src, category, alt, thumb }: any) => ({ src, category, alt, thumb }));
         const cleanNew = newPhotos.map(({ src, category, alt, thumb }: any) => ({ src, category, alt, thumb }));
-
-        if (JSON.stringify(cleanOld) === JSON.stringify(cleanNew)) return;
-
-        const newData = { ...data, photos: cleanNew };
-        saveData(newData, "Updated photos");
+        setData({ ...data, photos: cleanNew });
     };
 
     const handleVideosUpdate = (newVideos: any[]) => {
         if (!data) return;
-        // Strip SortableJS metadata if any and compare
-        const cleanOld = data.videos.map(({ src, video_url, category, label, poster }: any) => ({ src, video_url, category, label, poster }));
         const cleanNew = newVideos.map(({ src, video_url, category, label, poster }: any) => ({ src, video_url, category, label, poster }));
+        setData({ ...data, videos: cleanNew });
+    };
 
-        if (JSON.stringify(cleanOld) === JSON.stringify(cleanNew)) return;
+    const isDirty = data !== null && originalData !== null && JSON.stringify(data) !== JSON.stringify(originalData);
 
-        const newData = { ...data, videos: cleanNew };
-        saveData(newData, "Updated videos");
+    const onSaveAll = async () => {
+        if (!data) return;
+        await saveData(data, "Updated portfolio data via admin panel");
     };
 
     if (!isAuthenticated) {
@@ -304,16 +302,36 @@ export default function AdminPage() {
     return (
         <div className="min-h-screen bg-[#050505] text-white flex justify-center p-8">
             <div className="w-full max-w-5xl space-y-12 mt-10">
-                <div className="flex justify-between items-center border-b border-gray-800 pb-4">
-                    <h2 className="text-xl font-bold tracking-widest uppercase text-gray-400">Панель управления</h2>
-                    <div className="flex items-center gap-4">
-                        <span className="text-sm text-gray-500">Admin</span>
-                        <button
-                            onClick={handleLogout}
-                            className="text-xs uppercase tracking-widest hover:text-red-500 transition"
-                        >
-                            Выйти
-                        </button>
+                <div className="flex justify-between items-center border-b border-gray-800 pb-6 sticky top-0 bg-[#050505]/90 backdrop-blur-md z-40 py-4 mb-4">
+                    <div className="flex flex-col gap-1">
+                        <h2 className="text-xl font-bold tracking-widest uppercase text-white">Панель управления</h2>
+                        <div className="flex items-center gap-2">
+                            <div className={`w-2 h-2 rounded-full ${isDirty ? 'bg-orange-500 animate-pulse' : 'bg-green-500'}`}></div>
+                            <span className="text-[10px] uppercase tracking-widest text-gray-500 font-bold">
+                                {isDirty ? 'Есть несохраненные изменения' : 'Все изменения сохранены'}
+                            </span>
+                        </div>
+                    </div>
+
+                    <div className="flex items-center gap-6">
+                        {isDirty && (
+                            <button
+                                onClick={onSaveAll}
+                                disabled={isLoading}
+                                className="bg-pink-600 hover:bg-pink-500 text-white px-6 py-3 rounded-full text-xs font-bold uppercase tracking-widest transition-all shadow-lg shadow-pink-600/20 flex items-center gap-2 animate-bounce-subtle"
+                            >
+                                {isLoading ? 'Сохранение...' : 'Сохранить изменения'}
+                            </button>
+                        )}
+                        <div className="flex items-center gap-4 border-l border-gray-800 pl-6">
+                            <span className="text-sm text-gray-500 font-medium">Admin</span>
+                            <button
+                                onClick={handleLogout}
+                                className="text-xs uppercase tracking-widest text-gray-400 hover:text-red-500 transition font-bold"
+                            >
+                                Выйти
+                            </button>
+                        </div>
                     </div>
                 </div>
 
@@ -346,7 +364,7 @@ export default function AdminPage() {
                                                             const url = await uploadFileToCloudinary(croppedFile, "image");
                                                             if (url) {
                                                                 const newData = { ...data, siteImages: { ...data.siteImages, hero: url } };
-                                                                saveData(newData, "Updated Hero Image");
+                                                                setData(newData);
                                                             }
                                                             setCropImage(null);
                                                         }
@@ -385,7 +403,7 @@ export default function AdminPage() {
                                                             const url = await uploadFileToCloudinary(croppedFile, "image");
                                                             if (url) {
                                                                 const newData = { ...data, siteImages: { ...data.siteImages, about1: url } };
-                                                                saveData(newData, "Updated About1 Image");
+                                                                setData(newData);
                                                             }
                                                             setCropImage(null);
                                                         }
@@ -424,7 +442,7 @@ export default function AdminPage() {
                                                             const url = await uploadFileToCloudinary(croppedFile, "image");
                                                             if (url) {
                                                                 const newData = { ...data, siteImages: { ...data.siteImages, about2: url } };
-                                                                saveData(newData, "Updated About2 Image");
+                                                                setData(newData);
                                                             }
                                                             setCropImage(null);
                                                         }
