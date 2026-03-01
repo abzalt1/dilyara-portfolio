@@ -29,7 +29,7 @@
       "video_url": "https://instagram.com/bydilyara",
       "label": "Beauty Reel 01",
       "poster": "./img/beauty-poster.jpg",
-      "chosen": false,
+      "chosen": true,
       "selected": false
     },
     {
