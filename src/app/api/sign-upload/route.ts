@@ -1,6 +1,9 @@
 import { NextResponse } from "next/server";
 import crypto from "crypto";
 
+import jwt from "jsonwebtoken";
+export const dynamic = "force-dynamic";
+
 /**
  * GET /api/sign-upload
  * Generates a Cloudinary signature for secure direct client uploads.
@@ -8,13 +11,17 @@ import crypto from "crypto";
 export async function GET(req: Request) {
     try {
         const authHeader = req.headers.get("authorization");
-
-        // Simulate Basic Authentication or use a provided environment variable
-        // In production, connect this to NextAuth or JWT validation
-        const secret = process.env.ADMIN_SECRET || "antigravity-secret-key";
-
-        if (!authHeader || !authHeader.startsWith('Bearer ') || authHeader !== `Bearer ${secret}`) {
+        if (!authHeader || !authHeader.startsWith("Bearer ")) {
             return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
+        }
+
+        const token = authHeader.split(" ")[1];
+        const jwtSecret = process.env.JWT_SECRET || "fallback_secret_for_local_dev";
+
+        try {
+            jwt.verify(token, jwtSecret);
+        } catch (e) {
+            return NextResponse.json({ error: "Invalid token" }, { status: 401 });
         }
 
         const api_secret = process.env.CLOUDINARY_API_SECRET;

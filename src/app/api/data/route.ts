@@ -27,6 +27,8 @@ function verifyAuth(req: Request) {
  * GET /api/data
  * Returns the current data.json directly from the GitHub repository to avoid stale local cache during deployments
  */
+export const dynamic = "force-dynamic";
+
 export async function GET(req: Request) {
     if (!verifyAuth(req)) {
         return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
@@ -44,7 +46,10 @@ export async function GET(req: Request) {
         }
 
         const url = `https://api.github.com/repos/${owner}/${repo}/contents/${path}`;
-        const response = await fetch(url, { headers });
+        const response = await fetch(url, {
+            headers,
+            cache: "no-store" // Disable Next.js fetch caching
+        });
 
         if (!response.ok) {
             const err = await response.json();
