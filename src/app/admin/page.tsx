@@ -16,8 +16,8 @@ interface PortfolioData {
         about1: string;
         about2: string;
     };
-    photos: any[];
-    videos: any[];
+    photos: { src: string; thumb?: string; category: string; alt?: string; }[];
+    videos: { src: string; video_url?: string; category: string; label?: string; poster?: string; }[];
 }
 
 export default function AdminPage() {
@@ -38,6 +38,7 @@ export default function AdminPage() {
             setIsAuthenticated(true);
             initializeAdmin(token);
         }
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
 
     const initializeAdmin = async (token: string) => {
@@ -212,14 +213,14 @@ export default function AdminPage() {
         }
     };
 
-    const handlePhotosUpdate = (newPhotos: any[]) => {
+    const handlePhotosUpdate = (newPhotos: { src: string; thumb?: string; category: string; alt?: string; }[]) => {
         if (!data) return;
         const newData = { ...data, photos: newPhotos };
         // Prevent rapid saving if just reordering during drag, mostly handled by sortable onEnd internally
         saveData(newData, "Updated photos");
     };
 
-    const handleVideosUpdate = (newVideos: any[]) => {
+    const handleVideosUpdate = (newVideos: { src: string; video_url?: string; category: string; label?: string; poster?: string; }[]) => {
         if (!data) return;
         const newData = { ...data, videos: newVideos };
         saveData(newData, "Updated videos");

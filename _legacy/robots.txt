@@ -1,4 +1,0 @@
-User-agent: *
-Allow: /
-
-Sitemap: https://dilyara.kz/sitemap.xml

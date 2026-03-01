@@ -6,7 +6,7 @@ import { FiUploadCloud, FiTrash2 } from "react-icons/fi";
 
 const CATEGORIES = ["beauty", "streetwear", "commercial", "casual", "ugc", "food", "acting"];
 
-export function PhotoGrid({ photos, onUpdatePhotos, onUploadPhoto }: any) {
+export function PhotoGrid({ photos, onUpdatePhotos, onUploadPhoto }: { photos: { src: string; thumb?: string; category: string; alt?: string; }[]; onUpdatePhotos: (photos: { src: string; thumb?: string; category: string; alt?: string; }[]) => void; onUploadPhoto: (file: File) => Promise<void>; }) {
     const [isDragging, setIsDragging] = useState(false);
 
     // Handle Drag & Drop to upload area
@@ -75,13 +75,13 @@ export function PhotoGrid({ photos, onUpdatePhotos, onUploadPhoto }: any) {
 
                 {/* Existing Photos */}
                 <ReactSortable
-                    list={photos}
-                    setList={onUpdatePhotos}
+                    list={photos as any}
+                    setList={onUpdatePhotos as any}
                     animation={150}
                     className="contents" // Critical to keep grid layout
                     ghostClass="opacity-50"
                 >
-                    {photos.map((photo: any, index: number) => {
+                    {photos.map((photo: { src: string; thumb?: string; category: string; alt?: string; }, index: number) => {
                         const displaySrc = photo.thumb || photo.src;
                         const formattedSrc = displaySrc.startsWith("./") ? displaySrc.replace("./", "/") : displaySrc;
 

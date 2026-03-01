@@ -1,9 +1,0 @@
-[build]
-  command = "npx @tailwindcss/cli@^4 -i input.css -o style.css --minify"
-  publish = "."
-  functions = "netlify/functions"
-
-[[redirects]]
-  from = "/*"
-  to = "/404.html"
-  status = 404

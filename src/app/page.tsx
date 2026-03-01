@@ -1,7 +1,6 @@
 "use client";
 
-import { useEffect, useState, useRef, useCallback } from "react";
-import Image from "next/image";
+import { useEffect, useState } from "react";
 
 // ─── 1. TRANSLATIONS ───
 const translations = {
@@ -69,7 +68,7 @@ export default function Home() {
   const [lang, setLangState] = useState<"ru" | "en" | "kk">("ru");
   const t = translations[lang];
 
-  const [data, setData] = useState<{ photos: any[]; videos: any[]; siteImages?: { hero: string; about1: string; about2: string } }>({ photos: [], videos: [] });
+  const [data, setData] = useState<{ photos: { src: string; thumb?: string; category: string; alt?: string; }[]; videos: { src: string; video_url?: string; category: string; label?: string; poster?: string; }[]; siteImages?: { hero: string; about1: string; about2: string } }>({ photos: [], videos: [] });
   const [activeCategory, setActiveCategory] = useState("all");
   const [availableCategories, setAvailableCategories] = useState<string[]>([]);
   const [photoLimit, setPhotoLimit] = useState(12);
@@ -119,19 +118,25 @@ export default function Home() {
   const filteredPhotos = data.photos?.filter((p) => activeCategory === "all" || p.category.includes(activeCategory)) || [];
   const filteredVideos = data.videos?.filter((v) => v.src && (activeCategory === "all" || v.category.includes(activeCategory))) || [];
 
+  useEffect(() => {
+    if (lightbox.type) {
+      document.body.style.overflow = "hidden";
+    } else {
+      document.body.style.overflow = "";
+    }
+    return () => { document.body.style.overflow = ""; };
+  }, [lightbox.type]);
+
   const openPhoto = (index: number) => {
     setLightbox({ type: "photo", index });
-    document.body.style.overflow = "hidden";
   };
 
   const openVideo = (index: number) => {
     setLightbox({ type: "video", index });
-    document.body.style.overflow = "hidden";
   };
 
   const closeLightbox = () => {
     setLightbox({ type: null, index: 0 });
-    document.body.style.overflow = "";
   };
 
   const nextLightbox = () => {

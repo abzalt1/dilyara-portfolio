@@ -6,7 +6,7 @@ import { FiUploadCloud, FiTrash2, FiPlay, FiImage, FiVideo } from "react-icons/f
 
 const CATEGORIES = ["beauty", "streetwear", "commercial", "casual", "ugc", "food", "acting"];
 
-export function VideoGrid({ videos, onUpdateVideos, onUploadVideo, onUploadPoster }: any) {
+export function VideoGrid({ videos, onUpdateVideos, onUploadVideo, onUploadPoster }: { videos: { src: string; video_url?: string; category: string; label?: string; poster?: string; }[]; onUpdateVideos: (videos: { src: string; video_url?: string; category: string; label?: string; poster?: string; }[]) => void; onUploadVideo: (file: File) => Promise<string | null | void>; onUploadPoster: (index: number, file: File) => Promise<void>; }) {
     const [isDragging, setIsDragging] = useState(false);
     const [previewVideo, setPreviewVideo] = useState<string | null>(null);
 
@@ -46,7 +46,7 @@ export function VideoGrid({ videos, onUpdateVideos, onUploadVideo, onUploadPoste
     };
 
     const updateField = (index: number, field: string, value: string) => {
-        const newVideos = [...videos];
+        const newVideos: any[] = [...videos];
         newVideos[index][field] = value;
         onUpdateVideos(newVideos);
     };
@@ -94,14 +94,14 @@ export function VideoGrid({ videos, onUpdateVideos, onUploadVideo, onUploadPoste
 
                 {/* Existing Videos */}
                 <ReactSortable
-                    list={videos}
-                    setList={onUpdateVideos}
+                    list={videos as any}
+                    setList={onUpdateVideos as any}
                     animation={150}
                     handle=".drag-handle"
                     className="contents"
                     ghostClass="opacity-50"
                 >
-                    {videos.map((video: any, index: number) => {
+                    {videos.map((video: { src: string; video_url?: string; category: string; label?: string; poster?: string; }, index: number) => {
                         const formattedPoster = video.poster?.startsWith("./") ? video.poster.replace("./", "/") : video.poster;
 
                         return (
