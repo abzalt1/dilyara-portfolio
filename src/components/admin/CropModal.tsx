@@ -19,14 +19,14 @@ export function CropModal({ image, aspectRatio, onCrop, onClose }: CropModalProp
         if (!cropper) return;
 
         cropper.getCroppedCanvas({
-            maxWidth: 2000,
-            maxHeight: 2000,
+            maxWidth: 4000,
+            maxHeight: 4000,
             imageSmoothingQuality: 'high'
         }).toBlob((blob) => {
             if (blob) {
                 onCrop(blob);
             }
-        }, 'image/jpeg', 0.9);
+        }, 'image/jpeg', 1.0);
     };
 
     return (
