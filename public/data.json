@@ -24,15 +24,6 @@
   ],
   "videos": [
     {
-      "category": "commercial",
-      "src": "./video/IMG_6449.mp4",
-      "video_url": "https://instagram.com/bydilyara",
-      "label": "Commercial Reel (Actual Video)",
-      "poster": "./img/preview1.jpg",
-      "chosen": false,
-      "selected": false
-    },
-    {
       "category": "streetwear",
       "src": "",
       "video_url": "https://instagram.com/bydilyara",
