@@ -6,20 +6,34 @@
   },
   "photos": [
     {
+      "src": "https://res.cloudinary.com/dkexmocck/image/upload/q_auto,f_auto/v1772378679/v2tfleq9ynwo43xhuwqa.jpg",
+      "category": "commercial",
+      "alt": "IMG_6793.jpg",
+      "thumb": "https://res.cloudinary.com/dkexmocck/image/upload/q_auto,f_auto/v1772378679/v2tfleq9ynwo43xhuwqa.jpg"
+    },
+    {
+      "src": "https://res.cloudinary.com/dkexmocck/image/upload/q_auto,f_auto/v1772378668/iisg9qeyk3t3wfaczjfe.jpg",
+      "category": "commercial",
+      "alt": "IMG_6794.jpg",
+      "thumb": "https://res.cloudinary.com/dkexmocck/image/upload/q_auto,f_auto/v1772378668/iisg9qeyk3t3wfaczjfe.jpg"
+    },
+    {
+      "src": "https://res.cloudinary.com/dkexmocck/image/upload/q_auto,f_auto/v1772378651/xebimkkkbwyxau0r4zkc.jpg",
+      "category": "commercial",
+      "alt": "IMG_6795.jpg",
+      "thumb": "https://res.cloudinary.com/dkexmocck/image/upload/q_auto,f_auto/v1772378651/xebimkkkbwyxau0r4zkc.jpg"
+    },
+    {
       "src": "https://res.cloudinary.com/dkexmocck/image/upload/w_1600,c_limit,q_auto,f_auto/v1772037506/zhjytmommnik177nnicz.jpg",
-      "thumb": "https://res.cloudinary.com/dkexmocck/image/upload/w_500,c_limit,q_auto,f_auto/v1772037506/zhjytmommnik177nnicz.jpg",
       "category": "casual",
       "alt": "IMG 7238",
-      "chosen": false,
-      "selected": false
+      "thumb": "https://res.cloudinary.com/dkexmocck/image/upload/w_500,c_limit,q_auto,f_auto/v1772037506/zhjytmommnik177nnicz.jpg"
     },
     {
       "src": "https://res.cloudinary.com/dkexmocck/image/upload/w_1600,c_limit,q_auto,f_auto/v1772037422/hwffncfxijtoj4k5l7ut.jpg",
-      "thumb": "https://res.cloudinary.com/dkexmocck/image/upload/w_500,c_limit,q_auto,f_auto/v1772037422/hwffncfxijtoj4k5l7ut.jpg",
       "category": "streetwear",
       "alt": "IMG 6901",
-      "chosen": false,
-      "selected": false
+      "thumb": "https://res.cloudinary.com/dkexmocck/image/upload/w_500,c_limit,q_auto,f_auto/v1772037422/hwffncfxijtoj4k5l7ut.jpg"
     }
   ],
   "videos": [
