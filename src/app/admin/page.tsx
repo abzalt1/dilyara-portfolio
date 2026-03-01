@@ -112,8 +112,9 @@ export default function AdminPage() {
         setIsAuthenticated(false);
     };
 
-    const saveData = async (newData: PortfolioData, message: string, retryCount = 0) => {
-        if (!authToken || !fileSha) return;
+    const saveData = async (newData: PortfolioData, message: string, retryCount = 0, forcedSha?: string) => {
+        const currentSha = forcedSha || fileSha;
+        if (!authToken || !currentSha) return;
         setIsLoading(true);
         try {
             const response = await fetch("/api/data", {
@@ -125,31 +126,30 @@ export default function AdminPage() {
                 body: JSON.stringify({
                     message,
                     content: newData,
-                    sha: fileSha,
+                    sha: currentSha,
                 }),
             });
 
             if (!response.ok) {
                 const errorData = await response.json().catch(() => ({}));
+                const errorMessage = errorData.error || errorData.details?.message || "Failed to save to GitHub";
 
-                // If conflict (409) and we haven't retried yet, try to get the latest SHA and retry
-                if (response.status === 409 && retryCount === 0) {
-                    console.log("Conflict detected, retrying with new SHA...");
+                // If conflict (409/422) and we haven't retried yet, get latest SHA and retry
+                const isConflict = response.status === 409 || (response.status === 422 && errorMessage.includes("does not match"));
+
+                if (isConflict && retryCount < 2) {
+                    console.log(`Conflict detected (${response.status}), retrying with new SHA (attempt ${retryCount + 1})...`);
                     const dataRes = await fetch("/api/data", {
                         headers: { "Authorization": `Bearer ${authToken}` }
                     });
                     if (dataRes.ok) {
                         const latest = await dataRes.json();
                         setFileSha(latest.sha);
-                        // We use the latest data but apply our new change? 
-                        // For simplicity, we'll try to save the same newData with the new SHA.
-                        // In a more complex app, we'd merge, but here newData is the whole state.
-                        setIsLoading(false); // temporary reset to avoid flickering if needed
-                        return saveData(newData, message, retryCount + 1);
+                        return saveData(newData, message, retryCount + 1, latest.sha);
                     }
                 }
 
-                throw new Error(errorData.error || errorData.details?.message || "Failed to save to GitHub");
+                throw new Error(errorMessage);
             }
             const json = await response.json();
             setFileSha(json.newSha);
