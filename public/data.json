@@ -27,16 +27,16 @@
       "category": "beauty",
       "src": "",
       "video_url": "https://instagram.com/bydilyara",
-      "label": "Beauty Reel 01",
+      "label": "Beauty Reel (Placeholder)",
       "poster": "./img/beauty-poster.jpg",
       "chosen": false,
       "selected": false
     },
     {
-      "category": "commercial ugc",
+      "category": "commercial",
       "src": "./video/IMG_6449.mp4",
       "video_url": "https://instagram.com/bydilyara",
-      "label": "Commercial Reel 01",
+      "label": "Commercial Reel (Actual Video)",
       "poster": "./img/preview1.jpg",
       "chosen": true,
       "selected": false
@@ -45,7 +45,7 @@
       "category": "streetwear",
       "src": "",
       "video_url": "https://instagram.com/bydilyara",
-      "label": "Streetwear Reel 01",
+      "label": "Streetwear Reel (Placeholder)",
       "poster": "./img/street-poster.jpg",
       "chosen": false,
       "selected": false
@@ -54,7 +54,7 @@
       "category": "food",
       "src": "",
       "video_url": "https://instagram.com/bydilyara",
-      "label": "Food & Bev Reel 01",
+      "label": "Food & Bev Reel (Placeholder)",
       "poster": "./img/food-poster.jpg",
       "chosen": false,
       "selected": false
@@ -63,7 +63,7 @@
       "category": "acting",
       "src": "",
       "video_url": "https://instagram.com/bydilyara",
-      "label": "Acting Reel 01",
+      "label": "Acting Reel (Placeholder)",
       "poster": "./img/acting-poster.jpg",
       "chosen": false,
       "selected": false

@@ -4,6 +4,7 @@ import { useState, useEffect } from "react";
 import Image from "next/image";
 import { PhotoGrid } from "@/components/admin/PhotoGrid";
 import { VideoGrid } from "@/components/admin/VideoGrid";
+import { CropModal } from "@/components/admin/CropModal";
 
 interface CloudinaryConfig {
     cloud_name: string;
@@ -30,6 +31,9 @@ export default function AdminPage() {
     const [cloudConfig, setCloudConfig] = useState<CloudinaryConfig | null>(null);
     const [data, setData] = useState<PortfolioData | null>(null);
     const [fileSha, setFileSha] = useState<string>("");
+
+    // Cropping state
+    const [cropImage, setCropImage] = useState<{ src: string; aspect: number; onCrop: (file: File) => void } | null>(null);
 
     useEffect(() => {
         const token = localStorage.getItem("admin_token");
@@ -166,10 +170,17 @@ export default function AdminPage() {
                 body: formData
             });
 
-            if (!uploadRes.ok) throw new Error("Cloudinary upload failed");
+            if (!uploadRes.ok) throw new Error(`Cloudinary upload failed: ${uploadRes.statusText}`);
 
             const uploadData = await uploadRes.json();
-            return uploadData.secure_url;
+            let secureUrl = uploadData.secure_url;
+
+            // Add auto optimization for images
+            if (resourceType === "image" && secureUrl.includes("/upload/")) {
+                secureUrl = secureUrl.replace("/upload/", "/upload/q_auto,f_auto/");
+            }
+
+            return secureUrl;
         } catch (err) {
             console.error("Upload Error", err);
             alert("Failed to upload file");
@@ -207,7 +218,7 @@ export default function AdminPage() {
         const url = await uploadFileToCloudinary(file, "image");
         if (url && data) {
             const newVideos = [...data.videos];
-            newVideos[index].poster = url;
+            newVideos[index] = { ...newVideos[index], poster: url };
             const newData = { ...data, videos: newVideos };
             await saveData(newData, "Updated video poster");
         }
@@ -300,14 +311,26 @@ export default function AdminPage() {
                                             type="file"
                                             className="hidden"
                                             accept="image/*"
-                                            onChange={async (e) => {
+                                            onChange={(e) => {
                                                 const file = e.target.files?.[0];
                                                 if (!file) return;
-                                                const url = await uploadFileToCloudinary(file, "image");
-                                                if (url) {
-                                                    const newData = { ...data, siteImages: { ...data.siteImages, hero: url } };
-                                                    saveData(newData, "Updated Hero Image");
-                                                }
+                                                const reader = new FileReader();
+                                                reader.onload = () => {
+                                                    setCropImage({
+                                                        src: reader.result as string,
+                                                        aspect: 4 / 5,
+                                                        onCrop: async (croppedFile) => {
+                                                            const url = await uploadFileToCloudinary(croppedFile, "image");
+                                                            if (url) {
+                                                                const newData = { ...data, siteImages: { ...data.siteImages, hero: url } };
+                                                                saveData(newData, "Updated Hero Image");
+                                                            }
+                                                            setCropImage(null);
+                                                        }
+                                                    });
+                                                };
+                                                reader.readAsDataURL(file);
+                                                e.target.value = '';
                                             }}
                                         />
                                     </label>
@@ -327,14 +350,26 @@ export default function AdminPage() {
                                             type="file"
                                             className="hidden"
                                             accept="image/*"
-                                            onChange={async (e) => {
+                                            onChange={(e) => {
                                                 const file = e.target.files?.[0];
                                                 if (!file) return;
-                                                const url = await uploadFileToCloudinary(file, "image");
-                                                if (url) {
-                                                    const newData = { ...data, siteImages: { ...data.siteImages, about1: url } };
-                                                    saveData(newData, "Updated About1 Image");
-                                                }
+                                                const reader = new FileReader();
+                                                reader.onload = () => {
+                                                    setCropImage({
+                                                        src: reader.result as string,
+                                                        aspect: 2 / 3,
+                                                        onCrop: async (croppedFile) => {
+                                                            const url = await uploadFileToCloudinary(croppedFile, "image");
+                                                            if (url) {
+                                                                const newData = { ...data, siteImages: { ...data.siteImages, about1: url } };
+                                                                saveData(newData, "Updated About1 Image");
+                                                            }
+                                                            setCropImage(null);
+                                                        }
+                                                    });
+                                                };
+                                                reader.readAsDataURL(file);
+                                                e.target.value = '';
                                             }}
                                         />
                                     </label>
@@ -354,14 +389,26 @@ export default function AdminPage() {
                                             type="file"
                                             className="hidden"
                                             accept="image/*"
-                                            onChange={async (e) => {
+                                            onChange={(e) => {
                                                 const file = e.target.files?.[0];
                                                 if (!file) return;
-                                                const url = await uploadFileToCloudinary(file, "image");
-                                                if (url) {
-                                                    const newData = { ...data, siteImages: { ...data.siteImages, about2: url } };
-                                                    saveData(newData, "Updated About2 Image");
-                                                }
+                                                const reader = new FileReader();
+                                                reader.onload = () => {
+                                                    setCropImage({
+                                                        src: reader.result as string,
+                                                        aspect: 2 / 3,
+                                                        onCrop: async (croppedFile) => {
+                                                            const url = await uploadFileToCloudinary(croppedFile, "image");
+                                                            if (url) {
+                                                                const newData = { ...data, siteImages: { ...data.siteImages, about2: url } };
+                                                                saveData(newData, "Updated About2 Image");
+                                                            }
+                                                            setCropImage(null);
+                                                        }
+                                                    });
+                                                };
+                                                reader.readAsDataURL(file);
+                                                e.target.value = '';
                                             }}
                                         />
                                     </label>
@@ -386,6 +433,18 @@ export default function AdminPage() {
                     onUploadVideo={handleUploadVideo}
                     onUploadPoster={handleUploadVideoPoster}
                 />
+
+                {cropImage && (
+                    <CropModal
+                        image={cropImage.src}
+                        aspectRatio={cropImage.aspect}
+                        onClose={() => setCropImage(null)}
+                        onCrop={(blob) => {
+                            const file = new File([blob], "cropped_image.jpg", { type: "image/jpeg" });
+                            cropImage.onCrop(file);
+                        }}
+                    />
+                )}
 
             </div>
 

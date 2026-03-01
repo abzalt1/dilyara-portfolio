@@ -102,10 +102,11 @@ export function VideoGrid({ videos, onUpdateVideos, onUploadVideo, onUploadPoste
                     ghostClass="opacity-50"
                 >
                     {videos.map((video: { src: string; video_url?: string; category: string; label?: string; poster?: string; }, index: number) => {
+                        const videoKey = `video-${video.src || 'nosrc'}-${index}`;
                         const formattedPoster = video.poster?.startsWith("./") ? video.poster.replace("./", "/") : video.poster;
 
                         return (
-                            <div key={`video-${index}`} className="relative group bg-gray-900 rounded-lg overflow-hidden border border-gray-800 flex flex-col">
+                            <div key={videoKey} className="relative group bg-gray-900 rounded-lg overflow-hidden border border-gray-800 flex flex-col">
 
                                 {/* Poster Area */}
                                 <div className="relative aspect-[9/16] bg-black cursor-move drag-handle group/poster">
