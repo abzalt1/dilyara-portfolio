@@ -29,7 +29,7 @@
       "video_url": "https://instagram.com/bydilyara",
       "label": "Beauty Reel 01",
       "poster": "./img/beauty-poster.jpg",
-      "chosen": true,
+      "chosen": false,
       "selected": false
     },
     {
@@ -38,7 +38,7 @@
       "video_url": "https://instagram.com/bydilyara",
       "label": "Commercial Reel 01",
       "poster": "./img/preview1.jpg",
-      "chosen": false,
+      "chosen": true,
       "selected": false
     },
     {
