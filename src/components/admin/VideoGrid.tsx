@@ -2,7 +2,7 @@
 
 import { useState } from "react";
 import { ReactSortable } from "react-sortablejs";
-import { FiUploadCloud, FiTrash2, FiPlay, FiImage, FiVideo } from "react-icons/fi";
+import { FiUploadCloud, FiTrash2, FiPlay, FiImage, FiVideo, FiMenu } from "react-icons/fi";
 
 const CATEGORIES = ["beauty", "streetwear", "commercial", "casual", "ugc", "food", "acting"];
 
@@ -101,35 +101,51 @@ export function VideoGrid({ videos, onUpdateVideos, onUploadVideo, onUploadPoste
                     className="contents"
                     ghostClass="opacity-50"
                 >
-                    {videos.map((video: { src: string; video_url?: string; category: string; label?: string; poster?: string; }, index: number) => {
-                        const videoKey = `video-${video.src || 'nosrc'}-${index}`;
+                    {videos.map((video: { src: string; video_url?: string; category: string; label?: string; poster?: string; }) => {
+                        const videoKey = video.src || video.video_url || `video-temp-${videos.indexOf(video)}`;
                         const formattedPoster = video.poster?.startsWith("./") ? video.poster.replace("./", "/") : video.poster;
 
                         return (
                             <div key={videoKey} className="relative group bg-gray-900 rounded-lg overflow-hidden border border-gray-800 flex flex-col">
 
                                 {/* Poster Area */}
-                                <div className="relative aspect-[9/16] bg-black cursor-move drag-handle group/poster">
+                                <div className="relative aspect-[9/16] bg-black group/poster overflow-hidden">
                                     <img src={formattedPoster || 'https://via.placeholder.com/300x533/111/555?text=NO+POSTER'} className="w-full h-full object-cover opacity-80 group-hover/poster:opacity-100 transition" alt="Video cover" />
 
+                                    {/* Drag Handle Overlay - PINK AND ALWAYS VISIBLE FOR DISCOVERABILITY */}
+                                    <div className="absolute top-2 right-2 z-50 drag-handle cursor-grab active:cursor-grabbing bg-pink-600 p-2 rounded-lg text-white shadow-xl hover:bg-pink-500 transition-colors flex items-center justify-center">
+                                        <FiMenu className="w-4 h-4" />
+                                    </div>
+
                                     {video.src && (
-                                        <div className="absolute top-2 left-2 z-20">
-                                            <button onClick={(e) => { e.stopPropagation(); setPreviewVideo(video.src); }} className="bg-black/80 hover:bg-pink-600 text-white w-8 h-8 rounded-full flex items-center justify-center transition shadow-lg">
+                                        <div className="absolute top-2 left-2 z-40">
+                                            <button
+                                                onClick={(e) => { e.stopPropagation(); setPreviewVideo(video.src!); }}
+                                                onMouseDown={(e) => e.stopPropagation()}
+                                                className="bg-black/80 hover:bg-pink-600 text-white w-8 h-8 rounded-full flex items-center justify-center transition shadow-lg"
+                                            >
                                                 <FiPlay className="w-4 h-4 ml-1" />
                                             </button>
                                         </div>
                                     )}
 
-                                    <div className="absolute inset-0 flex items-center justify-center opacity-0 group-hover/poster:opacity-100 bg-black/40 transition">
-                                        <label className="bg-black/80 text-white px-3 py-1 text-xs rounded uppercase tracking-wider border border-gray-600 cursor-pointer hover:bg-white hover:text-black transition flex items-center gap-1">
-                                            <FiImage /> Обложка
+                                    <div className="absolute inset-0 flex items-center justify-center opacity-0 group-hover/poster:opacity-100 bg-black/50 transition-opacity z-30">
+                                        <label
+                                            className="bg-white text-black px-4 py-2 text-xs font-bold rounded uppercase tracking-widest border border-white cursor-pointer hover:bg-gray-200 transition-colors flex items-center gap-2 shadow-2xl scale-95 group-hover/poster:scale-100"
+                                            onMouseDown={(e) => e.stopPropagation()}
+                                        >
+                                            <FiImage className="w-4 h-4" /> Обложка
                                             <input
                                                 type="file"
                                                 className="hidden"
                                                 accept="image/*"
                                                 onChange={async (e) => {
                                                     const file = e.target.files?.[0];
-                                                    if (file) await onUploadPoster(index, file);
+                                                    if (file) {
+                                                        // Find index by reference to ensure we hit the right one
+                                                        const idx = videos.indexOf(video);
+                                                        await onUploadPoster(idx, file);
+                                                    }
                                                 }}
                                             />
                                         </label>
@@ -137,11 +153,12 @@ export function VideoGrid({ videos, onUpdateVideos, onUploadVideo, onUploadPoste
                                 </div>
 
                                 {/* Metadata Area */}
-                                <div className="p-3 space-y-3 flex-1 flex flex-col" onMouseDown={(e) => e.stopPropagation()}>
+                                <div className="p-3 space-y-3 flex-1 flex flex-col">
                                     <input
                                         type="text"
                                         value={video.label || ''}
-                                        onChange={(e) => updateField(index, 'label', e.target.value)}
+                                        onChange={(e) => updateField(videos.findIndex(v => (v.src || v.video_url) === (video.src || video.video_url)), 'label', e.target.value)}
+                                        onMouseDown={(e) => e.stopPropagation()}
                                         className="w-full bg-black border border-gray-700 rounded px-2 py-1 text-xs text-white focus:border-pink-500 outline-none"
                                         placeholder="Название"
                                     />
@@ -149,14 +166,16 @@ export function VideoGrid({ videos, onUpdateVideos, onUploadVideo, onUploadPoste
                                     <input
                                         type="text"
                                         value={video.video_url || ''}
-                                        onChange={(e) => updateField(index, 'video_url', e.target.value)}
+                                        onChange={(e) => updateField(videos.findIndex(v => (v.src || v.video_url) === (video.src || video.video_url)), 'video_url', e.target.value)}
+                                        onMouseDown={(e) => e.stopPropagation()}
                                         className="w-full bg-black border border-gray-700 rounded px-2 py-1 text-xs text-white focus:border-pink-500 outline-none"
                                         placeholder="Ссылка (Instagram/Vimeo)"
                                     />
 
                                     <select
                                         value={video.category}
-                                        onChange={(e) => updateField(index, 'category', e.target.value)}
+                                        onChange={(e) => updateField(videos.findIndex(v => (v.src || v.video_url) === (video.src || video.video_url)), 'category', e.target.value)}
+                                        onMouseDown={(e) => e.stopPropagation()}
                                         className="w-full bg-black border border-gray-700 rounded px-2 py-1 text-xs text-white focus:border-pink-500 outline-none uppercase tracking-wider"
                                     >
                                         {CATEGORIES.map(c => (
@@ -165,7 +184,11 @@ export function VideoGrid({ videos, onUpdateVideos, onUploadVideo, onUploadPoste
                                     </select>
 
                                     <div className="flex justify-between items-center mt-auto pt-2 border-t border-gray-800">
-                                        <label className="text-[10px] uppercase tracking-wider text-gray-400 hover:text-blue-400 transition flex items-center gap-1 cursor-pointer" title={video.src || 'No file'}>
+                                        <label
+                                            className="text-[10px] uppercase tracking-wider text-gray-400 hover:text-blue-400 transition flex items-center gap-1 cursor-pointer"
+                                            title={video.src || 'No file'}
+                                            onMouseDown={(e) => e.stopPropagation()}
+                                        >
                                             <FiVideo /> {video.src ? 'Заменить MP4' : 'Загрузить MP4'}
                                             <input
                                                 type="file"
@@ -175,13 +198,20 @@ export function VideoGrid({ videos, onUpdateVideos, onUploadVideo, onUploadPoste
                                                     const file = e.target.files?.[0];
                                                     if (file) {
                                                         const url = await onUploadVideo(file);
-                                                        if (url) updateField(index, 'src', url);
+                                                        if (url) {
+                                                            const idx = videos.findIndex(v => (v.src || v.video_url) === (video.src || video.video_url));
+                                                            updateField(idx, 'src', url);
+                                                        }
                                                     }
                                                 }}
                                             />
                                         </label>
 
-                                        <button onClick={() => deleteVideo(index)} className="text-gray-500 hover:text-red-500 transition">
+                                        <button
+                                            onClick={() => deleteVideo(videos.findIndex(v => (v.src || v.video_url) === (video.src || video.video_url)))}
+                                            onMouseDown={(e) => e.stopPropagation()}
+                                            className="text-gray-500 hover:text-red-500 transition"
+                                        >
                                             <FiTrash2 className="w-4 h-4" />
                                         </button>
                                     </div>

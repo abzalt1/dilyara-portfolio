@@ -80,19 +80,20 @@ export function PhotoGrid({ photos, onUpdatePhotos, onUploadPhoto }: { photos: {
                     animation={150}
                     className="contents" // Critical to keep grid layout
                     ghostClass="opacity-50"
+                    handle=".drag-handle"
                 >
-                    {photos.map((photo: { src: string; thumb?: string; category: string; alt?: string; }, index: number) => {
+                    {photos.map((photo: { src: string; thumb?: string; category: string; alt?: string; }) => {
                         const displaySrc = photo.thumb || photo.src;
                         const formattedSrc = displaySrc.startsWith("./") ? displaySrc.replace("./", "/") : displaySrc;
 
                         return (
-                            <div key={`${photo.src}-${index}`} className="relative group aspect-[2/3] bg-gray-800 rounded-lg overflow-hidden cursor-move transition-all duration-200">
+                            <div key={photo.src} className="relative group aspect-[2/3] bg-gray-800 rounded-lg overflow-hidden transition-all duration-200 drag-handle cursor-move">
                                 <img src={formattedSrc} className="w-full h-full object-cover opacity-80 group-hover:opacity-100 transition" alt="Portfolio" />
 
                                 <div className="absolute inset-0 bg-black/70 opacity-0 group-hover:opacity-100 transition flex flex-col items-center justify-center gap-2 p-2">
                                     <select
                                         value={photo.category}
-                                        onChange={(e) => changeCategory(index, e.target.value)}
+                                        onChange={(e) => changeCategory(photos.findIndex(p => p.src === photo.src), e.target.value)}
                                         className="bg-black text-xs text-white border border-gray-600 rounded px-2 py-2 outline-none w-full uppercase tracking-wider"
                                         onMouseDown={(e) => e.stopPropagation()} // Prevent sorting when clicking select
                                     >
@@ -101,7 +102,7 @@ export function PhotoGrid({ photos, onUpdatePhotos, onUploadPhoto }: { photos: {
                                         ))}
                                     </select>
                                     <button
-                                        onClick={(e) => { e.stopPropagation(); deletePhoto(index); }}
+                                        onClick={(e) => { e.stopPropagation(); deletePhoto(photos.findIndex(p => p.src === photo.src)); }}
                                         className="mt-2 bg-red-500/80 hover:bg-red-600 text-white rounded-full p-2 flex items-center justify-center transition"
                                         title="Удалить"
                                         onMouseDown={(e) => e.stopPropagation()}

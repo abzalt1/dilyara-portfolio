@@ -245,16 +245,27 @@ export default function AdminPage() {
         }
     };
 
-    const handlePhotosUpdate = (newPhotos: { src: string; thumb?: string; category: string; alt?: string; }[]) => {
+    const handlePhotosUpdate = (newPhotos: any[]) => {
         if (!data) return;
-        const newData = { ...data, photos: newPhotos };
-        // Prevent rapid saving if just reordering during drag, mostly handled by sortable onEnd internally
+        // Strip SortableJS metadata if any and compare
+        const cleanOld = data.photos.map(({ src, category, alt, thumb }: any) => ({ src, category, alt, thumb }));
+        const cleanNew = newPhotos.map(({ src, category, alt, thumb }: any) => ({ src, category, alt, thumb }));
+
+        if (JSON.stringify(cleanOld) === JSON.stringify(cleanNew)) return;
+
+        const newData = { ...data, photos: cleanNew };
         saveData(newData, "Updated photos");
     };
 
-    const handleVideosUpdate = (newVideos: { src: string; video_url?: string; category: string; label?: string; poster?: string; }[]) => {
+    const handleVideosUpdate = (newVideos: any[]) => {
         if (!data) return;
-        const newData = { ...data, videos: newVideos };
+        // Strip SortableJS metadata if any and compare
+        const cleanOld = data.videos.map(({ src, video_url, category, label, poster }: any) => ({ src, video_url, category, label, poster }));
+        const cleanNew = newVideos.map(({ src, video_url, category, label, poster }: any) => ({ src, video_url, category, label, poster }));
+
+        if (JSON.stringify(cleanOld) === JSON.stringify(cleanNew)) return;
+
+        const newData = { ...data, videos: cleanNew };
         saveData(newData, "Updated videos");
     };
 
