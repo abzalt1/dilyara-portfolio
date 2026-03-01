@@ -24,15 +24,6 @@
   ],
   "videos": [
     {
-      "category": "food",
-      "src": "",
-      "video_url": "https://instagram.com/bydilyara",
-      "label": "Food & Bev Reel (Placeholder)",
-      "poster": "./img/food-poster.jpg",
-      "chosen": false,
-      "selected": false
-    },
-    {
       "category": "acting",
       "src": "",
       "video_url": "https://instagram.com/bydilyara",
