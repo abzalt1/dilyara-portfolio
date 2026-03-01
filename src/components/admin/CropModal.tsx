@@ -37,7 +37,7 @@ export function CropModal({ image, aspectRatio, onCrop, onClose }: CropModalProp
                     <button onClick={onClose} className="text-gray-400 hover:text-white transition text-2xl">&times;</button>
                 </div>
 
-                <div className="relative bg-black flex-1 min-h-[400px] max-h-[70vh]">
+                <div className="relative bg-black flex-1 min-h-[300px] max-h-[60vh] overflow-hidden">
                     <Cropper
                         src={image}
                         style={{ height: "100%", width: "100%" }}
@@ -54,7 +54,7 @@ export function CropModal({ image, aspectRatio, onCrop, onClose }: CropModalProp
                     />
                 </div>
 
-                <div className="p-4 border-t border-gray-800 flex justify-end gap-3">
+                <div className="p-4 border-t border-gray-800 flex justify-end gap-3 bg-gray-900 relative z-10">
                     <button
                         onClick={onClose}
                         className="px-6 py-2 text-xs font-bold uppercase tracking-widest text-gray-400 hover:text-white transition"
