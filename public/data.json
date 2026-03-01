@@ -24,15 +24,6 @@
   ],
   "videos": [
     {
-      "category": "beauty",
-      "src": "",
-      "video_url": "https://instagram.com/bydilyara",
-      "label": "Beauty Reel (Placeholder)",
-      "poster": "./img/beauty-poster.jpg",
-      "chosen": false,
-      "selected": false
-    },
-    {
       "category": "commercial",
       "src": "./video/IMG_6449.mp4",
       "video_url": "https://instagram.com/bydilyara",
