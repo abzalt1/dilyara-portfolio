@@ -235,15 +235,6 @@ export default function AdminPage() {
         }
     };
 
-    const handleUploadVideoPoster = async (index: number, file: File) => {
-        const url = await uploadFileToCloudinary(file, "image");
-        if (url && data) {
-            const newVideos = [...data.videos];
-            newVideos[index] = { ...newVideos[index], poster: url };
-            const newData = { ...data, videos: newVideos };
-            await saveData(newData, "Updated video poster");
-        }
-    };
 
     const handlePhotosUpdate = (newPhotos: any[]) => {
         if (!data) return;
@@ -463,7 +454,6 @@ export default function AdminPage() {
                     videos={data.videos}
                     onUpdateVideos={handleVideosUpdate}
                     onUploadVideo={handleUploadVideo}
-                    onUploadPoster={handleUploadVideoPoster}
                 />
 
                 {cropImage && (

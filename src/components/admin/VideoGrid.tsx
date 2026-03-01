@@ -2,11 +2,11 @@
 
 import { useState } from "react";
 import { ReactSortable } from "react-sortablejs";
-import { FiUploadCloud, FiTrash2, FiPlay, FiImage, FiVideo, FiMenu } from "react-icons/fi";
+import { FiUploadCloud, FiTrash2, FiPlay, FiVideo, FiMenu } from "react-icons/fi";
 
 const CATEGORIES = ["beauty", "streetwear", "commercial", "casual", "ugc", "food", "acting"];
 
-export function VideoGrid({ videos, onUpdateVideos, onUploadVideo, onUploadPoster }: { videos: { src: string; video_url?: string; category: string; label?: string; poster?: string; }[]; onUpdateVideos: (videos: { src: string; video_url?: string; category: string; label?: string; poster?: string; }[]) => void; onUploadVideo: (file: File) => Promise<string | null | void>; onUploadPoster: (index: number, file: File) => Promise<void>; }) {
+export function VideoGrid({ videos, onUpdateVideos, onUploadVideo }: { videos: { src: string; video_url?: string; category: string; label?: string; poster?: string; }[]; onUpdateVideos: (videos: { src: string; video_url?: string; category: string; label?: string; poster?: string; }[]) => void; onUploadVideo: (file: File) => Promise<string | null | void>; }) {
     const [isDragging, setIsDragging] = useState(false);
     const [previewVideo, setPreviewVideo] = useState<string | null>(null);
 
@@ -130,25 +130,7 @@ export function VideoGrid({ videos, onUpdateVideos, onUploadVideo, onUploadPoste
                                     )}
 
                                     <div className="absolute inset-0 flex items-center justify-center opacity-0 group-hover/poster:opacity-100 bg-black/50 transition-opacity z-30">
-                                        <label
-                                            className="bg-white text-black px-4 py-2 text-xs font-bold rounded uppercase tracking-widest border border-white cursor-pointer hover:bg-gray-200 transition-colors flex items-center gap-2 shadow-2xl scale-95 group-hover/poster:scale-100"
-                                            onMouseDown={(e) => e.stopPropagation()}
-                                        >
-                                            <FiImage className="w-4 h-4" /> Обложка
-                                            <input
-                                                type="file"
-                                                className="hidden"
-                                                accept="image/*"
-                                                onChange={async (e) => {
-                                                    const file = e.target.files?.[0];
-                                                    if (file) {
-                                                        // Find index by reference to ensure we hit the right one
-                                                        const idx = videos.indexOf(video);
-                                                        await onUploadPoster(idx, file);
-                                                    }
-                                                }}
-                                            />
-                                        </label>
+                                        {/* REMOVED POSTER UPLOAD */}
                                     </div>
                                 </div>
 
