@@ -46,7 +46,6 @@ export default function RootLayout({
           rel="stylesheet"
         />
         <link href="https://cdn.jsdelivr.net/npm/remixicon@3.5.0/fonts/remixicon.css" rel="stylesheet" />
-        <script src="https://identity.netlify.com/v1/netlify-identity-widget.js" async></script>
       </head>
       {/* Restored the exact original classes: bg-white text-black font-sans selection:bg-black selection:text-white bg-noise overflow-hidden */}
       <body className="bg-white text-black font-sans selection:bg-black selection:text-white bg-noise overflow-x-hidden">
