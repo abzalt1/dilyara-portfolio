@@ -70,7 +70,10 @@ const cloudinaryLoader = ({ src, width, quality }: { src: string; width: number;
     const parts = src.split("/upload/");
     if (parts.length !== 2) return src;
     const q = quality || 80;
-    return `${parts[0]}/upload/w_${width},q_${q},f_auto/${parts[1]}`;
+    // Use 2.0x multiplier for sharpness, but cap at 5120px (Cloudinary's common limit)
+    // to prevent 400 errors on ultra-wide or 4K/5K desktop screens.
+    const w = Math.min(Math.round(width * 2), 5120);
+    return `${parts[0]}/upload/w_${w},q_${q},f_auto/${parts[1]}`;
 };
 
 interface PortfolioData {
