@@ -85,6 +85,7 @@ export function PortfolioContent({ initialData }: { initialData: PortfolioData }
         type: null,
         index: 0,
     });
+    const [isZoomed, setIsZoomed] = useState(false);
 
     useEffect(() => {
         const activeCats = new Set<string>();
@@ -128,6 +129,7 @@ export function PortfolioContent({ initialData }: { initialData: PortfolioData }
 
     const openPhoto = (index: number) => {
         setLightbox({ type: "photo", index });
+        setIsZoomed(false);
     };
 
     const openVideo = (index: number) => {
@@ -136,9 +138,11 @@ export function PortfolioContent({ initialData }: { initialData: PortfolioData }
 
     const closeLightbox = () => {
         setLightbox({ type: null, index: 0 });
+        setIsZoomed(false);
     };
 
     const nextLightbox = () => {
+        setIsZoomed(false);
         if (lightbox.type === "photo") {
             setLightbox({ ...lightbox, index: (lightbox.index + 1) % filteredPhotos.length });
         } else if (lightbox.type === "video") {
@@ -147,10 +151,67 @@ export function PortfolioContent({ initialData }: { initialData: PortfolioData }
     };
 
     const prevLightbox = () => {
+        setIsZoomed(false);
         if (lightbox.type === "photo") {
             setLightbox({ ...lightbox, index: (lightbox.index - 1 + filteredPhotos.length) % filteredPhotos.length });
         } else if (lightbox.type === "video") {
             setLightbox({ ...lightbox, index: (lightbox.index - 1 + filteredVideos.length) % filteredVideos.length });
+        }
+    };
+
+    const toggleZoom = (e: React.MouseEvent) => {
+        e.stopPropagation();
+        setIsZoomed(!isZoomed);
+    };
+
+    const handleDownload = async (e: React.MouseEvent) => {
+        e.stopPropagation();
+        if (lightbox.type !== "photo") return;
+        const photo = filteredPhotos[lightbox.index];
+        if (!photo) return;
+        try {
+            const response = await fetch(photo.src);
+            const blob = await response.blob();
+            const url = window.URL.createObjectURL(blob);
+            const a = document.createElement("a");
+            a.href = url;
+            a.download = photo.alt || `photo-${lightbox.index}.jpg`;
+            document.body.appendChild(a);
+            a.click();
+            window.URL.revokeObjectURL(url);
+            document.body.removeChild(a);
+        } catch (error) {
+            console.error("Download failed:", error);
+            // Fallback for cross-origin images
+            window.open(photo.src, "_blank");
+        }
+    };
+
+    const handleShare = async (e: React.MouseEvent) => {
+        e.stopPropagation();
+        if (lightbox.type !== "photo") return;
+        const photo = filteredPhotos[lightbox.index];
+        if (!photo) return;
+
+        const shareData = {
+            title: "Dilyara Kunanbayeva Portfolio",
+            text: photo.alt || "Check out this photo from Dilyara's portfolio!",
+            url: window.location.origin + photo.src,
+        };
+
+        if (navigator.share) {
+            try {
+                await navigator.share(shareData);
+            } catch (err) {
+                console.log("Error sharing:", err);
+            }
+        } else {
+            try {
+                await navigator.clipboard.writeText(shareData.url);
+                alert("Link copied to clipboard!");
+            } catch (err) {
+                console.error("Clipboard failed:", err);
+            }
         }
     };
 
@@ -178,6 +239,8 @@ export function PortfolioContent({ initialData }: { initialData: PortfolioData }
                         alt="Header"
                         fill
                         priority
+                        quality={90}
+                        sizes="100vw"
                         className="object-cover object-top opacity-70 grayscale contrast-125 will-change-transform h-[120%] -top-[10%]"
                     />
                 </div>
@@ -253,10 +316,24 @@ export function PortfolioContent({ initialData }: { initialData: PortfolioData }
                 </div>
                 <div className="md:col-span-6 grid grid-cols-2 gap-4">
                     <div className="aspect-[2/3] relative overflow-hidden transition-all duration-700">
-                        <Image src={data.siteImages?.about1 || "/img/IMG_7263.jpg"} alt="Model" fill className="object-cover hover:scale-105 transition-transform duration-700" />
+                        <Image
+                            src={data.siteImages?.about1 || "/img/IMG_7263.jpg"}
+                            alt="Model"
+                            fill
+                            quality={85}
+                            sizes="(max-width: 768px) 50vw, 25vw"
+                            className="object-cover hover:scale-105 transition-transform duration-700"
+                        />
                     </div>
                     <div className="aspect-[2/3] relative overflow-hidden mt-16 transition-all duration-700">
-                        <Image src={data.siteImages?.about2 || "/img/IMG_8558.jpg"} alt="Model" fill className="object-cover hover:scale-105 transition-transform duration-700" />
+                        <Image
+                            src={data.siteImages?.about2 || "/img/IMG_8558.jpg"}
+                            alt="Model"
+                            fill
+                            quality={85}
+                            sizes="(max-width: 768px) 50vw, 25vw"
+                            className="object-cover hover:scale-105 transition-transform duration-700"
+                        />
                     </div>
                 </div>
             </section>
@@ -293,10 +370,11 @@ export function PortfolioContent({ initialData }: { initialData: PortfolioData }
                                 <div key={i} className="media-item photo-thumb reveal-item visible" onClick={() => openPhoto(i)}>
                                     <div className="parallax-wrapper relative aspect-[2/3]">
                                         <Image
-                                            src={p.thumb || p.src}
+                                            src={p.src}
                                             alt={p.alt || "Portfolio Photo"}
                                             fill
-                                            sizes="(max-width: 768px) 100vw, 50vw"
+                                            quality={80}
+                                            sizes="(max-width: 768px) 50vw, 33vw"
                                             className="object-cover"
                                         />
                                     </div>
@@ -348,14 +426,36 @@ export function PortfolioContent({ initialData }: { initialData: PortfolioData }
             {lightbox.type === "photo" && (
                 <div id="lightbox" className="open" onClick={closeLightbox}>
                     <span className="lb-close" onClick={(e) => { e.stopPropagation(); closeLightbox(); }}>✕</span>
+                    <span className="lb-share" title="Share" onClick={handleShare}>
+                        <i className="ri-share-line" />
+                    </span>
+                    <span className="lb-download" title="Download" onClick={handleDownload}>
+                        <i className="ri-download-line" />
+                    </span>
+                    <span className="lb-zoom" title="Zoom" onClick={toggleZoom} style={{
+                        position: 'absolute',
+                        top: '1.5rem',
+                        right: '10.5rem',
+                        color: 'white',
+                        fontSize: '1.8rem',
+                        cursor: 'pointer',
+                        opacity: 0.6,
+                        transition: 'opacity 0.2s',
+                        lineHeight: 1,
+                        zIndex: 10
+                    }}>
+                        <i className={isZoomed ? "ri-zoom-out-line" : "ri-zoom-in-line"} />
+                    </span>
+
                     <span className="lb-prev" onClick={(e) => { e.stopPropagation(); prevLightbox(); }}>‹</span>
                     {/* eslint-disable-next-line @next/next/no-img-element */}
                     <img
                         id="lightbox-img"
                         src={filteredPhotos[lightbox.index]?.src}
                         alt="Lightbox"
-                        style={{ opacity: 1, transform: "" }}
-                        onClick={(e) => e.stopPropagation()}
+                        className={isZoomed ? "zoomed" : ""}
+                        style={{ opacity: 1, cursor: isZoomed ? "zoom-out" : "zoom-in" }}
+                        onClick={toggleZoom}
                     />
                     <span className="lb-next" onClick={(e) => { e.stopPropagation(); nextLightbox(); }}>›</span>
                     <span className="lb-counter" id="lb-photo-counter">
