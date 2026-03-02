@@ -65,6 +65,14 @@ const titleMap: Record<string, string> = {
 
 const categoryOrder = ["beauty", "streetwear", "commercial", "casual", "ugc", "food", "acting"];
 
+const cloudinaryLoader = ({ src, width, quality }: { src: string; width: number; quality?: number }) => {
+    if (!src.includes("res.cloudinary.com")) return src;
+    const parts = src.split("/upload/");
+    if (parts.length !== 2) return src;
+    const q = quality || 80;
+    return `${parts[0]}/upload/w_${width},q_${q},f_auto/${parts[1]}`;
+};
+
 interface PortfolioData {
     photos: { src: string; thumb?: string; category: string; alt?: string; }[];
     videos: { src: string; video_url?: string; category: string; label?: string; poster?: string; }[];
@@ -235,6 +243,7 @@ export function PortfolioContent({ initialData }: { initialData: PortfolioData }
                 <div className="absolute inset-0 z-0">
                     <Image
                         id="header-img"
+                        loader={cloudinaryLoader}
                         src={data.siteImages?.hero || "/img/IMG_6543.jpg"}
                         alt="Header"
                         fill
@@ -317,6 +326,7 @@ export function PortfolioContent({ initialData }: { initialData: PortfolioData }
                 <div className="md:col-span-6 grid grid-cols-2 gap-4">
                     <div className="aspect-[2/3] relative overflow-hidden transition-all duration-700">
                         <Image
+                            loader={cloudinaryLoader}
                             src={data.siteImages?.about1 || "/img/IMG_7263.jpg"}
                             alt="Model"
                             fill
@@ -327,6 +337,7 @@ export function PortfolioContent({ initialData }: { initialData: PortfolioData }
                     </div>
                     <div className="aspect-[2/3] relative overflow-hidden mt-16 transition-all duration-700">
                         <Image
+                            loader={cloudinaryLoader}
                             src={data.siteImages?.about2 || "/img/IMG_8558.jpg"}
                             alt="Model"
                             fill
@@ -370,6 +381,7 @@ export function PortfolioContent({ initialData }: { initialData: PortfolioData }
                                 <div key={i} className="media-item photo-thumb reveal-item visible" onClick={() => openPhoto(i)}>
                                     <div className="parallax-wrapper relative aspect-[2/3]">
                                         <Image
+                                            loader={cloudinaryLoader}
                                             src={p.src}
                                             alt={p.alt || "Portfolio Photo"}
                                             fill
