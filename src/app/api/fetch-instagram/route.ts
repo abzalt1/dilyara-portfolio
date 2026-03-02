@@ -1,14 +1,21 @@
 import { NextResponse } from "next/server";
 import crypto from "crypto";
+import { verifyAuthToken, unauthorizedResponse } from "@/lib/auth";
 
 export async function POST(req: Request) {
-    const authHeader = req.headers.get("Authorization");
-    if (!authHeader || !authHeader.startsWith("Bearer ")) {
-        return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
+    const decoded = verifyAuthToken(req);
+    if (!decoded) {
+        return unauthorizedResponse();
     }
 
     try {
         const { url } = await req.json();
+
+        // Security: Prevent SSRF by restricting to Instagram domains
+        if (!url || !url.includes("instagram.com")) {
+            return NextResponse.json({ error: "Invalid URL. Only Instagram links are allowed." }, { status: 400 });
+        }
+
         const cloud_name = process.env.CLOUDINARY_CLOUD_NAME;
         const api_key = process.env.CLOUDINARY_API_KEY;
         const api_secret = process.env.CLOUDINARY_API_SECRET;

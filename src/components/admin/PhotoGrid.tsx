@@ -2,7 +2,7 @@
 
 import { useState } from "react";
 import { ReactSortable } from "react-sortablejs";
-import { FiUploadCloud, FiTrash2 } from "react-icons/fi";
+import { FiUploadCloud, FiTrash2, FiMenu } from "react-icons/fi";
 
 const CATEGORIES = ["beauty", "streetwear", "commercial", "casual", "ugc", "food", "acting"];
 
@@ -87,8 +87,13 @@ export function PhotoGrid({ photos, onUpdatePhotos, onUploadPhoto }: { photos: {
                         const formattedSrc = displaySrc.startsWith("./") ? displaySrc.replace("./", "/") : displaySrc;
 
                         return (
-                            <div key={photo.src} className="relative group aspect-[2/3] bg-gray-800 rounded-lg overflow-hidden transition-all duration-200 drag-handle cursor-move">
+                            <div key={photo.src} className="relative group aspect-[2/3] bg-gray-800 rounded-lg overflow-hidden transition-all duration-200">
                                 <img src={formattedSrc} className="w-full h-full object-cover opacity-80 group-hover:opacity-100 transition" alt="Portfolio" />
+
+                                {/* Drag Handle Overlay - PINK AND ALWAYS VISIBLE FOR DISCOVERABILITY */}
+                                <div className="absolute top-2 right-2 z-50 drag-handle cursor-grab active:cursor-grabbing bg-pink-600 p-2 rounded-lg text-white shadow-xl hover:bg-pink-500 transition-colors flex items-center justify-center">
+                                    <FiMenu className="w-4 h-4" />
+                                </div>
 
                                 <div className="absolute inset-0 bg-black/70 opacity-0 group-hover:opacity-100 transition flex flex-col items-center justify-center gap-2 p-2">
                                     <select

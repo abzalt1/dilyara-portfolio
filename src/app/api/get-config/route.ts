@@ -1,11 +1,12 @@
 import { NextResponse } from "next/server";
+import { verifyAuthToken, unauthorizedResponse } from "@/lib/auth";
 
 export const dynamic = "force-dynamic";
 
 export async function GET(req: Request) {
-    const authHeader = req.headers.get("Authorization");
-    if (!authHeader || !authHeader.startsWith("Bearer ")) {
-        return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
+    const decoded = verifyAuthToken(req);
+    if (!decoded) {
+        return unauthorizedResponse();
     }
 
     return NextResponse.json({

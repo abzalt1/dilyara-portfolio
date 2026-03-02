@@ -1,27 +1,9 @@
 import { NextResponse } from "next/server";
-import jwt from "jsonwebtoken";
+import { verifyAuthToken, unauthorizedResponse } from "@/lib/auth";
 
-const owner = "abzalt1";
-const repo = "dilyara-portfolio";
+const owner = process.env.GITHUB_OWNER || "abzalt1";
+const repo = process.env.GITHUB_REPO || "dilyara-portfolio";
 const path = "public/data.json";
-
-/**
- * Helper to verify JWT token
- */
-function verifyAuth(req: Request) {
-    const authHeader = req.headers.get("Authorization");
-    if (!authHeader || !authHeader.startsWith("Bearer ")) return false;
-
-    const token = authHeader.split(" ")[1];
-    const jwtSecret = process.env.JWT_SECRET || "fallback_secret_for_local_dev";
-
-    try {
-        jwt.verify(token, jwtSecret);
-        return true;
-    } catch (e) {
-        return false;
-    }
-}
 
 /**
  * GET /api/data
@@ -30,8 +12,8 @@ function verifyAuth(req: Request) {
 export const dynamic = "force-dynamic";
 
 export async function GET(req: Request) {
-    if (!verifyAuth(req)) {
-        return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
+    if (!verifyAuthToken(req)) {
+        return unauthorizedResponse();
     }
 
     try {
@@ -84,8 +66,8 @@ export async function GET(req: Request) {
  * Overwrites data.json on GitHub using the REST API
  */
 export async function POST(req: Request) {
-    if (!verifyAuth(req)) {
-        return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
+    if (!verifyAuthToken(req)) {
+        return unauthorizedResponse();
     }
 
     try {
