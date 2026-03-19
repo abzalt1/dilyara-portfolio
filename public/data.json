@@ -9,31 +9,41 @@
       "src": "https://res.cloudinary.com/dkexmocck/image/upload/v1772378679/v2tfleq9ynwo43xhuwqa.jpg",
       "category": "commercial",
       "alt": "IMG_6793.jpg",
-      "thumb": "https://res.cloudinary.com/dkexmocck/image/upload/v1772378679/v2tfleq9ynwo43xhuwqa.jpg"
+      "thumb": "https://res.cloudinary.com/dkexmocck/image/upload/v1772378679/v2tfleq9ynwo43xhuwqa.jpg",
+      "chosen": false,
+      "selected": false
     },
     {
       "src": "https://res.cloudinary.com/dkexmocck/image/upload/v1772378668/iisg9qeyk3t3wfaczjfe.jpg",
       "category": "commercial",
       "alt": "IMG_6794.jpg",
-      "thumb": "https://res.cloudinary.com/dkexmocck/image/upload/v1772378668/iisg9qeyk3t3wfaczjfe.jpg"
+      "thumb": "https://res.cloudinary.com/dkexmocck/image/upload/v1772378668/iisg9qeyk3t3wfaczjfe.jpg",
+      "chosen": false,
+      "selected": false
     },
     {
       "src": "https://res.cloudinary.com/dkexmocck/image/upload/v1772378651/xebimkkkbwyxau0r4zkc.jpg",
       "category": "commercial",
       "alt": "IMG_6795.jpg",
-      "thumb": "https://res.cloudinary.com/dkexmocck/image/upload/v1772378651/xebimkkkbwyxau0r4zkc.jpg"
+      "thumb": "https://res.cloudinary.com/dkexmocck/image/upload/v1772378651/xebimkkkbwyxau0r4zkc.jpg",
+      "chosen": false,
+      "selected": false
     },
     {
       "src": "https://res.cloudinary.com/dkexmocck/image/upload/v1772037506/zhjytmommnik177nnicz.jpg",
       "category": "casual",
       "alt": "IMG 7238",
-      "thumb": "https://res.cloudinary.com/dkexmocck/image/upload/v1772037506/zhjytmommnik177nnicz.jpg"
+      "thumb": "https://res.cloudinary.com/dkexmocck/image/upload/v1772037506/zhjytmommnik177nnicz.jpg",
+      "chosen": false,
+      "selected": false
     },
     {
       "src": "https://res.cloudinary.com/dkexmocck/image/upload/v1772037422/hwffncfxijtoj4k5l7ut.jpg",
       "category": "streetwear",
       "alt": "IMG 6901",
-      "thumb": "https://res.cloudinary.com/dkexmocck/image/upload/v1772037422/hwffncfxijtoj4k5l7ut.jpg"
+      "thumb": "https://res.cloudinary.com/dkexmocck/image/upload/v1772037422/hwffncfxijtoj4k5l7ut.jpg",
+      "chosen": false,
+      "selected": false
     }
   ],
   "videos": [
@@ -41,14 +51,14 @@
       "src": "https://res.cloudinary.com/dkexmocck/video/upload/v1772375980/jkots8btvndo1wruy9mu.mp4",
       "video_url": "",
       "category": "commercial",
-      "label": "IMG_8764.MP4",
+      "label": "KFC commercial",
       "poster": "https://res.cloudinary.com/dkexmocck/video/upload/v1772375980/jkots8btvndo1wruy9mu.jpg"
     },
     {
       "src": "https://res.cloudinary.com/dkexmocck/video/upload/v1772377556/daqpqmwipcykn1f6a8vm.mov",
       "video_url": "",
       "category": "beauty",
-      "label": "IMG_7508.MOV",
+      "label": "JAIN cosmetics",
       "poster": "https://res.cloudinary.com/dkexmocck/video/upload/v1772377556/daqpqmwipcykn1f6a8vm.jpg"
     }
   ]
