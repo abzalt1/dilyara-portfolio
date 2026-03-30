@@ -6,6 +6,48 @@
   },
   "photos": [
     {
+      "src": "https://res.cloudinary.com/dkexmocck/image/upload/q_auto,f_auto/v1774857150/wwzxdlj5n8iv62rg9ovd.jpg",
+      "category": "streetwear",
+      "alt": "IMG_1743.JPG",
+      "thumb": "https://res.cloudinary.com/dkexmocck/image/upload/q_auto,f_auto/v1774857150/wwzxdlj5n8iv62rg9ovd.jpg"
+    },
+    {
+      "src": "https://res.cloudinary.com/dkexmocck/image/upload/q_auto,f_auto/v1774857146/u6yhsdl1ectmrwxqkuep.jpg",
+      "category": "streetwear",
+      "alt": "IMG_1738.JPG",
+      "thumb": "https://res.cloudinary.com/dkexmocck/image/upload/q_auto,f_auto/v1774857146/u6yhsdl1ectmrwxqkuep.jpg"
+    },
+    {
+      "src": "https://res.cloudinary.com/dkexmocck/image/upload/q_auto,f_auto/v1774857124/hitog2enm2dmqzapkybw.jpg",
+      "category": "beauty",
+      "alt": "IMG_2524.PNG",
+      "thumb": "https://res.cloudinary.com/dkexmocck/image/upload/q_auto,f_auto/v1774857124/hitog2enm2dmqzapkybw.jpg"
+    },
+    {
+      "src": "https://res.cloudinary.com/dkexmocck/image/upload/q_auto,f_auto/v1774857123/tqek5ingtjovdb0bkqml.jpg",
+      "category": "beauty",
+      "alt": "IMG_2523.PNG",
+      "thumb": "https://res.cloudinary.com/dkexmocck/image/upload/q_auto,f_auto/v1774857123/tqek5ingtjovdb0bkqml.jpg"
+    },
+    {
+      "src": "https://res.cloudinary.com/dkexmocck/image/upload/q_auto,f_auto/v1774857097/nkuivpyljkcuofxqfrix.jpg",
+      "category": "casual",
+      "alt": "IMG_4250.JPG",
+      "thumb": "https://res.cloudinary.com/dkexmocck/image/upload/q_auto,f_auto/v1774857097/nkuivpyljkcuofxqfrix.jpg"
+    },
+    {
+      "src": "https://res.cloudinary.com/dkexmocck/image/upload/q_auto,f_auto/v1774857093/qt0dweytu7zpbfwefzqa.jpg",
+      "category": "casual",
+      "alt": "IMG_4248.JPG",
+      "thumb": "https://res.cloudinary.com/dkexmocck/image/upload/q_auto,f_auto/v1774857093/qt0dweytu7zpbfwefzqa.jpg"
+    },
+    {
+      "src": "https://res.cloudinary.com/dkexmocck/image/upload/q_auto,f_auto/v1774857089/pmqitbc2nhkpzwyasmbu.jpg",
+      "category": "casual",
+      "alt": "IMG_4246.JPG",
+      "thumb": "https://res.cloudinary.com/dkexmocck/image/upload/q_auto,f_auto/v1774857089/pmqitbc2nhkpzwyasmbu.jpg"
+    },
+    {
       "src": "https://res.cloudinary.com/dkexmocck/image/upload/q_auto,f_auto/v1774856547/izd60rsekez64wzvsq9k.jpg",
       "category": "streetwear",
       "alt": "IMG_4354.PNG",
