@@ -284,6 +284,41 @@
   ],
   "videos": [
     {
+      "src": "https://res.cloudinary.com/dkexmocck/video/upload/v1774858348/lyvdhexnjtmvzaoynanj.mp4",
+      "video_url": "",
+      "category": "streetwear",
+      "label": "QOIMA",
+      "poster": "https://res.cloudinary.com/dkexmocck/video/upload/v1774858348/lyvdhexnjtmvzaoynanj.jpg"
+    },
+    {
+      "src": "https://res.cloudinary.com/dkexmocck/video/upload/v1774858319/muvw5jgwoxbq945ssrju.mp4",
+      "video_url": "",
+      "category": "streetwear",
+      "label": "QOIMA",
+      "poster": "https://res.cloudinary.com/dkexmocck/video/upload/v1774858319/muvw5jgwoxbq945ssrju.jpg"
+    },
+    {
+      "src": "https://res.cloudinary.com/dkexmocck/video/upload/v1774858313/hs7q8rfcgggzqgj7ugqa.mov",
+      "video_url": "",
+      "category": "beauty",
+      "label": "JAYN",
+      "poster": "https://res.cloudinary.com/dkexmocck/video/upload/v1774858313/hs7q8rfcgggzqgj7ugqa.jpg"
+    },
+    {
+      "src": "https://res.cloudinary.com/dkexmocck/video/upload/v1774858263/wxedhrwljlxib1o13rzk.mov",
+      "video_url": "",
+      "category": "social",
+      "label": "Kitfort",
+      "poster": "https://res.cloudinary.com/dkexmocck/video/upload/v1774858263/wxedhrwljlxib1o13rzk.jpg"
+    },
+    {
+      "src": "https://res.cloudinary.com/dkexmocck/video/upload/v1774858197/rxnlcep9cb3krfvrmhfl.mov",
+      "video_url": "",
+      "category": "social",
+      "label": "Kitfort",
+      "poster": "https://res.cloudinary.com/dkexmocck/video/upload/v1774858197/rxnlcep9cb3krfvrmhfl.jpg"
+    },
+    {
       "src": "https://res.cloudinary.com/dkexmocck/video/upload/v1774855135/mncua1stgi0xw2frtc4t.mp4",
       "video_url": "",
       "category": "social",
