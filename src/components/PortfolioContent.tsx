@@ -60,10 +60,10 @@ const titleMap: Record<string, string> = {
     casual: "Casual",
     ugc: "UGC",
     food: "Food & Bev",
-    acting: "Acting",
+    "social media content": "Social Media Content",
 };
 
-const categoryOrder = ["beauty", "streetwear", "commercial", "casual", "ugc", "food", "acting"];
+const categoryOrder = ["beauty", "streetwear", "commercial", "casual", "ugc", "food", "social media content"];
 
 const cloudinaryLoader = ({ src, width, quality }: { src: string; width: number; quality?: number }) => {
     if (!src.includes("res.cloudinary.com")) return src;
@@ -92,9 +92,10 @@ export function PortfolioContent({ initialData }: { initialData: PortfolioData }
     const [photoLimit, setPhotoLimit] = useState(12);
 
     // Lightbox state
-    const [lightbox, setLightbox] = useState<{ type: "photo" | "video" | null; index: number; url?: string }>({
+    const [lightbox, setLightbox] = useState<{ type: "photo" | "video" | null; index: number; url?: string; isAbout?: boolean }>({
         type: null,
         index: 0,
+        isAbout: false,
     });
     const [isZoomed, setIsZoomed] = useState(false);
 
@@ -129,6 +130,11 @@ export function PortfolioContent({ initialData }: { initialData: PortfolioData }
     const filteredPhotos = data.photos?.filter((p) => activeCategory === "all" || p.category.includes(activeCategory)) || [];
     const filteredVideos = data.videos?.filter((v) => v.src && (activeCategory === "all" || v.category.includes(activeCategory))) || [];
 
+    const aboutPhotos = [
+        { src: data.siteImages?.about1 || "/img/IMG_7263.jpg", alt: "Model Photo 1" },
+        { src: data.siteImages?.about2 || "/img/IMG_8558.jpg", alt: "Model Photo 2" }
+    ];
+
     useEffect(() => {
         if (lightbox.type) {
             document.body.style.overflow = "hidden";
@@ -139,7 +145,12 @@ export function PortfolioContent({ initialData }: { initialData: PortfolioData }
     }, [lightbox.type]);
 
     const openPhoto = (index: number) => {
-        setLightbox({ type: "photo", index });
+        setLightbox({ type: "photo", index, isAbout: false });
+        setIsZoomed(false);
+    };
+
+    const openAboutPhoto = (index: number) => {
+        setLightbox({ type: "photo", index, isAbout: true });
         setIsZoomed(false);
     };
 
@@ -148,14 +159,15 @@ export function PortfolioContent({ initialData }: { initialData: PortfolioData }
     };
 
     const closeLightbox = () => {
-        setLightbox({ type: null, index: 0 });
+        setLightbox({ type: null, index: 0, isAbout: false });
         setIsZoomed(false);
     };
 
     const nextLightbox = () => {
         setIsZoomed(false);
         if (lightbox.type === "photo") {
-            setLightbox({ ...lightbox, index: (lightbox.index + 1) % filteredPhotos.length });
+            const list = lightbox.isAbout ? aboutPhotos : filteredPhotos;
+            setLightbox({ ...lightbox, index: (lightbox.index + 1) % list.length });
         } else if (lightbox.type === "video") {
             setLightbox({ ...lightbox, index: (lightbox.index + 1) % filteredVideos.length });
         }
@@ -164,7 +176,8 @@ export function PortfolioContent({ initialData }: { initialData: PortfolioData }
     const prevLightbox = () => {
         setIsZoomed(false);
         if (lightbox.type === "photo") {
-            setLightbox({ ...lightbox, index: (lightbox.index - 1 + filteredPhotos.length) % filteredPhotos.length });
+            const list = lightbox.isAbout ? aboutPhotos : filteredPhotos;
+            setLightbox({ ...lightbox, index: (lightbox.index - 1 + list.length) % list.length });
         } else if (lightbox.type === "video") {
             setLightbox({ ...lightbox, index: (lightbox.index - 1 + filteredVideos.length) % filteredVideos.length });
         }
@@ -178,7 +191,7 @@ export function PortfolioContent({ initialData }: { initialData: PortfolioData }
     const handleDownload = async (e: React.MouseEvent) => {
         e.stopPropagation();
         if (lightbox.type !== "photo") return;
-        const photo = filteredPhotos[lightbox.index];
+        const photo = lightbox.isAbout ? aboutPhotos[lightbox.index] : filteredPhotos[lightbox.index];
         if (!photo) return;
         try {
             const response = await fetch(photo.src);
@@ -201,7 +214,7 @@ export function PortfolioContent({ initialData }: { initialData: PortfolioData }
     const handleShare = async (e: React.MouseEvent) => {
         e.stopPropagation();
         if (lightbox.type !== "photo") return;
-        const photo = filteredPhotos[lightbox.index];
+        const photo = lightbox.isAbout ? aboutPhotos[lightbox.index] : filteredPhotos[lightbox.index];
         if (!photo) return;
 
         const shareData = {
@@ -327,7 +340,7 @@ export function PortfolioContent({ initialData }: { initialData: PortfolioData }
                     </div>
                 </div>
                 <div className="md:col-span-6 grid grid-cols-2 gap-4">
-                    <div className="aspect-[2/3] relative overflow-hidden transition-all duration-700">
+                    <div className="aspect-[2/3] relative overflow-hidden transition-all duration-700 cursor-pointer group/about" onClick={() => openAboutPhoto(0)}>
                         <Image
                             loader={cloudinaryLoader}
                             src={data.siteImages?.about1 || "/img/IMG_7263.jpg"}
@@ -335,10 +348,13 @@ export function PortfolioContent({ initialData }: { initialData: PortfolioData }
                             fill
                             quality={85}
                             sizes="(max-width: 768px) 50vw, 25vw"
-                            className="object-cover hover:scale-105 transition-transform duration-700"
+                            className="object-cover group-hover/about:scale-105 transition-transform duration-700"
                         />
+                        <div className="absolute inset-0 bg-black/20 opacity-0 group-hover/about:opacity-100 transition-opacity flex items-center justify-center">
+                            <i className="ri-zoom-in-line text-white text-3xl" />
+                        </div>
                     </div>
-                    <div className="aspect-[2/3] relative overflow-hidden mt-16 transition-all duration-700">
+                    <div className="aspect-[2/3] relative overflow-hidden mt-16 transition-all duration-700 cursor-pointer group/about" onClick={() => openAboutPhoto(1)}>
                         <Image
                             loader={cloudinaryLoader}
                             src={data.siteImages?.about2 || "/img/IMG_8558.jpg"}
@@ -346,8 +362,11 @@ export function PortfolioContent({ initialData }: { initialData: PortfolioData }
                             fill
                             quality={85}
                             sizes="(max-width: 768px) 50vw, 25vw"
-                            className="object-cover hover:scale-105 transition-transform duration-700"
+                            className="object-cover group-hover/about:scale-105 transition-transform duration-700"
                         />
+                        <div className="absolute inset-0 bg-black/20 opacity-0 group-hover/about:opacity-100 transition-opacity flex items-center justify-center">
+                            <i className="ri-zoom-in-line text-white text-3xl" />
+                        </div>
                     </div>
                 </div>
             </section>
@@ -466,7 +485,7 @@ export function PortfolioContent({ initialData }: { initialData: PortfolioData }
                     {/* eslint-disable-next-line @next/next/no-img-element */}
                     <img
                         id="lightbox-img"
-                        src={filteredPhotos[lightbox.index]?.src}
+                        src={lightbox.isAbout ? aboutPhotos[lightbox.index]?.src : filteredPhotos[lightbox.index]?.src}
                         alt="Lightbox"
                         className={isZoomed ? "zoomed" : ""}
                         style={{ opacity: 1, cursor: isZoomed ? "zoom-out" : "zoom-in" }}
@@ -474,7 +493,7 @@ export function PortfolioContent({ initialData }: { initialData: PortfolioData }
                     />
                     <span className="lb-next" onClick={(e) => { e.stopPropagation(); nextLightbox(); }}>›</span>
                     <span className="lb-counter" id="lb-photo-counter">
-                        {lightbox.index + 1} / {filteredPhotos.length}
+                        {lightbox.index + 1} / {lightbox.isAbout ? aboutPhotos.length : filteredPhotos.length}
                     </span>
                 </div>
             )}
