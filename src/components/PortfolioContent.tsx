@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useEffect, useState, useRef } from "react";
 import Image from "next/image";
 
 // ─── 1. TRANSLATIONS ───
@@ -70,9 +70,8 @@ const cloudinaryLoader = ({ src, width, quality }: { src: string; width: number;
     const parts = src.split("/upload/");
     if (parts.length !== 2) return src;
     const q = quality || 80;
-    // Use 2.0x multiplier for sharpness, but cap at 5120px (Cloudinary's common limit)
-    // to prevent 400 errors on ultra-wide or 4K/5K desktop screens.
-    const w = Math.min(Math.round(width * 2), 5120);
+    // Removed 2.0x multiplier to drastically save on bandwidth and RAM for thumbnails
+    const w = Math.min(Math.round(width), 1920);
     return `${parts[0]}/upload/w_${w},q_${q},f_auto/${parts[1]}`;
 };
 
@@ -84,10 +83,62 @@ interface PortfolioData {
 
 const VideoThumbnail = ({ v, index, onClick }: { v: any; index: number; onClick: () => void }) => {
     const [loaded, setLoaded] = useState(false);
+    const [isPlaying, setIsPlaying] = useState(false);
+    const videoRef = useRef<HTMLVideoElement>(null);
+    const containerRef = useRef<HTMLDivElement>(null);
+
+    useEffect(() => {
+        const video = videoRef.current;
+        const container = containerRef.current;
+        if (!video || !container) return;
+
+        // Check if device is primarily touch based (mobile behavior)
+        const isTouchDevice = window.matchMedia("(hover: none)").matches || window.matchMedia("(max-width: 768px)").matches;
+
+        if (isTouchDevice) {
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach((entry) => {
+                    if (entry.isIntersecting) {
+                        video.play().then(() => setIsPlaying(true)).catch(() => {});
+                    } else {
+                        video.pause();
+                        video.currentTime = 0; // optional: reset to start
+                        setIsPlaying(false);
+                    }
+                });
+            }, { threshold: 0.5 }); // Play when at least 50% of the video is visible
+
+            observer.observe(container);
+            return () => observer.unobserve(container);
+        }
+    }, [v.src]);
+
+    const handleMouseEnter = () => {
+        const isHoverDevice = window.matchMedia("(hover: hover)").matches && window.innerWidth > 768;
+        if (isHoverDevice && videoRef.current) {
+            videoRef.current.play().then(() => setIsPlaying(true)).catch(() => {});
+        }
+    };
+
+    const handleMouseLeave = () => {
+        const isHoverDevice = window.matchMedia("(hover: hover)").matches && window.innerWidth > 768;
+        if (isHoverDevice && videoRef.current) {
+            videoRef.current.pause();
+            videoRef.current.currentTime = 0;
+            setIsPlaying(false);
+        }
+    };
+
     return (
-        <div className="media-item video-thumb reveal-item visible relative" onClick={onClick}>
+        <div 
+            ref={containerRef}
+            className={`media-item video-thumb reveal-item visible relative transition-all duration-300 ${isPlaying ? 'playing' : ''}`} 
+            onClick={onClick}
+            onMouseEnter={handleMouseEnter}
+            onMouseLeave={handleMouseLeave}
+        >
             {/* The Image fallback */}
-            <div className={`absolute inset-0 z-0 transition-opacity duration-700 pointer-events-none ${loaded ? 'opacity-0' : 'opacity-100'}`}>
+            <div className={`absolute inset-0 z-0 transition-opacity duration-700 pointer-events-none ${loaded && isPlaying ? 'opacity-0' : 'opacity-100'}`}>
                 {v.poster ? (
                     <Image
                         loader={cloudinaryLoader}
@@ -95,7 +146,7 @@ const VideoThumbnail = ({ v, index, onClick }: { v: any; index: number; onClick:
                         alt="Video Cover"
                         fill
                         className="object-cover"
-                        sizes="(max-width: 768px) 33vw, 20vw"
+                        sizes="(max-width: 768px) 50vw, 33vw"
                     />
                 ) : (
                     <div className="w-full h-full bg-[#1a1a1a]" />
@@ -103,15 +154,16 @@ const VideoThumbnail = ({ v, index, onClick }: { v: any; index: number; onClick:
             </div>
             
             <video 
+                ref={videoRef}
                 src={v.src} 
                 poster={v.poster || ""} 
                 muted 
                 loop 
                 playsInline 
-                preload="auto" 
+                preload="none" 
                 className="preview-video relative z-10 w-full h-full object-cover transition-opacity duration-700" 
-                style={{ opacity: loaded ? 1 : 0 }}
-                autoPlay 
+                style={{ opacity: loaded && isPlaying ? 1 : 0 }}
+                // removed autoPlay, handled by logic above
                 onCanPlay={() => setLoaded(true)}
             />
             
