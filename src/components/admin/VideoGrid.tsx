@@ -6,7 +6,7 @@ import { FiUploadCloud, FiTrash2, FiPlay, FiVideo, FiMenu } from "react-icons/fi
 
 const CATEGORIES = ["beauty", "streetwear", "commercial", "casual", "ugc", "food", "social"];
 
-export function VideoGrid({ videos, onUpdateVideos, onUploadVideo }: { videos: { src: string; video_url?: string; category: string; label?: string; poster?: string; }[]; onUpdateVideos: (videos: { src: string; video_url?: string; category: string; label?: string; poster?: string; }[]) => void; onUploadVideo: (file: File) => Promise<string | null | void>; }) {
+export function VideoGrid({ videos, onUpdateVideos, onUploadVideo, onUploadCover }: { videos: { src: string; video_url?: string; category: string; label?: string; poster?: string; }[]; onUpdateVideos: (videos: { src: string; video_url?: string; category: string; label?: string; poster?: string; }[]) => void; onUploadVideo: (file: File) => Promise<string | null | void>; onUploadCover: (file: File) => Promise<string | null>; }) {
     const [isDragging, setIsDragging] = useState(false);
     const [previewVideo, setPreviewVideo] = useState<string | null>(null);
 
@@ -101,7 +101,7 @@ export function VideoGrid({ videos, onUpdateVideos, onUploadVideo }: { videos: {
                     className="contents"
                     ghostClass="opacity-50"
                 >
-                    {videos.map((video: { src: string; video_url?: string; category: string; label?: string; poster?: string; }) => {
+                    {videos.map((video: { src: string; video_url?: string; category: string; label?: string; poster?: string; }, mappedIndex: number) => {
                         const videoKey = video.src || video.video_url || `video-temp-${videos.indexOf(video)}`;
                         const formattedPoster = video.poster?.startsWith("./") ? video.poster.replace("./", "/") : video.poster;
 
@@ -129,8 +129,26 @@ export function VideoGrid({ videos, onUpdateVideos, onUploadVideo }: { videos: {
                                         </div>
                                     )}
 
-                                    <div className="absolute inset-0 flex items-center justify-center opacity-0 group-hover/poster:opacity-100 bg-black/50 transition-opacity z-30">
-                                        {/* REMOVED POSTER UPLOAD */}
+                                    <div className="absolute inset-0 flex items-center justify-center opacity-0 group-hover/poster:opacity-100 bg-black/50 transition-opacity z-30 pointer-events-none">
+                                        <label className="text-white text-[10px] font-bold uppercase tracking-wider bg-pink-600 px-3 py-1.5 rounded cursor-pointer pointer-events-auto hover:bg-pink-500 transition shadow-lg">
+                                            Обложка
+                                            <input 
+                                                type="file" 
+                                                className="hidden" 
+                                                accept="image/*" 
+                                                onChange={async (e) => {
+                                                    const file = e.target.files?.[0];
+                                                    if (file) {
+                                                        const url = await onUploadCover(file);
+                                                        if (url) {
+                                                            const idx = videos.findIndex(v => (v.src || v.video_url) === (video.src || video.video_url));
+                                                            updateField(idx, 'poster', url);
+                                                        }
+                                                    }
+                                                    e.target.value = '';
+                                                }}
+                                            />
+                                        </label>
                                     </div>
                                 </div>
 

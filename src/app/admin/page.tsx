@@ -476,6 +476,10 @@ export default function AdminPage() {
                     videos={data.videos}
                     onUpdateVideos={handleVideosUpdate}
                     onUploadVideo={handleUploadVideo}
+                    onUploadCover={async (file) => {
+                        const url = await uploadFileToCloudinary(file, "image");
+                        return url;
+                    }}
                 />
 
                 {cropImage && (

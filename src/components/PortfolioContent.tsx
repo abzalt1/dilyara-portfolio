@@ -82,6 +82,50 @@ interface PortfolioData {
     siteImages?: { hero: string; about1: string; about2: string };
 }
 
+const VideoThumbnail = ({ v, index, onClick }: { v: any; index: number; onClick: () => void }) => {
+    const [loaded, setLoaded] = useState(false);
+    return (
+        <div className="media-item video-thumb reveal-item visible relative" onClick={onClick}>
+            {/* The Image fallback */}
+            <div className={`absolute inset-0 z-0 transition-opacity duration-700 pointer-events-none ${loaded ? 'opacity-0' : 'opacity-100'}`}>
+                {v.poster ? (
+                    <Image
+                        loader={cloudinaryLoader}
+                        src={v.poster}
+                        alt="Video Cover"
+                        fill
+                        className="object-cover"
+                        sizes="(max-width: 768px) 33vw, 20vw"
+                    />
+                ) : (
+                    <div className="w-full h-full bg-[#1a1a1a]" />
+                )}
+            </div>
+            
+            <video 
+                src={v.src} 
+                poster={v.poster || ""} 
+                muted 
+                loop 
+                playsInline 
+                preload="auto" 
+                className="preview-video relative z-10 w-full h-full object-cover transition-opacity duration-700" 
+                style={{ opacity: loaded ? 1 : 0 }}
+                autoPlay 
+                onCanPlay={() => setLoaded(true)}
+            />
+            
+            <div className="play-overlay z-20">
+                <i className="ri-play-circle-line" />
+            </div>
+            <div className="reels-icon z-20">
+                <i className="ri-movie-fill" />
+            </div>
+            <span className="vid-label z-20">{(v.label || "").split(" ")[0]}</span>
+        </div>
+    );
+};
+
 export function PortfolioContent({ initialData }: { initialData: PortfolioData }) {
     const [lang, setLangState] = useState<"ru" | "en" | "kk">("ru");
     const t = translations[lang];
@@ -440,16 +484,7 @@ export function PortfolioContent({ initialData }: { initialData: PortfolioData }
                             <p className="empty-state text-white visible">Нет видео в этой категории</p>
                         ) : (
                             filteredVideos.map((v, i) => (
-                                <div key={i} className="media-item video-thumb reveal-item visible" onClick={() => openVideo(i)}>
-                                    <video src={v.src} poster={v.poster || ""} muted loop playsInline preload="none" className="preview-video" autoPlay />
-                                    <div className="play-overlay">
-                                        <i className="ri-play-circle-line" />
-                                    </div>
-                                    <div className="reels-icon">
-                                        <i className="ri-movie-fill" />
-                                    </div>
-                                    <span className="vid-label">{(v.label || "").split(" ")[0]}</span>
-                                </div>
+                                <VideoThumbnail key={i} v={v} index={i} onClick={() => openVideo(i)} />
                             ))
                         )}
                     </div>
