@@ -6,6 +6,90 @@
   },
   "photos": [
     {
+      "src": "https://res.cloudinary.com/dkexmocck/image/upload/q_auto,f_auto/v1774858075/quhq1hm8w1wjusrziqag.jpg",
+      "category": "ugc",
+      "alt": "IMG_8623.JPG",
+      "thumb": "https://res.cloudinary.com/dkexmocck/image/upload/q_auto,f_auto/v1774858075/quhq1hm8w1wjusrziqag.jpg"
+    },
+    {
+      "src": "https://res.cloudinary.com/dkexmocck/image/upload/q_auto,f_auto/v1774858073/rvuvcpu2lu51mrlcdbid.jpg",
+      "category": "ugc",
+      "alt": "IMG_8621.JPG",
+      "thumb": "https://res.cloudinary.com/dkexmocck/image/upload/q_auto,f_auto/v1774858073/rvuvcpu2lu51mrlcdbid.jpg"
+    },
+    {
+      "src": "https://res.cloudinary.com/dkexmocck/image/upload/q_auto,f_auto/v1774858072/cepyuxty1n9wwved18jb.jpg",
+      "category": "ugc",
+      "alt": "IMG_8617.JPG",
+      "thumb": "https://res.cloudinary.com/dkexmocck/image/upload/q_auto,f_auto/v1774858072/cepyuxty1n9wwved18jb.jpg"
+    },
+    {
+      "src": "https://res.cloudinary.com/dkexmocck/image/upload/q_auto,f_auto/v1774858070/bchzjmj9cviwbbidstij.jpg",
+      "category": "ugc",
+      "alt": "IMG_8154.JPG",
+      "thumb": "https://res.cloudinary.com/dkexmocck/image/upload/q_auto,f_auto/v1774858070/bchzjmj9cviwbbidstij.jpg"
+    },
+    {
+      "src": "https://res.cloudinary.com/dkexmocck/image/upload/q_auto,f_auto/v1774858066/p0nfklf797uezi2mragu.jpg",
+      "category": "ugc",
+      "alt": "IMG_8152.JPG",
+      "thumb": "https://res.cloudinary.com/dkexmocck/image/upload/q_auto,f_auto/v1774858066/p0nfklf797uezi2mragu.jpg"
+    },
+    {
+      "src": "https://res.cloudinary.com/dkexmocck/image/upload/q_auto,f_auto/v1774858063/xw2bbp8obk9jlpm9k50t.jpg",
+      "category": "ugc",
+      "alt": "IMG_8148.JPG",
+      "thumb": "https://res.cloudinary.com/dkexmocck/image/upload/q_auto,f_auto/v1774858063/xw2bbp8obk9jlpm9k50t.jpg"
+    },
+    {
+      "src": "https://res.cloudinary.com/dkexmocck/image/upload/q_auto,f_auto/v1774858060/dv7wzg5qgsbqw9k9qglp.jpg",
+      "category": "ugc",
+      "alt": "IMG_8142.JPG",
+      "thumb": "https://res.cloudinary.com/dkexmocck/image/upload/q_auto,f_auto/v1774858060/dv7wzg5qgsbqw9k9qglp.jpg"
+    },
+    {
+      "src": "https://res.cloudinary.com/dkexmocck/image/upload/q_auto,f_auto/v1774857981/hnydgy3pb7fmoorpnph3.jpg",
+      "category": "streetwear",
+      "alt": "IMG_6872.jpeg",
+      "thumb": "https://res.cloudinary.com/dkexmocck/image/upload/q_auto,f_auto/v1774857981/hnydgy3pb7fmoorpnph3.jpg"
+    },
+    {
+      "src": "https://res.cloudinary.com/dkexmocck/image/upload/q_auto,f_auto/v1774857913/bovrcjf48temeanlhitz.jpg",
+      "category": "streetwear",
+      "alt": "IMG_6871.JPEG",
+      "thumb": "https://res.cloudinary.com/dkexmocck/image/upload/q_auto,f_auto/v1774857913/bovrcjf48temeanlhitz.jpg"
+    },
+    {
+      "src": "https://res.cloudinary.com/dkexmocck/image/upload/q_auto,f_auto/v1774857933/s6ni3yn4h9k0otqkwynw.jpg",
+      "category": "streetwear",
+      "alt": "IMG_6884.JPEG",
+      "thumb": "https://res.cloudinary.com/dkexmocck/image/upload/q_auto,f_auto/v1774857933/s6ni3yn4h9k0otqkwynw.jpg"
+    },
+    {
+      "src": "https://res.cloudinary.com/dkexmocck/image/upload/q_auto,f_auto/v1774856517/kcbpyitvzeaammabu0nh.jpg",
+      "category": "streetwear",
+      "alt": "IMG_6883.JPEG",
+      "thumb": "https://res.cloudinary.com/dkexmocck/image/upload/q_auto,f_auto/v1774856517/kcbpyitvzeaammabu0nh.jpg"
+    },
+    {
+      "src": "https://res.cloudinary.com/dkexmocck/image/upload/q_auto,f_auto/v1774857930/tnl0r1aoibdx7ics7cei.jpg",
+      "category": "streetwear",
+      "alt": "IMG_6881.JPEG",
+      "thumb": "https://res.cloudinary.com/dkexmocck/image/upload/q_auto,f_auto/v1774857930/tnl0r1aoibdx7ics7cei.jpg"
+    },
+    {
+      "src": "https://res.cloudinary.com/dkexmocck/image/upload/q_auto,f_auto/v1774857926/jy3yt3emua8shh3ge6tm.jpg",
+      "category": "streetwear",
+      "alt": "IMG_6880.JPEG",
+      "thumb": "https://res.cloudinary.com/dkexmocck/image/upload/q_auto,f_auto/v1774857926/jy3yt3emua8shh3ge6tm.jpg"
+    },
+    {
+      "src": "https://res.cloudinary.com/dkexmocck/image/upload/q_auto,f_auto/v1774857923/h8mwbc2mhoawfnvgbejc.jpg",
+      "category": "streetwear",
+      "alt": "IMG_6877.JPEG",
+      "thumb": "https://res.cloudinary.com/dkexmocck/image/upload/q_auto,f_auto/v1774857923/h8mwbc2mhoawfnvgbejc.jpg"
+    },
+    {
       "src": "https://res.cloudinary.com/dkexmocck/image/upload/q_auto,f_auto/v1774857833/ocnhgk9wklewvvippwzm.jpg",
       "category": "food",
       "alt": "IMG_6416.jpeg",
@@ -85,19 +169,19 @@
     },
     {
       "src": "https://res.cloudinary.com/dkexmocck/image/upload/q_auto,f_auto/v1774857097/nkuivpyljkcuofxqfrix.jpg",
-      "category": "casual",
+      "category": "ugc",
       "alt": "IMG_4250.JPG",
       "thumb": "https://res.cloudinary.com/dkexmocck/image/upload/q_auto,f_auto/v1774857097/nkuivpyljkcuofxqfrix.jpg"
     },
     {
       "src": "https://res.cloudinary.com/dkexmocck/image/upload/q_auto,f_auto/v1774857093/qt0dweytu7zpbfwefzqa.jpg",
-      "category": "casual",
+      "category": "ugc",
       "alt": "IMG_4248.JPG",
       "thumb": "https://res.cloudinary.com/dkexmocck/image/upload/q_auto,f_auto/v1774857093/qt0dweytu7zpbfwefzqa.jpg"
     },
     {
       "src": "https://res.cloudinary.com/dkexmocck/image/upload/q_auto,f_auto/v1774857089/pmqitbc2nhkpzwyasmbu.jpg",
-      "category": "casual",
+      "category": "ugc",
       "alt": "IMG_4246.JPG",
       "thumb": "https://res.cloudinary.com/dkexmocck/image/upload/q_auto,f_auto/v1774857089/pmqitbc2nhkpzwyasmbu.jpg"
     },
@@ -142,12 +226,6 @@
       "category": "streetwear",
       "alt": "IMG_4001.PNG",
       "thumb": "https://res.cloudinary.com/dkexmocck/image/upload/q_auto,f_auto/v1774856544/wqhlrs60femnqrebgg36.jpg"
-    },
-    {
-      "src": "https://res.cloudinary.com/dkexmocck/image/upload/q_auto,f_auto/v1774856517/kcbpyitvzeaammabu0nh.jpg",
-      "category": "streetwear",
-      "alt": "IMG_6883.JPEG",
-      "thumb": "https://res.cloudinary.com/dkexmocck/image/upload/q_auto,f_auto/v1774856517/kcbpyitvzeaammabu0nh.jpg"
     },
     {
       "src": "https://res.cloudinary.com/dkexmocck/image/upload/v1772037422/hwffncfxijtoj4k5l7ut.jpg",
