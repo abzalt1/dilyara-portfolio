@@ -48,6 +48,41 @@
   ],
   "videos": [
     {
+      "src": "https://res.cloudinary.com/dkexmocck/video/upload/v1774855135/mncua1stgi0xw2frtc4t.mp4",
+      "video_url": "",
+      "category": "acting",
+      "label": "АкваМарис",
+      "poster": "https://res.cloudinary.com/dkexmocck/video/upload/v1774855135/mncua1stgi0xw2frtc4t.jpg"
+    },
+    {
+      "src": "https://res.cloudinary.com/dkexmocck/video/upload/v1774855065/nvdv79hcixq8qjnbi5hm.mov",
+      "video_url": "",
+      "category": "acting",
+      "label": "Lunel Floral",
+      "poster": "https://res.cloudinary.com/dkexmocck/video/upload/v1774855065/nvdv79hcixq8qjnbi5hm.jpg"
+    },
+    {
+      "src": "https://res.cloudinary.com/dkexmocck/video/upload/v1774855002/xr160wslkpanp3vom4uy.mp4",
+      "video_url": "",
+      "category": "acting",
+      "label": "Aston",
+      "poster": "https://res.cloudinary.com/dkexmocck/video/upload/v1774855002/xr160wslkpanp3vom4uy.jpg"
+    },
+    {
+      "src": "https://res.cloudinary.com/dkexmocck/video/upload/v1774854950/giu0zaezks94fma7vu5p.mp4",
+      "video_url": "",
+      "category": "commercial",
+      "label": "LC Waikiki",
+      "poster": "https://res.cloudinary.com/dkexmocck/video/upload/v1774854950/giu0zaezks94fma7vu5p.jpg"
+    },
+    {
+      "src": "https://res.cloudinary.com/dkexmocck/video/upload/v1774854879/llfsgm3ac6menskswjsm.mov",
+      "video_url": "",
+      "category": "beauty",
+      "label": "MakeUpRevolution",
+      "poster": "https://res.cloudinary.com/dkexmocck/video/upload/v1774854879/llfsgm3ac6menskswjsm.jpg"
+    },
+    {
       "src": "https://res.cloudinary.com/dkexmocck/video/upload/v1772375980/jkots8btvndo1wruy9mu.mp4",
       "video_url": "",
       "category": "commercial",
