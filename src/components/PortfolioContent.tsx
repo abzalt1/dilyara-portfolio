@@ -511,8 +511,8 @@ export function PortfolioContent({ initialData }: { initialData: PortfolioData }
                 </div>
             </div>
 
-            <section id="portfolio-view" className="min-h-screen grid grid-cols-1 md:grid-cols-2">
-                <div className="border-r border-black p-4 md:p-12">
+            <section id="portfolio-view" className="min-h-screen grid grid-cols-1 md:grid-cols-2 border-t-2 border-black">
+                <div className="border-b md:border-b-0 md:border-r border-black p-4 md:p-12">
                     <h3 className="font-display font-extralight text-2xl md:text-4xl uppercase mb-8 flex flex-wrap items-center gap-x-4 gap-y-2 visible">
                         <i className="ri-camera-fill" /> <span>{titleMap[activeCategory] || "Portfolio"}</span> Photos
                     </h3>
