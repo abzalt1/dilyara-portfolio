@@ -419,16 +419,16 @@ export function PortfolioContent({ initialData }: { initialData: PortfolioData }
                                 </div>
                             ))
                         )}
-                        {photoLimit < filteredPhotos.length && (
-                            <button
-                                id="load-more-btn"
-                                className="block mx-auto mt-8 border border-black px-8 py-3 uppercase tracking-widest text-xs hover:bg-black hover:text-white transition"
-                                onClick={() => setPhotoLimit(photoLimit + 12)}
-                            >
-                                {t.load_more} ({filteredPhotos.length - photoLimit})
-                            </button>
-                        )}
                     </div>
+                    {photoLimit < filteredPhotos.length && (
+                        <button
+                            id="load-more-btn"
+                            className="block mx-auto mt-8 border border-black px-8 py-3 uppercase tracking-widest text-xs hover:bg-black hover:text-white transition"
+                            onClick={() => setPhotoLimit(photoLimit + 12)}
+                        >
+                            {t.load_more} ({filteredPhotos.length - photoLimit})
+                        </button>
+                    )}
                 </div>
 
                 <div className="bg-black text-white p-6 md:p-12">
