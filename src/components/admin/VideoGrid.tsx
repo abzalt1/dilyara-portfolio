@@ -224,10 +224,65 @@ export function VideoGrid({ videos, onUpdateVideos, onUploadVideo, onUploadCover
             </div>
 
             {previewVideo && (
-                <div className="fixed inset-0 z-[60] bg-black/90 flex items-center justify-center p-4" onClick={() => setPreviewVideo(null)}>
-                    <div className="relative max-w-2xl w-full flex items-center justify-center bg-black/50" onClick={(e) => e.stopPropagation()}>
+                <div className="fixed inset-0 z-[60] bg-black/90 flex flex-col items-center justify-center p-4" onClick={() => setPreviewVideo(null)}>
+                    <div className="relative max-w-2xl w-full flex flex-col items-center justify-center bg-black/50" onClick={(e) => e.stopPropagation()}>
                         <button onClick={() => setPreviewVideo(null)} className="absolute -top-12 right-0 text-white/50 hover:text-white text-4xl">&times;</button>
-                        <video src={previewVideo} controls autoPlay className="max-h-[85vh] w-auto max-w-full rounded shadow-2xl border border-gray-800" />
+                        
+                        <video 
+                            id="preview-video-player"
+                            src={previewVideo} 
+                            controls 
+                            autoPlay 
+                            crossOrigin="anonymous"
+                            className="max-h-[75vh] w-auto max-w-full rounded shadow-2xl border border-gray-800" 
+                        />
+                        
+                        <div className="mt-4 p-4 bg-gray-900 w-full rounded-lg border border-gray-800 flex justify-between items-center text-sm shadow-xl">
+                            <div>
+                                <p className="text-white font-bold tracking-wider uppercase text-xs mb-1">Выбор обложки</p>
+                                <p className="text-gray-400 text-xs">Поставьте видео на паузу в нужный момент и нажмите кнопку</p>
+                            </div>
+                            <button 
+                                id="capture-btn"
+                                onClick={async () => {
+                                    const videoEl = document.getElementById("preview-video-player") as HTMLVideoElement;
+                                    if (!videoEl) return;
+                                    
+                                    const canvas = document.createElement("canvas");
+                                    canvas.width = videoEl.videoWidth;
+                                    canvas.height = videoEl.videoHeight;
+                                    const ctx = canvas.getContext("2d");
+                                    if (!ctx) return;
+                                    
+                                    // Отрисовка текущего кадра
+                                    ctx.drawImage(videoEl, 0, 0, canvas.width, canvas.height);
+                                    
+                                    canvas.toBlob(async (blob) => {
+                                        if (!blob) return;
+                                        const file = new File([blob], `cover-${Date.now()}.jpg`, { type: "image/jpeg" });
+                                        
+                                        const idx = videos.findIndex(v => v.src === previewVideo);
+                                        if (idx !== -1) {
+                                            const btn = document.getElementById("capture-btn");
+                                            if (btn) btn.innerText = "Сохранение...";
+                                            
+                                            const url = await onUploadCover(file);
+                                            if (url) {
+                                                updateField(idx, 'poster', url);
+                                                if (btn) btn.innerText = "Успешно!";
+                                                setTimeout(() => { if (btn) btn.innerText = "Захватить кадр"; }, 2000);
+                                            } else {
+                                                if (btn) btn.innerText = "Ошибка";
+                                                setTimeout(() => { if (btn) btn.innerText = "Захватить кадр"; }, 2000);
+                                            }
+                                        }
+                                    }, "image/jpeg", 0.9);
+                                }}
+                                className="bg-pink-600 hover:bg-pink-500 text-white px-6 py-3 rounded-md font-bold uppercase tracking-widest text-xs transition shadow-lg shrink-0 w-48 text-center"
+                            >
+                                Захватить кадр
+                            </button>
+                        </div>
                     </div>
                 </div>
             )}
