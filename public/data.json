@@ -132,6 +132,12 @@
       "thumb": "https://res.cloudinary.com/dkexmocck/image/upload/q_auto,f_auto/v1774857124/hitog2enm2dmqzapkybw.jpg"
     },
     {
+      "src": "https://res.cloudinary.com/dkexmocck/image/upload/q_auto,f_auto/v1774857658/iuearxll92gnjibubjxd.jpg",
+      "category": "beauty",
+      "alt": "IMG_6542.jpeg",
+      "thumb": "https://res.cloudinary.com/dkexmocck/image/upload/q_auto,f_auto/v1774857658/iuearxll92gnjibubjxd.jpg"
+    },
+    {
       "src": "https://res.cloudinary.com/dkexmocck/image/upload/q_auto,f_auto/v1774857663/txqabrwqybnkawnz5sez.jpg",
       "category": "beauty",
       "alt": "IMG_6544.jpeg",
@@ -144,22 +150,16 @@
       "thumb": "https://res.cloudinary.com/dkexmocck/image/upload/q_auto,f_auto/v1774857655/ikfiw7tzgduhhyntg54n.jpg"
     },
     {
-      "src": "https://res.cloudinary.com/dkexmocck/image/upload/q_auto,f_auto/v1774857660/i1obvpcfl4oi1r8trd1w.jpg",
-      "category": "beauty",
-      "alt": "IMG_6543.jpeg",
-      "thumb": "https://res.cloudinary.com/dkexmocck/image/upload/q_auto,f_auto/v1774857660/i1obvpcfl4oi1r8trd1w.jpg"
-    },
-    {
-      "src": "https://res.cloudinary.com/dkexmocck/image/upload/q_auto,f_auto/v1774857658/iuearxll92gnjibubjxd.jpg",
-      "category": "beauty",
-      "alt": "IMG_6542.jpeg",
-      "thumb": "https://res.cloudinary.com/dkexmocck/image/upload/q_auto,f_auto/v1774857658/iuearxll92gnjibubjxd.jpg"
-    },
-    {
       "src": "https://res.cloudinary.com/dkexmocck/image/upload/q_auto,f_auto/v1774857123/tqek5ingtjovdb0bkqml.jpg",
       "category": "beauty",
       "alt": "IMG_2523.PNG",
       "thumb": "https://res.cloudinary.com/dkexmocck/image/upload/q_auto,f_auto/v1774857123/tqek5ingtjovdb0bkqml.jpg"
+    },
+    {
+      "src": "https://res.cloudinary.com/dkexmocck/image/upload/q_auto,f_auto/v1774857660/i1obvpcfl4oi1r8trd1w.jpg",
+      "category": "beauty",
+      "alt": "IMG_6543.jpeg",
+      "thumb": "https://res.cloudinary.com/dkexmocck/image/upload/q_auto,f_auto/v1774857660/i1obvpcfl4oi1r8trd1w.jpg"
     },
     {
       "src": "https://res.cloudinary.com/dkexmocck/image/upload/q_auto,f_auto/v1774857097/nkuivpyljkcuofxqfrix.jpg",
@@ -296,7 +296,7 @@
       "video_url": "",
       "category": "beauty",
       "label": "JAYN",
-      "poster": "https://res.cloudinary.com/dkexmocck/image/upload/q_auto,f_auto/v1774861679/n3s1u5bcchrvuql6359t.jpg"
+      "poster": "https://res.cloudinary.com/dkexmocck/image/upload/q_auto,f_auto/v1774863235/w3sz2wt0hb3l9x3xwwsh.jpg"
     },
     {
       "src": "https://res.cloudinary.com/dkexmocck/video/upload/v1774858263/wxedhrwljlxib1o13rzk.mov",
