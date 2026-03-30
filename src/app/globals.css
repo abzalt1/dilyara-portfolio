@@ -537,7 +537,7 @@ html {
 
 #video-lightbox-inner video {
     width: 100%;
-    aspect-ratio: 9 / 16;
+    max-height: 85vh;
     object-fit: contain;
     background: #000;
     display: block;

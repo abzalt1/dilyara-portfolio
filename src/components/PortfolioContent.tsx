@@ -75,6 +75,13 @@ const cloudinaryLoader = ({ src, width, quality }: { src: string; width: number;
     return `${parts[0]}/upload/w_${w},q_${q},f_auto/${parts[1]}`;
 };
 
+const cloudinaryVideoLoader = (src: string) => {
+    if (!src || typeof src !== "string" || !src.includes("res.cloudinary.com/")) return src;
+    if (src.includes("/upload/q_") || src.includes("/upload/w_") || src.includes("/upload/f_") || src.includes("/upload/vc_")) return src;
+    const parts = src.split("/upload/");
+    if (parts.length !== 2) return src;
+    return `${parts[0]}/upload/w_1080,q_auto,f_auto,vc_auto/${parts[1]}`;
+};
 interface PortfolioData {
     photos: { src: string; thumb?: string; category: string; alt?: string; }[];
     videos: { src: string; video_url?: string; category: string; label?: string; poster?: string; }[];
@@ -173,7 +180,7 @@ const VideoThumbnail = ({ v, index, onClick }: { v: any; index: number; onClick:
             {shouldMountVideo && (
                 <video 
                     ref={videoRef}
-                    src={v.src} 
+                    src={cloudinaryVideoLoader(v.src)} 
                     poster={v.poster || ""} 
                     muted 
                     loop 
@@ -489,7 +496,7 @@ export function PortfolioContent({ initialData }: { initialData: PortfolioData }
                 <div className="text-center py-4 border-b-2 border-black bg-black text-white">
                     <span className="text-sm md:text-base font-extralight uppercase tracking-[0.3em]">{t.select_category}</span>
                 </div>
-                <div id="filter-buttons" className="flex flex-wrap justify-center gap-x-3 md:gap-x-6 gap-y-2 md:gap-y-4 py-6 md:py-8 px-4 font-display text-xl md:text-5xl uppercase font-extralight text-center">
+                <div id="filter-buttons" className="flex flex-wrap justify-center gap-x-2 md:gap-x-6 gap-y-1 md:gap-y-4 py-4 md:py-8 px-4 font-display text-lg md:text-5xl uppercase font-extralight text-center">
                     <button onClick={() => handleFilter("all")} className={`filter-btn px-2 md:px-4 py-1 ${activeCategory === "all" ? "active" : ""}`}>
                         All
                     </button>
@@ -505,8 +512,8 @@ export function PortfolioContent({ initialData }: { initialData: PortfolioData }
             </div>
 
             <section id="portfolio-view" className="min-h-screen grid grid-cols-1 md:grid-cols-2">
-                <div className="border-r border-black p-6 md:p-12">
-                    <h3 className="font-display font-extralight text-4xl uppercase mb-8 flex items-center gap-4 visible">
+                <div className="border-r border-black p-4 md:p-12">
+                    <h3 className="font-display font-extralight text-2xl md:text-4xl uppercase mb-8 flex flex-wrap items-center gap-x-4 gap-y-2 visible">
                         <i className="ri-camera-fill" /> <span>{titleMap[activeCategory] || "Portfolio"}</span> Photos
                     </h3>
                     <div id="photo-grid">
@@ -545,8 +552,8 @@ export function PortfolioContent({ initialData }: { initialData: PortfolioData }
                     )}
                 </div>
 
-                <div className="bg-black text-white p-6 md:p-12">
-                    <h3 className="font-display font-extralight text-4xl uppercase mb-8 flex items-center gap-4 visible">
+                <div className="bg-black text-white p-4 md:p-12">
+                    <h3 className="font-display font-extralight text-2xl md:text-4xl uppercase mb-8 flex flex-wrap items-center gap-x-4 gap-y-2 visible">
                         <i className="ri-movie-fill" /> <span>{titleMap[activeCategory] || "Portfolio"}</span> Reels
                     </h3>
                     <div id="video-grid">
@@ -608,7 +615,7 @@ export function PortfolioContent({ initialData }: { initialData: PortfolioData }
                     <span className="lb-close" onClick={(e) => { e.stopPropagation(); closeLightbox(); }}>✕</span>
                     <span className="lb-prev" onClick={(e) => { e.stopPropagation(); prevLightbox(); }}>‹</span>
                     <div id="video-lightbox-inner" onClick={(e) => e.stopPropagation()}>
-                        <video controls autoPlay playsInline src={filteredVideos[lightbox.index]?.src} poster={filteredVideos[lightbox.index]?.poster} />
+                        <video controls autoPlay playsInline src={cloudinaryVideoLoader(filteredVideos[lightbox.index]?.src)} poster={filteredVideos[lightbox.index]?.poster} />
                     </div>
                     <span className="lb-next" onClick={(e) => { e.stopPropagation(); nextLightbox(); }}>›</span>
                     <span className="lb-counter" id="lb-video-counter">
