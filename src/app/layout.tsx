@@ -36,7 +36,7 @@ export default function RootLayout({
     <html lang="ru">
       <head>
         <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
-        <link rel="icon" href="/favicon.ico" type="image/png" />
+        <link rel="icon" href="/img/icon.png" type="image/png" />
         <link rel="apple-touch-icon" href="/img/apple-touch-icon.png" />
         <link rel="canonical" href="https://dilyara.kz/" />
         <link rel="preconnect" href="https://fonts.googleapis.com" />
