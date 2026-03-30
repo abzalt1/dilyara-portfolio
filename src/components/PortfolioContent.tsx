@@ -60,10 +60,10 @@ const titleMap: Record<string, string> = {
     casual: "Casual",
     ugc: "UGC",
     food: "Food & Bev",
-    "social media content": "Social Media Content",
+    "social": "Social Media Content",
 };
 
-const categoryOrder = ["beauty", "streetwear", "commercial", "casual", "ugc", "food", "social media content"];
+const categoryOrder = ["beauty", "streetwear", "commercial", "casual", "ugc", "food", "social"];
 
 const cloudinaryLoader = ({ src, width, quality }: { src: string; width: number; quality?: number }) => {
     if (!src.includes("res.cloudinary.com")) return src;

@@ -4,7 +4,7 @@ import { useState } from "react";
 import { ReactSortable } from "react-sortablejs";
 import { FiUploadCloud, FiTrash2, FiMenu } from "react-icons/fi";
 
-const CATEGORIES = ["beauty", "streetwear", "commercial", "casual", "ugc", "food", "social media content"];
+const CATEGORIES = ["beauty", "streetwear", "commercial", "casual", "ugc", "food", "social"];
 
 export function PhotoGrid({ photos, onUpdatePhotos, onUploadPhoto }: { photos: { src: string; thumb?: string; category: string; alt?: string; }[]; onUpdatePhotos: (photos: { src: string; thumb?: string; category: string; alt?: string; }[]) => void; onUploadPhoto: (file: File) => Promise<void>; }) {
     const [isDragging, setIsDragging] = useState(false);

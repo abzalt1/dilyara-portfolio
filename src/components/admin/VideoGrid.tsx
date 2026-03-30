@@ -4,7 +4,7 @@ import { useState } from "react";
 import { ReactSortable } from "react-sortablejs";
 import { FiUploadCloud, FiTrash2, FiPlay, FiVideo, FiMenu } from "react-icons/fi";
 
-const CATEGORIES = ["beauty", "streetwear", "commercial", "casual", "ugc", "food", "social media content"];
+const CATEGORIES = ["beauty", "streetwear", "commercial", "casual", "ugc", "food", "social"];
 
 export function VideoGrid({ videos, onUpdateVideos, onUploadVideo }: { videos: { src: string; video_url?: string; category: string; label?: string; poster?: string; }[]; onUpdateVideos: (videos: { src: string; video_url?: string; category: string; label?: string; poster?: string; }[]) => void; onUploadVideo: (file: File) => Promise<string | null | void>; }) {
     const [isDragging, setIsDragging] = useState(false);
