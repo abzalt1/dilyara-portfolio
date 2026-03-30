@@ -84,15 +84,31 @@ interface PortfolioData {
 const VideoThumbnail = ({ v, index, onClick }: { v: any; index: number; onClick: () => void }) => {
     const [loaded, setLoaded] = useState(false);
     const [isPlaying, setIsPlaying] = useState(false);
+    const [shouldMountVideo, setShouldMountVideo] = useState(false);
     const videoRef = useRef<HTMLVideoElement>(null);
     const containerRef = useRef<HTMLDivElement>(null);
 
+    // 1. Mount observer (loads video DOM element only when near viewport)
     useEffect(() => {
+        const container = containerRef.current;
+        if (!container) return;
+        const mountObserver = new IntersectionObserver(([entry]) => {
+            if (entry.isIntersecting) {
+                setShouldMountVideo(true);
+                mountObserver.disconnect();
+            }
+        }, { rootMargin: '400px' });
+        mountObserver.observe(container);
+        return () => mountObserver.disconnect();
+    }, []);
+
+    // 2. Play observer (plays video ONLY when really visible)
+    useEffect(() => {
+        if (!shouldMountVideo) return;
         const video = videoRef.current;
         const container = containerRef.current;
         if (!video || !container) return;
 
-        // Check if device is primarily touch based (mobile behavior)
         const isTouchDevice = window.matchMedia("(hover: none)").matches || window.matchMedia("(max-width: 768px)").matches;
 
         if (isTouchDevice) {
@@ -111,9 +127,10 @@ const VideoThumbnail = ({ v, index, onClick }: { v: any; index: number; onClick:
             observer.observe(container);
             return () => observer.unobserve(container);
         }
-    }, [v.src]);
+    }, [v.src, shouldMountVideo]);
 
     const handleMouseEnter = () => {
+        setShouldMountVideo(true);
         const isHoverDevice = window.matchMedia("(hover: hover)").matches && window.innerWidth > 768;
         if (isHoverDevice && videoRef.current) {
             videoRef.current.play().then(() => setIsPlaying(true)).catch(() => {});
@@ -153,19 +170,20 @@ const VideoThumbnail = ({ v, index, onClick }: { v: any; index: number; onClick:
                 )}
             </div>
             
-            <video 
-                ref={videoRef}
-                src={v.src} 
-                poster={v.poster || ""} 
-                muted 
-                loop 
-                playsInline 
-                preload="none" 
-                className="preview-video relative z-10 w-full h-full object-cover transition-opacity duration-700" 
-                style={{ opacity: loaded && isPlaying ? 1 : 0 }}
-                // removed autoPlay, handled by logic above
-                onCanPlay={() => setLoaded(true)}
-            />
+            {shouldMountVideo && (
+                <video 
+                    ref={videoRef}
+                    src={v.src} 
+                    poster={v.poster || ""} 
+                    muted 
+                    loop 
+                    playsInline 
+                    preload="none" 
+                    className="preview-video relative z-10 w-full h-full object-cover transition-opacity duration-700" 
+                    style={{ opacity: loaded && isPlaying ? 1 : 0 }}
+                    onCanPlay={() => setLoaded(true)}
+                />
+            )}
             
             <div className="play-overlay z-20">
                 <i className="ri-play-circle-line" />
