@@ -54,9 +54,16 @@ export default function AdminPage() {
             const jsonData = await dataRes.json();
             
             if (!dataRes.ok) {
+                if (dataRes.status === 401) {
+                    console.warn("Stored token is unauthorized, clearing local storage.");
+                    localStorage.removeItem("admin_token");
+                    setAuthToken(null);
+                    setIsAuthenticated(false);
+                    return;
+                }
+                
                 console.error("API error fetching data:", jsonData);
                 alert(`Ошибка загрузки данных: ${jsonData.error || 'Unknown Error'}\nДетали: ${jsonData.details || JSON.stringify(jsonData)}`);
-                // Let it stay on loading or handle failure (by default it will stay loading because data is null)
                 return;
             }
 
