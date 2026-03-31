@@ -1,12 +1,26 @@
 import { NextResponse } from "next/server";
-import crypto from "crypto";
-
 import jwt from "jsonwebtoken";
+import { S3Client, PutObjectCommand } from "@aws-sdk/client-s3";
+import { getSignedUrl } from "@aws-sdk/s3-request-presigner";
+
 export const dynamic = "force-dynamic";
+
+const R2 = new S3Client({
+    region: "auto",
+    endpoint: process.env.R2_ENDPOINT!,
+    credentials: {
+        accessKeyId: process.env.R2_ACCESS_KEY_ID!,
+        secretAccessKey: process.env.R2_SECRET_ACCESS_KEY!,
+    },
+});
+
+const BUCKET = process.env.R2_BUCKET || "portfolio-media";
+const PUBLIC_DOMAIN = process.env.R2_PUBLIC_DOMAIN || "https://pub-4288a2bf7b6345c488d13d1481543425.r2.dev";
 
 /**
  * GET /api/sign-upload
- * Generates a Cloudinary signature for secure direct client uploads.
+ * Generates a Cloudflare R2 presigned URL for secure direct client uploads.
+ * Query params: ?filename=photo.jpg&contentType=image/jpeg
  */
 export async function GET(req: Request) {
     try {
@@ -24,22 +38,32 @@ export async function GET(req: Request) {
             return NextResponse.json({ error: "Invalid token" }, { status: 401 });
         }
 
-        const api_secret = process.env.CLOUDINARY_API_SECRET;
+        const url = new URL(req.url);
+        const filename = url.searchParams.get("filename");
+        const contentType = url.searchParams.get("contentType") || "application/octet-stream";
 
-        if (!api_secret) {
-            return NextResponse.json({ error: "Server Configuration Error: CLOUDINARY_API_SECRET missing" }, { status: 500 });
+        if (!filename) {
+            return NextResponse.json({ error: "Missing filename query param" }, { status: 400 });
         }
 
-        const timestamp = Math.round(new Date().getTime() / 1000);
+        // Generate a unique key to avoid collisions
+        const uniqueKey = `${Date.now()}_${filename}`;
 
-        const signature = crypto.createHash("sha1")
-            .update(`timestamp=${timestamp}${api_secret}`)
-            .digest("hex");
+        const command = new PutObjectCommand({
+            Bucket: BUCKET,
+            Key: uniqueKey,
+            ContentType: contentType,
+        });
 
-        return NextResponse.json({ signature, timestamp }, { status: 200 });
+        const presignedUrl = await getSignedUrl(R2, command, { expiresIn: 600 }); // 10 minutes
+
+        return NextResponse.json({
+            uploadUrl: presignedUrl,
+            publicUrl: `${PUBLIC_DOMAIN}/${uniqueKey}`,
+        });
 
     } catch (error) {
         console.error("Sign-upload error:", error);
-        return NextResponse.json({ error: "Failed to generate signature" }, { status: 500 });
+        return NextResponse.json({ error: "Failed to generate presigned URL" }, { status: 500 });
     }
 }

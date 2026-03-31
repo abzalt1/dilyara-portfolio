@@ -1,359 +1,359 @@
 {
   "siteImages": {
-    "hero": "https://res.cloudinary.com/dkexmocck/image/upload/v1772375889/xqqk5q5p8bbexgeiugwt.jpg",
-    "about1": "https://res.cloudinary.com/dkexmocck/image/upload/v1772367235/ffncfy2nacqhewy2ce4b.jpg",
-    "about2": "https://res.cloudinary.com/dkexmocck/image/upload/v1772367250/ed5yzpwwgz1ostgjknkr.jpg"
+    "hero": "https://pub-4288a2bf7b6345c488d13d1481543425.r2.dev/xqqk5q5p8bbexgeiugwt.jpg",
+    "about1": "https://pub-4288a2bf7b6345c488d13d1481543425.r2.dev/ffncfy2nacqhewy2ce4b.jpg",
+    "about2": "https://pub-4288a2bf7b6345c488d13d1481543425.r2.dev/ed5yzpwwgz1ostgjknkr.jpg"
   },
   "photos": [
     {
-      "src": "https://res.cloudinary.com/dkexmocck/image/upload/q_auto,f_auto/v1774858075/quhq1hm8w1wjusrziqag.jpg",
+      "src": "https://pub-4288a2bf7b6345c488d13d1481543425.r2.dev/quhq1hm8w1wjusrziqag.jpg",
       "category": "ugc",
       "alt": "IMG_8623.JPG",
-      "thumb": "https://res.cloudinary.com/dkexmocck/image/upload/q_auto,f_auto/v1774858075/quhq1hm8w1wjusrziqag.jpg"
+      "thumb": "https://pub-4288a2bf7b6345c488d13d1481543425.r2.dev/quhq1hm8w1wjusrziqag.jpg"
     },
     {
-      "src": "https://res.cloudinary.com/dkexmocck/image/upload/q_auto,f_auto/v1774858073/rvuvcpu2lu51mrlcdbid.jpg",
+      "src": "https://pub-4288a2bf7b6345c488d13d1481543425.r2.dev/rvuvcpu2lu51mrlcdbid.jpg",
       "category": "ugc",
       "alt": "IMG_8621.JPG",
-      "thumb": "https://res.cloudinary.com/dkexmocck/image/upload/q_auto,f_auto/v1774858073/rvuvcpu2lu51mrlcdbid.jpg"
+      "thumb": "https://pub-4288a2bf7b6345c488d13d1481543425.r2.dev/rvuvcpu2lu51mrlcdbid.jpg"
     },
     {
-      "src": "https://res.cloudinary.com/dkexmocck/image/upload/q_auto,f_auto/v1774858072/cepyuxty1n9wwved18jb.jpg",
+      "src": "https://pub-4288a2bf7b6345c488d13d1481543425.r2.dev/cepyuxty1n9wwved18jb.jpg",
       "category": "ugc",
       "alt": "IMG_8617.JPG",
-      "thumb": "https://res.cloudinary.com/dkexmocck/image/upload/q_auto,f_auto/v1774858072/cepyuxty1n9wwved18jb.jpg"
+      "thumb": "https://pub-4288a2bf7b6345c488d13d1481543425.r2.dev/cepyuxty1n9wwved18jb.jpg"
     },
     {
-      "src": "https://res.cloudinary.com/dkexmocck/image/upload/q_auto,f_auto/v1774858070/bchzjmj9cviwbbidstij.jpg",
+      "src": "https://pub-4288a2bf7b6345c488d13d1481543425.r2.dev/bchzjmj9cviwbbidstij.jpg",
       "category": "ugc",
       "alt": "IMG_8154.JPG",
-      "thumb": "https://res.cloudinary.com/dkexmocck/image/upload/q_auto,f_auto/v1774858070/bchzjmj9cviwbbidstij.jpg"
+      "thumb": "https://pub-4288a2bf7b6345c488d13d1481543425.r2.dev/bchzjmj9cviwbbidstij.jpg"
     },
     {
-      "src": "https://res.cloudinary.com/dkexmocck/image/upload/q_auto,f_auto/v1774858063/xw2bbp8obk9jlpm9k50t.jpg",
+      "src": "https://pub-4288a2bf7b6345c488d13d1481543425.r2.dev/xw2bbp8obk9jlpm9k50t.jpg",
       "category": "ugc",
       "alt": "IMG_8148.JPG",
-      "thumb": "https://res.cloudinary.com/dkexmocck/image/upload/q_auto,f_auto/v1774858063/xw2bbp8obk9jlpm9k50t.jpg"
+      "thumb": "https://pub-4288a2bf7b6345c488d13d1481543425.r2.dev/xw2bbp8obk9jlpm9k50t.jpg"
     },
     {
-      "src": "https://res.cloudinary.com/dkexmocck/image/upload/q_auto,f_auto/v1774858060/dv7wzg5qgsbqw9k9qglp.jpg",
+      "src": "https://pub-4288a2bf7b6345c488d13d1481543425.r2.dev/dv7wzg5qgsbqw9k9qglp.jpg",
       "category": "ugc",
       "alt": "IMG_8142.JPG",
-      "thumb": "https://res.cloudinary.com/dkexmocck/image/upload/q_auto,f_auto/v1774858060/dv7wzg5qgsbqw9k9qglp.jpg"
+      "thumb": "https://pub-4288a2bf7b6345c488d13d1481543425.r2.dev/dv7wzg5qgsbqw9k9qglp.jpg"
     },
     {
-      "src": "https://res.cloudinary.com/dkexmocck/image/upload/q_auto,f_auto/v1774857981/hnydgy3pb7fmoorpnph3.jpg",
+      "src": "https://pub-4288a2bf7b6345c488d13d1481543425.r2.dev/hnydgy3pb7fmoorpnph3.jpg",
       "category": "streetwear",
       "alt": "IMG_6872.jpeg",
-      "thumb": "https://res.cloudinary.com/dkexmocck/image/upload/q_auto,f_auto/v1774857981/hnydgy3pb7fmoorpnph3.jpg"
+      "thumb": "https://pub-4288a2bf7b6345c488d13d1481543425.r2.dev/hnydgy3pb7fmoorpnph3.jpg"
     },
     {
-      "src": "https://res.cloudinary.com/dkexmocck/image/upload/q_auto,f_auto/v1774857913/bovrcjf48temeanlhitz.jpg",
+      "src": "https://pub-4288a2bf7b6345c488d13d1481543425.r2.dev/bovrcjf48temeanlhitz.jpg",
       "category": "streetwear",
       "alt": "IMG_6871.JPEG",
-      "thumb": "https://res.cloudinary.com/dkexmocck/image/upload/q_auto,f_auto/v1774857913/bovrcjf48temeanlhitz.jpg"
+      "thumb": "https://pub-4288a2bf7b6345c488d13d1481543425.r2.dev/bovrcjf48temeanlhitz.jpg"
     },
     {
-      "src": "https://res.cloudinary.com/dkexmocck/image/upload/q_auto,f_auto/v1774857933/s6ni3yn4h9k0otqkwynw.jpg",
+      "src": "https://pub-4288a2bf7b6345c488d13d1481543425.r2.dev/s6ni3yn4h9k0otqkwynw.jpg",
       "category": "streetwear",
       "alt": "IMG_6884.JPEG",
-      "thumb": "https://res.cloudinary.com/dkexmocck/image/upload/q_auto,f_auto/v1774857933/s6ni3yn4h9k0otqkwynw.jpg"
+      "thumb": "https://pub-4288a2bf7b6345c488d13d1481543425.r2.dev/s6ni3yn4h9k0otqkwynw.jpg"
     },
     {
-      "src": "https://res.cloudinary.com/dkexmocck/image/upload/q_auto,f_auto/v1774856517/kcbpyitvzeaammabu0nh.jpg",
+      "src": "https://pub-4288a2bf7b6345c488d13d1481543425.r2.dev/kcbpyitvzeaammabu0nh.jpg",
       "category": "streetwear",
       "alt": "IMG_6883.JPEG",
-      "thumb": "https://res.cloudinary.com/dkexmocck/image/upload/q_auto,f_auto/v1774856517/kcbpyitvzeaammabu0nh.jpg"
+      "thumb": "https://pub-4288a2bf7b6345c488d13d1481543425.r2.dev/kcbpyitvzeaammabu0nh.jpg"
     },
     {
-      "src": "https://res.cloudinary.com/dkexmocck/image/upload/q_auto,f_auto/v1774857930/tnl0r1aoibdx7ics7cei.jpg",
+      "src": "https://pub-4288a2bf7b6345c488d13d1481543425.r2.dev/tnl0r1aoibdx7ics7cei.jpg",
       "category": "streetwear",
       "alt": "IMG_6881.JPEG",
-      "thumb": "https://res.cloudinary.com/dkexmocck/image/upload/q_auto,f_auto/v1774857930/tnl0r1aoibdx7ics7cei.jpg"
+      "thumb": "https://pub-4288a2bf7b6345c488d13d1481543425.r2.dev/tnl0r1aoibdx7ics7cei.jpg"
     },
     {
-      "src": "https://res.cloudinary.com/dkexmocck/image/upload/q_auto,f_auto/v1774857926/jy3yt3emua8shh3ge6tm.jpg",
+      "src": "https://pub-4288a2bf7b6345c488d13d1481543425.r2.dev/jy3yt3emua8shh3ge6tm.jpg",
       "category": "streetwear",
       "alt": "IMG_6880.JPEG",
-      "thumb": "https://res.cloudinary.com/dkexmocck/image/upload/q_auto,f_auto/v1774857926/jy3yt3emua8shh3ge6tm.jpg"
+      "thumb": "https://pub-4288a2bf7b6345c488d13d1481543425.r2.dev/jy3yt3emua8shh3ge6tm.jpg"
     },
     {
-      "src": "https://res.cloudinary.com/dkexmocck/image/upload/q_auto,f_auto/v1774857923/h8mwbc2mhoawfnvgbejc.jpg",
+      "src": "https://pub-4288a2bf7b6345c488d13d1481543425.r2.dev/h8mwbc2mhoawfnvgbejc.jpg",
       "category": "streetwear",
       "alt": "IMG_6877.JPEG",
-      "thumb": "https://res.cloudinary.com/dkexmocck/image/upload/q_auto,f_auto/v1774857923/h8mwbc2mhoawfnvgbejc.jpg"
+      "thumb": "https://pub-4288a2bf7b6345c488d13d1481543425.r2.dev/h8mwbc2mhoawfnvgbejc.jpg"
     },
     {
-      "src": "https://res.cloudinary.com/dkexmocck/image/upload/q_auto,f_auto/v1774857833/ocnhgk9wklewvvippwzm.jpg",
+      "src": "https://pub-4288a2bf7b6345c488d13d1481543425.r2.dev/ocnhgk9wklewvvippwzm.jpg",
       "category": "food",
       "alt": "IMG_6416.jpeg",
-      "thumb": "https://res.cloudinary.com/dkexmocck/image/upload/q_auto,f_auto/v1774857833/ocnhgk9wklewvvippwzm.jpg"
+      "thumb": "https://pub-4288a2bf7b6345c488d13d1481543425.r2.dev/ocnhgk9wklewvvippwzm.jpg"
     },
     {
-      "src": "https://res.cloudinary.com/dkexmocck/image/upload/q_auto,f_auto/v1774857804/o75gycejwefe8ecvqpsr.jpg",
+      "src": "https://pub-4288a2bf7b6345c488d13d1481543425.r2.dev/o75gycejwefe8ecvqpsr.jpg",
       "category": "food",
       "alt": "IMG_6636.jpeg",
-      "thumb": "https://res.cloudinary.com/dkexmocck/image/upload/q_auto,f_auto/v1774857804/o75gycejwefe8ecvqpsr.jpg"
+      "thumb": "https://pub-4288a2bf7b6345c488d13d1481543425.r2.dev/o75gycejwefe8ecvqpsr.jpg"
     },
     {
-      "src": "https://res.cloudinary.com/dkexmocck/image/upload/q_auto,f_auto/v1774857777/lunxnvymcsd8v2vxiteq.jpg",
+      "src": "https://pub-4288a2bf7b6345c488d13d1481543425.r2.dev/lunxnvymcsd8v2vxiteq.jpg",
       "category": "food",
       "alt": "IMG_6639.JPG",
-      "thumb": "https://res.cloudinary.com/dkexmocck/image/upload/q_auto,f_auto/v1774857777/lunxnvymcsd8v2vxiteq.jpg"
+      "thumb": "https://pub-4288a2bf7b6345c488d13d1481543425.r2.dev/lunxnvymcsd8v2vxiteq.jpg"
     },
     {
-      "src": "https://res.cloudinary.com/dkexmocck/image/upload/q_auto,f_auto/v1774857775/k59vbpvqyfr684ptdvwj.jpg",
+      "src": "https://pub-4288a2bf7b6345c488d13d1481543425.r2.dev/k59vbpvqyfr684ptdvwj.jpg",
       "category": "food",
       "alt": "IMG_6637.JPG",
-      "thumb": "https://res.cloudinary.com/dkexmocck/image/upload/q_auto,f_auto/v1774857775/k59vbpvqyfr684ptdvwj.jpg"
+      "thumb": "https://pub-4288a2bf7b6345c488d13d1481543425.r2.dev/k59vbpvqyfr684ptdvwj.jpg"
     },
     {
-      "src": "https://res.cloudinary.com/dkexmocck/image/upload/q_auto,f_auto/v1774857421/x5ph0qn51tuprviqkwzx.jpg",
+      "src": "https://pub-4288a2bf7b6345c488d13d1481543425.r2.dev/x5ph0qn51tuprviqkwzx.jpg",
       "category": "food",
       "alt": "IMG_6420.JPG",
-      "thumb": "https://res.cloudinary.com/dkexmocck/image/upload/q_auto,f_auto/v1774857421/x5ph0qn51tuprviqkwzx.jpg"
+      "thumb": "https://pub-4288a2bf7b6345c488d13d1481543425.r2.dev/x5ph0qn51tuprviqkwzx.jpg"
     },
     {
-      "src": "https://res.cloudinary.com/dkexmocck/image/upload/q_auto,f_auto/v1774857414/riubtoqnlgsz9jwlq7yz.jpg",
+      "src": "https://pub-4288a2bf7b6345c488d13d1481543425.r2.dev/riubtoqnlgsz9jwlq7yz.jpg",
       "category": "food",
       "alt": "IMG_6415.JPG",
-      "thumb": "https://res.cloudinary.com/dkexmocck/image/upload/q_auto,f_auto/v1774857414/riubtoqnlgsz9jwlq7yz.jpg"
+      "thumb": "https://pub-4288a2bf7b6345c488d13d1481543425.r2.dev/riubtoqnlgsz9jwlq7yz.jpg"
     },
     {
-      "src": "https://res.cloudinary.com/dkexmocck/image/upload/q_auto,f_auto/v1774857411/de0ludvlfzkpkecfwvqf.jpg",
+      "src": "https://pub-4288a2bf7b6345c488d13d1481543425.r2.dev/de0ludvlfzkpkecfwvqf.jpg",
       "category": "food",
       "alt": "IMG_6412.JPG",
-      "thumb": "https://res.cloudinary.com/dkexmocck/image/upload/q_auto,f_auto/v1774857411/de0ludvlfzkpkecfwvqf.jpg"
+      "thumb": "https://pub-4288a2bf7b6345c488d13d1481543425.r2.dev/de0ludvlfzkpkecfwvqf.jpg"
     },
     {
-      "src": "https://res.cloudinary.com/dkexmocck/image/upload/q_auto,f_auto/v1774857124/hitog2enm2dmqzapkybw.jpg",
+      "src": "https://pub-4288a2bf7b6345c488d13d1481543425.r2.dev/hitog2enm2dmqzapkybw.jpg",
       "category": "beauty",
       "alt": "IMG_2524.PNG",
-      "thumb": "https://res.cloudinary.com/dkexmocck/image/upload/q_auto,f_auto/v1774857124/hitog2enm2dmqzapkybw.jpg"
+      "thumb": "https://pub-4288a2bf7b6345c488d13d1481543425.r2.dev/hitog2enm2dmqzapkybw.jpg"
     },
     {
-      "src": "https://res.cloudinary.com/dkexmocck/image/upload/q_auto,f_auto/v1774857658/iuearxll92gnjibubjxd.jpg",
+      "src": "https://pub-4288a2bf7b6345c488d13d1481543425.r2.dev/iuearxll92gnjibubjxd.jpg",
       "category": "beauty",
       "alt": "IMG_6542.jpeg",
-      "thumb": "https://res.cloudinary.com/dkexmocck/image/upload/q_auto,f_auto/v1774857658/iuearxll92gnjibubjxd.jpg"
+      "thumb": "https://pub-4288a2bf7b6345c488d13d1481543425.r2.dev/iuearxll92gnjibubjxd.jpg"
     },
     {
-      "src": "https://res.cloudinary.com/dkexmocck/image/upload/q_auto,f_auto/v1774857663/txqabrwqybnkawnz5sez.jpg",
+      "src": "https://pub-4288a2bf7b6345c488d13d1481543425.r2.dev/txqabrwqybnkawnz5sez.jpg",
       "category": "beauty",
       "alt": "IMG_6544.jpeg",
-      "thumb": "https://res.cloudinary.com/dkexmocck/image/upload/q_auto,f_auto/v1774857663/txqabrwqybnkawnz5sez.jpg"
+      "thumb": "https://pub-4288a2bf7b6345c488d13d1481543425.r2.dev/txqabrwqybnkawnz5sez.jpg"
     },
     {
-      "src": "https://res.cloudinary.com/dkexmocck/image/upload/q_auto,f_auto/v1774857655/ikfiw7tzgduhhyntg54n.jpg",
+      "src": "https://pub-4288a2bf7b6345c488d13d1481543425.r2.dev/ikfiw7tzgduhhyntg54n.jpg",
       "category": "beauty",
       "alt": "IMG_6541(1).jpg",
-      "thumb": "https://res.cloudinary.com/dkexmocck/image/upload/q_auto,f_auto/v1774857655/ikfiw7tzgduhhyntg54n.jpg"
+      "thumb": "https://pub-4288a2bf7b6345c488d13d1481543425.r2.dev/ikfiw7tzgduhhyntg54n.jpg"
     },
     {
-      "src": "https://res.cloudinary.com/dkexmocck/image/upload/q_auto,f_auto/v1774857660/i1obvpcfl4oi1r8trd1w.jpg",
+      "src": "https://pub-4288a2bf7b6345c488d13d1481543425.r2.dev/i1obvpcfl4oi1r8trd1w.jpg",
       "category": "beauty",
       "alt": "IMG_6543.jpeg",
-      "thumb": "https://res.cloudinary.com/dkexmocck/image/upload/q_auto,f_auto/v1774857660/i1obvpcfl4oi1r8trd1w.jpg"
+      "thumb": "https://pub-4288a2bf7b6345c488d13d1481543425.r2.dev/i1obvpcfl4oi1r8trd1w.jpg"
     },
     {
-      "src": "https://res.cloudinary.com/dkexmocck/image/upload/q_auto,f_auto/v1774857097/nkuivpyljkcuofxqfrix.jpg",
+      "src": "https://pub-4288a2bf7b6345c488d13d1481543425.r2.dev/nkuivpyljkcuofxqfrix.jpg",
       "category": "ugc",
       "alt": "IMG_4250.JPG",
-      "thumb": "https://res.cloudinary.com/dkexmocck/image/upload/q_auto,f_auto/v1774857097/nkuivpyljkcuofxqfrix.jpg"
+      "thumb": "https://pub-4288a2bf7b6345c488d13d1481543425.r2.dev/nkuivpyljkcuofxqfrix.jpg"
     },
     {
-      "src": "https://res.cloudinary.com/dkexmocck/image/upload/q_auto,f_auto/v1774857093/qt0dweytu7zpbfwefzqa.jpg",
+      "src": "https://pub-4288a2bf7b6345c488d13d1481543425.r2.dev/qt0dweytu7zpbfwefzqa.jpg",
       "category": "ugc",
       "alt": "IMG_4248.JPG",
-      "thumb": "https://res.cloudinary.com/dkexmocck/image/upload/q_auto,f_auto/v1774857093/qt0dweytu7zpbfwefzqa.jpg"
+      "thumb": "https://pub-4288a2bf7b6345c488d13d1481543425.r2.dev/qt0dweytu7zpbfwefzqa.jpg"
     },
     {
-      "src": "https://res.cloudinary.com/dkexmocck/image/upload/q_auto,f_auto/v1774857089/pmqitbc2nhkpzwyasmbu.jpg",
+      "src": "https://pub-4288a2bf7b6345c488d13d1481543425.r2.dev/pmqitbc2nhkpzwyasmbu.jpg",
       "category": "ugc",
       "alt": "IMG_4246.JPG",
-      "thumb": "https://res.cloudinary.com/dkexmocck/image/upload/q_auto,f_auto/v1774857089/pmqitbc2nhkpzwyasmbu.jpg"
+      "thumb": "https://pub-4288a2bf7b6345c488d13d1481543425.r2.dev/pmqitbc2nhkpzwyasmbu.jpg"
     },
     {
-      "src": "https://res.cloudinary.com/dkexmocck/image/upload/q_auto,f_auto/v1774857146/u6yhsdl1ectmrwxqkuep.jpg",
+      "src": "https://pub-4288a2bf7b6345c488d13d1481543425.r2.dev/u6yhsdl1ectmrwxqkuep.jpg",
       "category": "streetwear",
       "alt": "IMG_1738.JPG",
-      "thumb": "https://res.cloudinary.com/dkexmocck/image/upload/q_auto,f_auto/v1774857146/u6yhsdl1ectmrwxqkuep.jpg"
+      "thumb": "https://pub-4288a2bf7b6345c488d13d1481543425.r2.dev/u6yhsdl1ectmrwxqkuep.jpg"
     },
     {
-      "src": "https://res.cloudinary.com/dkexmocck/image/upload/q_auto,f_auto/v1774857389/vjxtfhrr1ctzydo1rbbr.jpg",
+      "src": "https://pub-4288a2bf7b6345c488d13d1481543425.r2.dev/vjxtfhrr1ctzydo1rbbr.jpg",
       "category": "streetwear",
       "alt": "IMG_1736.jpeg",
-      "thumb": "https://res.cloudinary.com/dkexmocck/image/upload/q_auto,f_auto/v1774857389/vjxtfhrr1ctzydo1rbbr.jpg"
+      "thumb": "https://pub-4288a2bf7b6345c488d13d1481543425.r2.dev/vjxtfhrr1ctzydo1rbbr.jpg"
     },
     {
-      "src": "https://res.cloudinary.com/dkexmocck/image/upload/q_auto,f_auto/v1774857150/wwzxdlj5n8iv62rg9ovd.jpg",
+      "src": "https://pub-4288a2bf7b6345c488d13d1481543425.r2.dev/wwzxdlj5n8iv62rg9ovd.jpg",
       "category": "streetwear",
       "alt": "IMG_1743.JPG",
-      "thumb": "https://res.cloudinary.com/dkexmocck/image/upload/q_auto,f_auto/v1774857150/wwzxdlj5n8iv62rg9ovd.jpg"
+      "thumb": "https://pub-4288a2bf7b6345c488d13d1481543425.r2.dev/wwzxdlj5n8iv62rg9ovd.jpg"
     },
     {
-      "src": "https://res.cloudinary.com/dkexmocck/image/upload/q_auto,f_auto/v1774856547/izd60rsekez64wzvsq9k.jpg",
+      "src": "https://pub-4288a2bf7b6345c488d13d1481543425.r2.dev/izd60rsekez64wzvsq9k.jpg",
       "category": "streetwear",
       "alt": "IMG_4354.PNG",
-      "thumb": "https://res.cloudinary.com/dkexmocck/image/upload/q_auto,f_auto/v1774856547/izd60rsekez64wzvsq9k.jpg"
+      "thumb": "https://pub-4288a2bf7b6345c488d13d1481543425.r2.dev/izd60rsekez64wzvsq9k.jpg"
     },
     {
-      "src": "https://res.cloudinary.com/dkexmocck/image/upload/q_auto,f_auto/v1774856546/hkcw7tcgojrpi5ngxnl4.jpg",
+      "src": "https://pub-4288a2bf7b6345c488d13d1481543425.r2.dev/hkcw7tcgojrpi5ngxnl4.jpg",
       "category": "streetwear",
       "alt": "IMG_4353.PNG",
-      "thumb": "https://res.cloudinary.com/dkexmocck/image/upload/q_auto,f_auto/v1774856546/hkcw7tcgojrpi5ngxnl4.jpg"
+      "thumb": "https://pub-4288a2bf7b6345c488d13d1481543425.r2.dev/hkcw7tcgojrpi5ngxnl4.jpg"
     },
     {
-      "src": "https://res.cloudinary.com/dkexmocck/image/upload/q_auto,f_auto/v1774856545/f8q1azrphbiddb34mn2t.jpg",
+      "src": "https://pub-4288a2bf7b6345c488d13d1481543425.r2.dev/f8q1azrphbiddb34mn2t.jpg",
       "category": "streetwear",
       "alt": "IMG_4003.PNG",
-      "thumb": "https://res.cloudinary.com/dkexmocck/image/upload/q_auto,f_auto/v1774856545/f8q1azrphbiddb34mn2t.jpg"
+      "thumb": "https://pub-4288a2bf7b6345c488d13d1481543425.r2.dev/f8q1azrphbiddb34mn2t.jpg"
     },
     {
-      "src": "https://res.cloudinary.com/dkexmocck/image/upload/q_auto,f_auto/v1774856544/wqhlrs60femnqrebgg36.jpg",
+      "src": "https://pub-4288a2bf7b6345c488d13d1481543425.r2.dev/wqhlrs60femnqrebgg36.jpg",
       "category": "streetwear",
       "alt": "IMG_4001.PNG",
-      "thumb": "https://res.cloudinary.com/dkexmocck/image/upload/q_auto,f_auto/v1774856544/wqhlrs60femnqrebgg36.jpg"
+      "thumb": "https://pub-4288a2bf7b6345c488d13d1481543425.r2.dev/wqhlrs60femnqrebgg36.jpg"
     },
     {
-      "src": "https://res.cloudinary.com/dkexmocck/image/upload/v1772037422/hwffncfxijtoj4k5l7ut.jpg",
+      "src": "https://pub-4288a2bf7b6345c488d13d1481543425.r2.dev/hwffncfxijtoj4k5l7ut.jpg",
       "category": "streetwear",
       "alt": "IMG 6901",
-      "thumb": "https://res.cloudinary.com/dkexmocck/image/upload/v1772037422/hwffncfxijtoj4k5l7ut.jpg"
+      "thumb": "https://pub-4288a2bf7b6345c488d13d1481543425.r2.dev/hwffncfxijtoj4k5l7ut.jpg"
     },
     {
-      "src": "https://res.cloudinary.com/dkexmocck/image/upload/q_auto,f_auto/v1774856499/kuadrzjshaxyuphfqwgc.jpg",
+      "src": "https://pub-4288a2bf7b6345c488d13d1481543425.r2.dev/kuadrzjshaxyuphfqwgc.jpg",
       "category": "ugc",
       "alt": "IMG_6966.JPG",
-      "thumb": "https://res.cloudinary.com/dkexmocck/image/upload/q_auto,f_auto/v1774856499/kuadrzjshaxyuphfqwgc.jpg"
+      "thumb": "https://pub-4288a2bf7b6345c488d13d1481543425.r2.dev/kuadrzjshaxyuphfqwgc.jpg"
     },
     {
-      "src": "https://res.cloudinary.com/dkexmocck/image/upload/q_auto,f_auto/v1774856478/fjxbaewvybaexdvr9f8l.jpg",
+      "src": "https://pub-4288a2bf7b6345c488d13d1481543425.r2.dev/fjxbaewvybaexdvr9f8l.jpg",
       "category": "ugc",
       "alt": "IMG_6970.JPG",
-      "thumb": "https://res.cloudinary.com/dkexmocck/image/upload/q_auto,f_auto/v1774856478/fjxbaewvybaexdvr9f8l.jpg"
+      "thumb": "https://pub-4288a2bf7b6345c488d13d1481543425.r2.dev/fjxbaewvybaexdvr9f8l.jpg"
     },
     {
-      "src": "https://res.cloudinary.com/dkexmocck/image/upload/q_auto,f_auto/v1774856465/hovrsjusrb3dwgvpbi9a.jpg",
+      "src": "https://pub-4288a2bf7b6345c488d13d1481543425.r2.dev/hovrsjusrb3dwgvpbi9a.jpg",
       "category": "ugc",
       "alt": "IMG_6969.JPG",
-      "thumb": "https://res.cloudinary.com/dkexmocck/image/upload/q_auto,f_auto/v1774856465/hovrsjusrb3dwgvpbi9a.jpg"
+      "thumb": "https://pub-4288a2bf7b6345c488d13d1481543425.r2.dev/hovrsjusrb3dwgvpbi9a.jpg"
     },
     {
-      "src": "https://res.cloudinary.com/dkexmocck/image/upload/q_auto,f_auto/v1774856437/rumurqzl28zunw4dudrj.jpg",
+      "src": "https://pub-4288a2bf7b6345c488d13d1481543425.r2.dev/rumurqzl28zunw4dudrj.jpg",
       "category": "beauty",
       "alt": "IMG_7714.JPG",
-      "thumb": "https://res.cloudinary.com/dkexmocck/image/upload/q_auto,f_auto/v1774856437/rumurqzl28zunw4dudrj.jpg"
+      "thumb": "https://pub-4288a2bf7b6345c488d13d1481543425.r2.dev/rumurqzl28zunw4dudrj.jpg"
     },
     {
-      "src": "https://res.cloudinary.com/dkexmocck/image/upload/v1772378679/v2tfleq9ynwo43xhuwqa.jpg",
+      "src": "https://pub-4288a2bf7b6345c488d13d1481543425.r2.dev/v2tfleq9ynwo43xhuwqa.jpg",
       "category": "commercial",
       "alt": "IMG_6793.jpg",
-      "thumb": "https://res.cloudinary.com/dkexmocck/image/upload/v1772378679/v2tfleq9ynwo43xhuwqa.jpg"
+      "thumb": "https://pub-4288a2bf7b6345c488d13d1481543425.r2.dev/v2tfleq9ynwo43xhuwqa.jpg"
     },
     {
-      "src": "https://res.cloudinary.com/dkexmocck/image/upload/v1772378668/iisg9qeyk3t3wfaczjfe.jpg",
+      "src": "https://pub-4288a2bf7b6345c488d13d1481543425.r2.dev/iisg9qeyk3t3wfaczjfe.jpg",
       "category": "commercial",
       "alt": "IMG_6794.jpg",
-      "thumb": "https://res.cloudinary.com/dkexmocck/image/upload/v1772378668/iisg9qeyk3t3wfaczjfe.jpg"
+      "thumb": "https://pub-4288a2bf7b6345c488d13d1481543425.r2.dev/iisg9qeyk3t3wfaczjfe.jpg"
     },
     {
-      "src": "https://res.cloudinary.com/dkexmocck/image/upload/v1772378651/xebimkkkbwyxau0r4zkc.jpg",
+      "src": "https://pub-4288a2bf7b6345c488d13d1481543425.r2.dev/xebimkkkbwyxau0r4zkc.jpg",
       "category": "commercial",
       "alt": "IMG_6795.jpg",
-      "thumb": "https://res.cloudinary.com/dkexmocck/image/upload/v1772378651/xebimkkkbwyxau0r4zkc.jpg"
+      "thumb": "https://pub-4288a2bf7b6345c488d13d1481543425.r2.dev/xebimkkkbwyxau0r4zkc.jpg"
     },
     {
-      "src": "https://res.cloudinary.com/dkexmocck/image/upload/v1772037506/zhjytmommnik177nnicz.jpg",
+      "src": "https://pub-4288a2bf7b6345c488d13d1481543425.r2.dev/zhjytmommnik177nnicz.jpg",
       "category": "casual",
       "alt": "IMG 7238",
-      "thumb": "https://res.cloudinary.com/dkexmocck/image/upload/v1772037506/zhjytmommnik177nnicz.jpg"
+      "thumb": "https://pub-4288a2bf7b6345c488d13d1481543425.r2.dev/zhjytmommnik177nnicz.jpg"
     }
   ],
   "videos": [
     {
-      "src": "https://res.cloudinary.com/dkexmocck/video/upload/v1774858348/lyvdhexnjtmvzaoynanj.mp4",
+      "src": "https://pub-4288a2bf7b6345c488d13d1481543425.r2.dev/lyvdhexnjtmvzaoynanj.mp4",
       "video_url": "",
       "category": "streetwear",
       "label": "QOIMA",
-      "poster": "https://res.cloudinary.com/dkexmocck/image/upload/q_auto,f_auto/v1774861606/rktkxfsudjpekdxubl3h.jpg"
+      "poster": "https://pub-4288a2bf7b6345c488d13d1481543425.r2.dev/rktkxfsudjpekdxubl3h.jpg"
     },
     {
-      "src": "https://res.cloudinary.com/dkexmocck/video/upload/v1774858319/muvw5jgwoxbq945ssrju.mp4",
+      "src": "https://pub-4288a2bf7b6345c488d13d1481543425.r2.dev/muvw5jgwoxbq945ssrju.mp4",
       "video_url": "",
       "category": "streetwear",
       "label": "QOIMA",
-      "poster": "https://res.cloudinary.com/dkexmocck/video/upload/v1774858319/muvw5jgwoxbq945ssrju.jpg"
+      "poster": "https://pub-4288a2bf7b6345c488d13d1481543425.r2.dev/muvw5jgwoxbq945ssrju.jpg"
     },
     {
-      "src": "https://res.cloudinary.com/dkexmocck/video/upload/v1774858313/hs7q8rfcgggzqgj7ugqa.mov",
+      "src": "https://pub-4288a2bf7b6345c488d13d1481543425.r2.dev/hs7q8rfcgggzqgj7ugqa.mov",
       "video_url": "",
       "category": "beauty",
       "label": "JAYN",
-      "poster": "https://res.cloudinary.com/dkexmocck/image/upload/q_auto,f_auto/v1774863235/w3sz2wt0hb3l9x3xwwsh.jpg"
+      "poster": "https://pub-4288a2bf7b6345c488d13d1481543425.r2.dev/w3sz2wt0hb3l9x3xwwsh.jpg"
     },
     {
-      "src": "https://res.cloudinary.com/dkexmocck/video/upload/v1774858263/wxedhrwljlxib1o13rzk.mov",
+      "src": "https://pub-4288a2bf7b6345c488d13d1481543425.r2.dev/wxedhrwljlxib1o13rzk.mov",
       "video_url": "",
       "category": "social",
       "label": "Kitfort",
-      "poster": "https://res.cloudinary.com/dkexmocck/image/upload/q_auto,f_auto/v1774861704/xpoksumvllknw3bdcnh9.jpg"
+      "poster": "https://pub-4288a2bf7b6345c488d13d1481543425.r2.dev/xpoksumvllknw3bdcnh9.jpg"
     },
     {
-      "src": "https://res.cloudinary.com/dkexmocck/video/upload/v1774858197/rxnlcep9cb3krfvrmhfl.mov",
+      "src": "https://pub-4288a2bf7b6345c488d13d1481543425.r2.dev/rxnlcep9cb3krfvrmhfl.mov",
       "video_url": "",
       "category": "social",
       "label": "Kitfort",
-      "poster": "https://res.cloudinary.com/dkexmocck/image/upload/q_auto,f_auto/v1774861760/crxkyn6wut1diey5meq9.jpg"
+      "poster": "https://pub-4288a2bf7b6345c488d13d1481543425.r2.dev/crxkyn6wut1diey5meq9.jpg"
     },
     {
-      "src": "https://res.cloudinary.com/dkexmocck/video/upload/v1774855135/mncua1stgi0xw2frtc4t.mp4",
+      "src": "https://pub-4288a2bf7b6345c488d13d1481543425.r2.dev/mncua1stgi0xw2frtc4t.mp4",
       "video_url": "",
       "category": "social",
       "label": "АкваМарис",
-      "poster": "https://res.cloudinary.com/dkexmocck/image/upload/q_auto,f_auto/v1774861791/bepsakuploqkgr5iwdbv.jpg"
+      "poster": "https://pub-4288a2bf7b6345c488d13d1481543425.r2.dev/bepsakuploqkgr5iwdbv.jpg"
     },
     {
-      "src": "https://res.cloudinary.com/dkexmocck/video/upload/v1774855065/nvdv79hcixq8qjnbi5hm.mov",
+      "src": "https://pub-4288a2bf7b6345c488d13d1481543425.r2.dev/nvdv79hcixq8qjnbi5hm.mov",
       "video_url": "",
       "category": "social",
       "label": "Lunel Floral",
-      "poster": "https://res.cloudinary.com/dkexmocck/image/upload/q_auto,f_auto/v1774861825/tnbqofo9wyhqhc2zcyxe.jpg"
+      "poster": "https://pub-4288a2bf7b6345c488d13d1481543425.r2.dev/tnbqofo9wyhqhc2zcyxe.jpg"
     },
     {
-      "src": "https://res.cloudinary.com/dkexmocck/video/upload/v1774855002/xr160wslkpanp3vom4uy.mp4",
+      "src": "https://pub-4288a2bf7b6345c488d13d1481543425.r2.dev/xr160wslkpanp3vom4uy.mp4",
       "video_url": "",
       "category": "social",
       "label": "Aston",
-      "poster": "https://res.cloudinary.com/dkexmocck/image/upload/q_auto,f_auto/v1774861911/ivnuoehnsr86ddxzwmrh.jpg"
+      "poster": "https://pub-4288a2bf7b6345c488d13d1481543425.r2.dev/ivnuoehnsr86ddxzwmrh.jpg"
     },
     {
-      "src": "https://res.cloudinary.com/dkexmocck/video/upload/v1774854950/giu0zaezks94fma7vu5p.mp4",
+      "src": "https://pub-4288a2bf7b6345c488d13d1481543425.r2.dev/giu0zaezks94fma7vu5p.mp4",
       "video_url": "",
       "category": "commercial",
       "label": "LC Waikiki",
-      "poster": "https://res.cloudinary.com/dkexmocck/image/upload/q_auto,f_auto/v1774861975/jf5n0tm09z2ziywgatqe.jpg"
+      "poster": "https://pub-4288a2bf7b6345c488d13d1481543425.r2.dev/jf5n0tm09z2ziywgatqe.jpg"
     },
     {
-      "src": "https://res.cloudinary.com/dkexmocck/video/upload/v1774854879/llfsgm3ac6menskswjsm.mov",
+      "src": "https://pub-4288a2bf7b6345c488d13d1481543425.r2.dev/llfsgm3ac6menskswjsm.mov",
       "video_url": "",
       "category": "beauty",
       "label": "MakeUpRevolution",
-      "poster": "https://res.cloudinary.com/dkexmocck/image/upload/q_auto,f_auto/v1774861999/vopibv2hezhwtslsk9hb.jpg"
+      "poster": "https://pub-4288a2bf7b6345c488d13d1481543425.r2.dev/vopibv2hezhwtslsk9hb.jpg"
     },
     {
-      "src": "https://res.cloudinary.com/dkexmocck/video/upload/v1772375980/jkots8btvndo1wruy9mu.mp4",
+      "src": "https://pub-4288a2bf7b6345c488d13d1481543425.r2.dev/jkots8btvndo1wruy9mu.mp4",
       "video_url": "",
       "category": "commercial",
       "label": "KFC commercial",
-      "poster": "https://res.cloudinary.com/dkexmocck/image/upload/q_auto,f_auto/v1774862022/ia3hcpr3pdsxaxdfo472.jpg"
+      "poster": "https://pub-4288a2bf7b6345c488d13d1481543425.r2.dev/ia3hcpr3pdsxaxdfo472.jpg"
     },
     {
-      "src": "https://res.cloudinary.com/dkexmocck/video/upload/v1772377556/daqpqmwipcykn1f6a8vm.mov",
+      "src": "https://pub-4288a2bf7b6345c488d13d1481543425.r2.dev/daqpqmwipcykn1f6a8vm.mov",
       "video_url": "",
       "category": "beauty",
       "label": "JAIN cosmetics",
-      "poster": "https://res.cloudinary.com/dkexmocck/image/upload/q_auto,f_auto/v1774862038/bccbrcrx0yeao0mkus0n.jpg"
+      "poster": "https://pub-4288a2bf7b6345c488d13d1481543425.r2.dev/bccbrcrx0yeao0mkus0n.jpg"
     }
   ]
 }

@@ -6,10 +6,7 @@ import { PhotoGrid } from "@/components/admin/PhotoGrid";
 import { VideoGrid } from "@/components/admin/VideoGrid";
 import { CropModal } from "@/components/admin/CropModal";
 
-interface CloudinaryConfig {
-    cloud_name: string;
-    api_key: string;
-}
+
 
 interface PortfolioData {
     siteImages: {
@@ -28,7 +25,7 @@ export default function AdminPage() {
     const [isLoading, setIsLoading] = useState(false);
 
     const [authToken, setAuthToken] = useState<string | null>(null);
-    const [cloudConfig, setCloudConfig] = useState<CloudinaryConfig | null>(null);
+
     const [data, setData] = useState<PortfolioData | null>(null);
     const [originalData, setOriginalData] = useState<PortfolioData | null>(null);
     const [fileSha, setFileSha] = useState<string>("");
@@ -48,21 +45,6 @@ export default function AdminPage() {
 
     const initializeAdmin = async (token: string) => {
         try {
-            // Fetch Config
-            const configRes = await fetch("/api/get-config", {
-                headers: { "Authorization": `Bearer ${token}` }
-            });
-
-            if (configRes.status === 401) {
-                handleLogout();
-                return;
-            }
-
-            const configData = await configRes.json();
-            setCloudConfig({
-                cloud_name: configData.cloud_name,
-                api_key: configData.api_key
-            });
 
             // Fetch Data
             const dataRes = await fetch("/api/data", {
@@ -165,46 +147,32 @@ export default function AdminPage() {
         }
     };
 
-    const uploadFileToCloudinary = async (file: File, resourceType: "image" | "video" = "image"): Promise<string | null> => {
-        if (!authToken || !cloudConfig) {
-            alert("Missing config or authentication");
+    const uploadFileToR2 = async (file: File, resourceType: "image" | "video" = "image"): Promise<string | null> => {
+        if (!authToken) {
+            alert("Missing authentication");
             return null;
         }
 
         setIsLoading(true);
         try {
-            // 1. Get Signature
-            const sigRes = await fetch("/api/sign-upload", {
+            // 1. Get presigned URL from our API
+            const contentType = file.type || (resourceType === "video" ? "video/mp4" : "image/jpeg");
+            const sigRes = await fetch(`/api/sign-upload?filename=${encodeURIComponent(file.name)}&contentType=${encodeURIComponent(contentType)}`, {
                 headers: { "Authorization": `Bearer ${authToken}` }
             });
-            if (!sigRes.ok) throw new Error("Failed to get signature");
-            const { signature, timestamp } = await sigRes.json();
+            if (!sigRes.ok) throw new Error("Failed to get presigned URL");
+            const { uploadUrl, publicUrl } = await sigRes.json();
 
-            // 2. Upload to Cloudinary
-            const formData = new FormData();
-            formData.append("file", file);
-            formData.append("api_key", cloudConfig.api_key);
-            formData.append("timestamp", timestamp);
-            formData.append("signature", signature);
-
-            const url = `https://api.cloudinary.com/v1_1/${cloudConfig.cloud_name}/${resourceType}/upload`;
-
-            const uploadRes = await fetch(url, {
-                method: "POST",
-                body: formData
+            // 2. Upload directly to Cloudflare R2
+            const uploadRes = await fetch(uploadUrl, {
+                method: "PUT",
+                body: file,
+                headers: { "Content-Type": contentType },
             });
 
-            if (!uploadRes.ok) throw new Error(`Cloudinary upload failed: ${uploadRes.statusText}`);
+            if (!uploadRes.ok) throw new Error(`R2 upload failed: ${uploadRes.statusText}`);
 
-            const uploadData = await uploadRes.json();
-            let secureUrl = uploadData.secure_url;
-
-            // Add auto optimization for images
-            if (resourceType === "image" && secureUrl.includes("/upload/")) {
-                secureUrl = secureUrl.replace("/upload/", "/upload/q_auto,f_auto/");
-            }
-
-            return secureUrl;
+            return publicUrl;
         } catch (err) {
             console.error("Upload Error", err);
             alert("Failed to upload file");
@@ -215,7 +183,7 @@ export default function AdminPage() {
     };
 
     const handleUploadPhoto = async (file: File) => {
-        const url = await uploadFileToCloudinary(file, "image");
+        const url = await uploadFileToR2(file, "image");
         if (url) {
             setData(prev => {
                 if (!prev) return prev;
@@ -226,7 +194,7 @@ export default function AdminPage() {
     };
 
     const handleUploadVideo = async (file: File) => {
-        const url = await uploadFileToCloudinary(file, "video");
+        const url = await uploadFileToR2(file, "video");
         if (url) {
             setData(prev => {
                 if (!prev) return prev;
@@ -292,7 +260,7 @@ export default function AdminPage() {
         );
     }
 
-    if (!data || !cloudConfig) {
+    if (!data) {
         return (
             <div className="min-h-screen bg-[#050505] text-white flex justify-center items-center p-8">
                 <div className="animate-pulse">Загрузка данных...</div>
@@ -365,7 +333,7 @@ export default function AdminPage() {
                                                         src: reader.result as string,
                                                         aspect: 16 / 9,
                                                         onCrop: async (croppedFile) => {
-                                                            const url = await uploadFileToCloudinary(croppedFile, "image");
+                                                            const url = await uploadFileToR2(croppedFile, "image");
                                                             if (url) {
                                                                 const newData = { ...data, siteImages: { ...data.siteImages, hero: url } };
                                                                 setData(newData);
@@ -404,7 +372,7 @@ export default function AdminPage() {
                                                         src: reader.result as string,
                                                         aspect: 2 / 3,
                                                         onCrop: async (croppedFile) => {
-                                                            const url = await uploadFileToCloudinary(croppedFile, "image");
+                                                            const url = await uploadFileToR2(croppedFile, "image");
                                                             if (url) {
                                                                 const newData = { ...data, siteImages: { ...data.siteImages, about1: url } };
                                                                 setData(newData);
@@ -443,7 +411,7 @@ export default function AdminPage() {
                                                         src: reader.result as string,
                                                         aspect: 2 / 3,
                                                         onCrop: async (croppedFile) => {
-                                                            const url = await uploadFileToCloudinary(croppedFile, "image");
+                                                            const url = await uploadFileToR2(croppedFile, "image");
                                                             if (url) {
                                                                 const newData = { ...data, siteImages: { ...data.siteImages, about2: url } };
                                                                 setData(newData);
@@ -477,7 +445,7 @@ export default function AdminPage() {
                     onUpdateVideos={handleVideosUpdate}
                     onUploadVideo={handleUploadVideo}
                     onUploadCover={async (file) => {
-                        const url = await uploadFileToCloudinary(file, "image");
+                        const url = await uploadFileToR2(file, "image");
                         return url;
                     }}
                 />

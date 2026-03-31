@@ -65,23 +65,7 @@ const titleMap: Record<string, string> = {
 
 const categoryOrder = ["beauty", "streetwear", "commercial", "casual", "ugc", "food", "social"];
 
-const cloudinaryLoader = ({ src, width, quality }: { src: string; width: number; quality?: number }) => {
-    if (!src.includes("res.cloudinary.com")) return src;
-    const parts = src.split("/upload/");
-    if (parts.length !== 2) return src;
-    const q = quality || 80;
-    // Removed 2.0x multiplier to drastically save on bandwidth and RAM for thumbnails
-    const w = Math.min(Math.round(width), 1920);
-    return `${parts[0]}/upload/w_${w},q_${q},f_auto/${parts[1]}`;
-};
 
-const cloudinaryVideoLoader = (src: string) => {
-    if (!src || typeof src !== "string" || !src.includes("res.cloudinary.com/")) return src;
-    if (src.includes("/upload/q_") || src.includes("/upload/w_") || src.includes("/upload/f_") || src.includes("/upload/vc_")) return src;
-    const parts = src.split("/upload/");
-    if (parts.length !== 2) return src;
-    return `${parts[0]}/upload/w_1080,q_auto,f_auto,vc_auto/${parts[1]}`;
-};
 interface PortfolioData {
     photos: { src: string; thumb?: string; category: string; alt?: string; }[];
     videos: { src: string; video_url?: string; category: string; label?: string; poster?: string; }[];
@@ -165,7 +149,7 @@ const VideoThumbnail = ({ v, index, onClick }: { v: any; index: number; onClick:
             <div className={`absolute inset-0 z-0 transition-opacity duration-700 pointer-events-none ${loaded && isPlaying ? 'opacity-0' : 'opacity-100'}`}>
                 {v.poster ? (
                     <Image
-                        loader={cloudinaryLoader}
+
                         src={v.poster}
                         alt="Video Cover"
                         fill
@@ -180,7 +164,7 @@ const VideoThumbnail = ({ v, index, onClick }: { v: any; index: number; onClick:
             {shouldMountVideo && (
                 <video 
                     ref={videoRef}
-                    src={cloudinaryVideoLoader(v.src)} 
+                    src={v.src} 
                     poster={v.poster || ""} 
                     muted 
                     loop 
@@ -380,7 +364,7 @@ export function PortfolioContent({ initialData }: { initialData: PortfolioData }
                 <div className="absolute inset-0 z-0">
                     <Image
                         id="header-img"
-                        loader={cloudinaryLoader}
+
                         src={data.siteImages?.hero || "/img/IMG_6543.jpg"}
                         alt="Header"
                         fill
@@ -463,7 +447,7 @@ export function PortfolioContent({ initialData }: { initialData: PortfolioData }
                 <div className="md:col-span-6 grid grid-cols-2 gap-4">
                     <div className="aspect-[2/3] relative overflow-hidden transition-all duration-700 cursor-pointer group/about" onClick={() => openAboutPhoto(0)}>
                         <Image
-                            loader={cloudinaryLoader}
+
                             src={data.siteImages?.about1 || "/img/IMG_7263.jpg"}
                             alt="Model"
                             fill
@@ -477,7 +461,7 @@ export function PortfolioContent({ initialData }: { initialData: PortfolioData }
                     </div>
                     <div className="aspect-[2/3] relative overflow-hidden mt-16 transition-all duration-700 cursor-pointer group/about" onClick={() => openAboutPhoto(1)}>
                         <Image
-                            loader={cloudinaryLoader}
+
                             src={data.siteImages?.about2 || "/img/IMG_8558.jpg"}
                             alt="Model"
                             fill
@@ -524,7 +508,7 @@ export function PortfolioContent({ initialData }: { initialData: PortfolioData }
                                 <div key={i} className="media-item photo-thumb reveal-item visible" onClick={() => openPhoto(i)}>
                                     <div className="parallax-wrapper relative aspect-[2/3]">
                                         <Image
-                                            loader={cloudinaryLoader}
+
                                             src={p.src}
                                             alt={p.alt || "Portfolio Photo"}
                                             fill
@@ -615,7 +599,7 @@ export function PortfolioContent({ initialData }: { initialData: PortfolioData }
                     <span className="lb-close" onClick={(e) => { e.stopPropagation(); closeLightbox(); }}>✕</span>
                     <span className="lb-prev" onClick={(e) => { e.stopPropagation(); prevLightbox(); }}>‹</span>
                     <div id="video-lightbox-inner" onClick={(e) => e.stopPropagation()}>
-                        <video controls autoPlay playsInline src={cloudinaryVideoLoader(filteredVideos[lightbox.index]?.src)} poster={filteredVideos[lightbox.index]?.poster} />
+                        <video controls autoPlay playsInline src={filteredVideos[lightbox.index]?.src} poster={filteredVideos[lightbox.index]?.poster} />
                     </div>
                     <span className="lb-next" onClick={(e) => { e.stopPropagation(); nextLightbox(); }}>›</span>
                     <span className="lb-counter" id="lb-video-counter">

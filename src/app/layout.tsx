@@ -11,7 +11,7 @@ export const metadata: Metadata = {
     siteName: "Dilyara Model Portfolio",
     images: [
       {
-        url: "https://dilyara.kz/img/IMG_6543.JPG",
+        url: "https://pub-4288a2bf7b6345c488d13d1481543425.r2.dev/xqqk5q5p8bbexgeiugwt.jpg",
         width: 1200,
         height: 630,
         alt: "Dilyara Kunanbayeva",
@@ -23,7 +23,7 @@ export const metadata: Metadata = {
     card: "summary_large_image",
     title: "DILYARA KUNANBAYEVA | MODEL",
     description: "Commercial model based in Almaty. Beauty, Streetwear, UGC.",
-    images: ["https://dilyara.kz/img/IMG_6543.JPG"],
+    images: ["https://pub-4288a2bf7b6345c488d13d1481543425.r2.dev/xqqk5q5p8bbexgeiugwt.jpg"],
   },
 };
 
