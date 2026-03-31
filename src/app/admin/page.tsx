@@ -149,33 +149,60 @@ export default function AdminPage() {
 
     const uploadFileToR2 = async (file: File, resourceType: "image" | "video" = "image"): Promise<string | null> => {
         if (!authToken) {
-            alert("Missing authentication");
+            alert("Missing authentication (отсутствует токен)");
             return null;
         }
 
         setIsLoading(true);
         try {
+            // Robust contentType detection
+            let contentType = file.type;
+            if (!contentType) {
+                // FALLBACKS:
+                if (resourceType === "video") {
+                    contentType = file.name.endsWith('.mov') ? 'video/quicktime' : 'video/mp4';
+                } else {
+                    contentType = 'image/jpeg';
+                }
+            }
+            
+            // Log for debugging
+            console.log(`Starting upload: name="${file.name}", size=${file.size}, type="${contentType}"`);
+
             // 1. Get presigned URL from our API
-            const contentType = file.type || (resourceType === "video" ? "video/mp4" : "image/jpeg");
             const sigRes = await fetch(`/api/sign-upload?filename=${encodeURIComponent(file.name)}&contentType=${encodeURIComponent(contentType)}`, {
                 headers: { "Authorization": `Bearer ${authToken}` }
             });
-            if (!sigRes.ok) throw new Error("Failed to get presigned URL");
+            
+            if (!sigRes.ok) {
+                const errData = await sigRes.json().catch(() => ({}));
+                throw new Error(`Failed to get presigned URL: ${errData.error || sigRes.status} ${sigRes.statusText}`);
+            }
             const { uploadUrl, publicUrl } = await sigRes.json();
 
             // 2. Upload directly to Cloudflare R2
+            // We use a clean fetch. Some browsers add charset which can break S3 signatures.
             const uploadRes = await fetch(uploadUrl, {
                 method: "PUT",
                 body: file,
-                headers: { "Content-Type": contentType },
+                headers: { 
+                    "Content-Type": contentType 
+                },
+                mode: 'cors'
             });
 
-            if (!uploadRes.ok) throw new Error(`R2 upload failed: ${uploadRes.statusText}`);
+            if (!uploadRes.ok) {
+                const errorBody = await uploadRes.text().catch(() => "");
+                console.error("R2 Upload error response:", errorBody);
+                throw new Error(`R2 upload failed: ${uploadRes.status} ${uploadRes.statusText}`);
+            }
 
+            console.log("Upload successful:", publicUrl);
             return publicUrl;
-        } catch (err) {
-            console.error("Upload Error", err);
-            alert("Failed to upload file");
+        } catch (err: any) {
+            console.error("Upload Error Detail:", err);
+            // Russian error for the user with technical details for debugging
+            alert(`Ошибка загрузки: ${err.message}\nПопробуйте другой браузер или проверьте размер файла.`);
             return null;
         } finally {
             setIsLoading(false);

@@ -39,15 +39,18 @@ export async function GET(req: Request) {
         }
 
         const url = new URL(req.url);
-        const filename = url.searchParams.get("filename");
+        let filename = url.searchParams.get("filename") || "unnamed";
         const contentType = url.searchParams.get("contentType") || "application/octet-stream";
 
-        if (!filename) {
-            return NextResponse.json({ error: "Missing filename query param" }, { status: 400 });
-        }
+        // Sanitize filename: remove path characters and limit length
+        // This prevents many common S3 signature errors with weird characters
+        filename = filename.replace(/[^a-zA-Z0-9.\-_]/g, "_");
+        if (filename.length > 100) filename = filename.slice(-100);
 
         // Generate a unique key to avoid collisions
         const uniqueKey = `${Date.now()}_${filename}`;
+
+        console.log(`[R2 SIGNING] Key: ${uniqueKey}, Type: ${contentType}`);
 
         const command = new PutObjectCommand({
             Bucket: BUCKET,
