@@ -52,12 +52,21 @@ export default function AdminPage() {
             });
 
             const jsonData = await dataRes.json();
+            
+            if (!dataRes.ok) {
+                console.error("API error fetching data:", jsonData);
+                alert(`Ошибка загрузки данных: ${jsonData.error || 'Unknown Error'}\nДетали: ${jsonData.details || JSON.stringify(jsonData)}`);
+                // Let it stay on loading or handle failure (by default it will stay loading because data is null)
+                return;
+            }
+
             setData(jsonData.data);
             setOriginalData(jsonData.data);
             setFileSha(jsonData.sha);
 
-        } catch (err) {
+        } catch (err: any) {
             console.error("Failed to initialize admin", err);
+            alert(`Сетевая ошибка при загрузке данных: ${err.message}`);
         }
     };
 

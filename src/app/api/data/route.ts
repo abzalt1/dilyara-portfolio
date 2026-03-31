@@ -34,9 +34,9 @@ export async function GET(req: Request) {
         });
 
         if (!response.ok) {
-            const err = await response.json();
+            const err = await response.json().catch(() => ({}));
             console.error("GitHub API Error (GET):", err);
-            return NextResponse.json({ error: "Failed to fetch from GitHub" }, { status: response.status });
+            return NextResponse.json({ error: "Failed to fetch from GitHub", details: err }, { status: response.status });
         }
 
         const data = await response.json();
@@ -55,9 +55,9 @@ export async function GET(req: Request) {
 
         throw new Error("No content found in GitHub response");
 
-    } catch (error) {
+    } catch (error: any) {
         console.error("Error fetching data from GitHub:", error);
-        return NextResponse.json({ error: "Failed to load data" }, { status: 500 });
+        return NextResponse.json({ error: "Failed to load data", details: error.message }, { status: 500 });
     }
 }
 
