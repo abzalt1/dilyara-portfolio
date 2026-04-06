@@ -199,7 +199,8 @@ export function PortfolioContent({ initialData }: { initialData: PortfolioData }
     const isFirstLoad = useRef(true);
 
     const activeCategory = searchParams.get("cat") || "all";
-    const [photoLimit, setPhotoLimit] = useState(12);
+    const [photoLimit, setPhotoLimit] = useState(9);
+    const [videoLimit, setVideoLimit] = useState(9);
 
     // Lightbox state
     const [lightbox, setLightbox] = useState<{ type: "photo" | "video" | null; index: number; url?: string; isAbout?: boolean }>({
@@ -251,7 +252,8 @@ export function PortfolioContent({ initialData }: { initialData: PortfolioData }
     }, [availableCategories, activeCategory]);
 
     const handleFilter = (cat: string) => {
-        setPhotoLimit(12);
+        setPhotoLimit(9);
+        setVideoLimit(9);
 
         // Sync URL without refreshing or scrolling
         const params = new URLSearchParams(searchParams.toString());
@@ -556,7 +558,7 @@ export function PortfolioContent({ initialData }: { initialData: PortfolioData }
                             <button
                                 id="load-more-btn"
                                 className="block mx-auto mt-8 border border-black px-8 py-3 uppercase tracking-widest text-xs hover:bg-black hover:text-white transition"
-                                onClick={() => setPhotoLimit(photoLimit + 12)}
+                                onClick={() => setPhotoLimit(photoLimit + 9)}
                             >
                                 {t.load_more} ({filteredPhotos.length - photoLimit})
                             </button>
@@ -570,10 +572,19 @@ export function PortfolioContent({ initialData }: { initialData: PortfolioData }
                             <i className="ri-movie-fill" /> <span>{titleMap[activeCategory] || "Portfolio"}</span> Reels
                         </h3>
                         <div id="video-grid">
-                            {filteredVideos.map((v, i) => (
+                            {filteredVideos.slice(0, videoLimit).map((v, i) => (
                                 <VideoThumbnail key={i} v={v} index={i} onClick={() => openVideo(i)} />
                             ))}
                         </div>
+                        {videoLimit < filteredVideos.length && (
+                            <button
+                                id="load-more-video-btn"
+                                className="block mx-auto mt-8 border border-white px-8 py-3 uppercase tracking-widest text-xs hover:bg-white hover:text-black transition"
+                                onClick={() => setVideoLimit(videoLimit + 9)}
+                            >
+                                {t.load_more} ({filteredVideos.length - videoLimit})
+                            </button>
+                        )}
                     </div>
                 )}
             </section>

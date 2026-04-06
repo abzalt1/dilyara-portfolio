@@ -316,15 +316,21 @@ html {
 /* ── ВИДЕО-СЕТКА ── */
 #video-grid {
     display: grid;
-    grid-template-columns: repeat(3, 1fr);
+    grid-template-columns: repeat(2, 1fr);
     gap: 4px;
+}
+
+@media (min-width: 768px) {
+    #video-grid {
+        grid-template-columns: repeat(3, 1fr);
+    }
 }
 
 #video-grid .video-thumb {
     width: 100%;
-    aspect-ratio: 9 / 16;
-    background: #1a1a1a;
-    border: 1px solid #2a2a2a;
+    aspect-ratio: 2 / 3;
+    background: #111;
+    border: 1px solid #1a1a1a;
     position: relative;
     overflow: hidden;
     cursor: pointer;
