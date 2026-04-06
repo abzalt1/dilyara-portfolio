@@ -199,8 +199,8 @@ export function PortfolioContent({ initialData }: { initialData: PortfolioData }
     const isFirstLoad = useRef(true);
 
     const activeCategory = searchParams.get("cat") || "all";
-    const [photoLimit, setPhotoLimit] = useState(9);
-    const [videoLimit, setVideoLimit] = useState(9);
+    const [photoLimit, setPhotoLimit] = useState(12);
+    const [videoLimit, setVideoLimit] = useState(12);
 
     // Lightbox state
     const [lightbox, setLightbox] = useState<{ type: "photo" | "video" | null; index: number; url?: string; isAbout?: boolean }>({
@@ -252,8 +252,8 @@ export function PortfolioContent({ initialData }: { initialData: PortfolioData }
     }, [availableCategories, activeCategory]);
 
     const handleFilter = (cat: string) => {
-        setPhotoLimit(9);
-        setVideoLimit(9);
+        setPhotoLimit(12);
+        setVideoLimit(12);
 
         // Sync URL without refreshing or scrolling
         const params = new URLSearchParams(searchParams.toString());
@@ -558,7 +558,7 @@ export function PortfolioContent({ initialData }: { initialData: PortfolioData }
                             <button
                                 id="load-more-btn"
                                 className="block mx-auto mt-8 border border-black px-8 py-3 uppercase tracking-widest text-xs hover:bg-black hover:text-white transition"
-                                onClick={() => setPhotoLimit(photoLimit + 9)}
+                                onClick={() => setPhotoLimit(photoLimit + 12)}
                             >
                                 {t.load_more} ({filteredPhotos.length - photoLimit})
                             </button>
@@ -580,7 +580,7 @@ export function PortfolioContent({ initialData }: { initialData: PortfolioData }
                             <button
                                 id="load-more-video-btn"
                                 className="block mx-auto mt-8 border border-white px-8 py-3 uppercase tracking-widest text-xs hover:bg-white hover:text-black transition"
-                                onClick={() => setVideoLimit(videoLimit + 9)}
+                                onClick={() => setVideoLimit(videoLimit + 12)}
                             >
                                 {t.load_more} ({filteredVideos.length - videoLimit})
                             </button>
