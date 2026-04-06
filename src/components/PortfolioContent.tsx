@@ -1,7 +1,8 @@
 "use client";
 
-import { useEffect, useState, useRef } from "react";
+import { useEffect, useState, useRef, Suspense, useMemo } from "react";
 import Image from "next/image";
+import { useSearchParams, useRouter, usePathname } from "next/navigation";
 
 // ─── 1. TRANSLATIONS ───
 const translations = {
@@ -192,8 +193,12 @@ export function PortfolioContent({ initialData }: { initialData: PortfolioData }
     const t = translations[lang];
 
     const [data] = useState<PortfolioData>(initialData);
-    const [activeCategory, setActiveCategory] = useState("all");
-    const [availableCategories, setAvailableCategories] = useState<string[]>([]);
+    const searchParams = useSearchParams();
+    const router = useRouter();
+    const pathname = usePathname();
+    const isFirstLoad = useRef(true);
+
+    const activeCategory = searchParams.get("cat") || "all";
     const [photoLimit, setPhotoLimit] = useState(12);
 
     // Lightbox state
@@ -204,7 +209,7 @@ export function PortfolioContent({ initialData }: { initialData: PortfolioData }
     });
     const [isZoomed, setIsZoomed] = useState(false);
 
-    useEffect(() => {
+    const availableCategories = useMemo(() => {
         const activeCats = new Set<string>();
         if (data.photos) {
             data.photos.forEach((p: any) => {
@@ -216,7 +221,7 @@ export function PortfolioContent({ initialData }: { initialData: PortfolioData }
                 if (v.src) v.category.split(" ").forEach((c: string) => activeCats.add(c));
             });
         }
-        const sorted = Array.from(activeCats).sort((a, b) => {
+        return Array.from(activeCats).sort((a, b) => {
             const ia = categoryOrder.indexOf(a);
             const ib = categoryOrder.indexOf(b);
             if (ia === -1 && ib === -1) return a.localeCompare(b);
@@ -224,12 +229,38 @@ export function PortfolioContent({ initialData }: { initialData: PortfolioData }
             if (ib === -1) return -1;
             return ia - ib;
         });
-        setAvailableCategories(sorted);
     }, [data]);
 
+    // ─── 4. SYNC WITH URL ───
+    useEffect(() => {
+        // Scroll logic only on first load
+        if (isFirstLoad.current && activeCategory !== "all") {
+            if (availableCategories.length > 0) {
+                const isValid = availableCategories.includes(activeCategory);
+                if (isValid) {
+                    setTimeout(() => {
+                        const section = document.getElementById("filters-section");
+                        if (section) section.scrollIntoView({ behavior: "smooth" });
+                    }, 500);
+                }
+                isFirstLoad.current = false;
+            }
+        } else if (isFirstLoad.current) {
+            isFirstLoad.current = false;
+        }
+    }, [availableCategories, activeCategory]);
+
     const handleFilter = (cat: string) => {
-        setActiveCategory(cat);
         setPhotoLimit(12);
+
+        // Sync URL without refreshing or scrolling
+        const params = new URLSearchParams(searchParams.toString());
+        if (cat === "all") {
+            params.delete("cat");
+        } else {
+            params.set("cat", cat);
+        }
+        router.replace(`${pathname}?${params.toString()}`, { scroll: false });
     };
 
     const filteredPhotos = data.photos?.filter((p) => activeCategory === "all" || p.category.includes(activeCategory)) || [];
@@ -495,20 +526,17 @@ export function PortfolioContent({ initialData }: { initialData: PortfolioData }
                 </div>
             </div>
 
-            <section id="portfolio-view" className="min-h-screen grid grid-cols-1 md:grid-cols-2 border-t-2 border-black">
-                <div className="border-b md:border-b-0 md:border-r border-black p-4 md:p-12">
-                    <h3 className="font-display font-extralight text-2xl md:text-4xl uppercase mb-8 flex flex-wrap items-center gap-x-4 gap-y-2 visible">
-                        <i className="ri-camera-fill" /> <span>{titleMap[activeCategory] || "Portfolio"}</span> Photos
-                    </h3>
-                    <div id="photo-grid">
-                        {filteredPhotos.length === 0 ? (
-                            <p className="empty-state visible">Нет фото в этой категории</p>
-                        ) : (
-                            filteredPhotos.slice(0, photoLimit).map((p, i) => (
+            <section id="portfolio-view" className={`min-h-screen grid grid-cols-1 ${filteredPhotos.length > 0 && filteredVideos.length > 0 ? 'md:grid-cols-2' : ''} border-t-2 border-black`}>
+                {filteredPhotos.length > 0 && (
+                    <div className={`border-b md:border-b-0 ${filteredVideos.length > 0 ? 'md:border-r' : ''} border-black p-4 md:p-12`}>
+                        <h3 className="font-display font-extralight text-2xl md:text-4xl uppercase mb-8 flex flex-wrap items-center gap-x-4 gap-y-2 visible">
+                            <i className="ri-camera-fill" /> <span>{titleMap[activeCategory] || "Portfolio"}</span> Photos
+                        </h3>
+                        <div id="photo-grid">
+                            {filteredPhotos.slice(0, photoLimit).map((p, i) => (
                                 <div key={i} className="media-item photo-thumb reveal-item visible" onClick={() => openPhoto(i)}>
                                     <div className="parallax-wrapper relative aspect-[2/3]">
                                         <Image
-
                                             src={p.src}
                                             alt={p.alt || "Portfolio Photo"}
                                             fill
@@ -522,34 +550,32 @@ export function PortfolioContent({ initialData }: { initialData: PortfolioData }
                                         <span className="photo-cat">{p.category}</span>
                                     </div>
                                 </div>
-                            ))
+                            ))}
+                        </div>
+                        {photoLimit < filteredPhotos.length && (
+                            <button
+                                id="load-more-btn"
+                                className="block mx-auto mt-8 border border-black px-8 py-3 uppercase tracking-widest text-xs hover:bg-black hover:text-white transition"
+                                onClick={() => setPhotoLimit(photoLimit + 12)}
+                            >
+                                {t.load_more} ({filteredPhotos.length - photoLimit})
+                            </button>
                         )}
                     </div>
-                    {photoLimit < filteredPhotos.length && (
-                        <button
-                            id="load-more-btn"
-                            className="block mx-auto mt-8 border border-black px-8 py-3 uppercase tracking-widest text-xs hover:bg-black hover:text-white transition"
-                            onClick={() => setPhotoLimit(photoLimit + 12)}
-                        >
-                            {t.load_more} ({filteredPhotos.length - photoLimit})
-                        </button>
-                    )}
-                </div>
+                )}
 
-                <div className="bg-black text-white p-4 md:p-12">
-                    <h3 className="font-display font-extralight text-2xl md:text-4xl uppercase mb-8 flex flex-wrap items-center gap-x-4 gap-y-2 visible">
-                        <i className="ri-movie-fill" /> <span>{titleMap[activeCategory] || "Portfolio"}</span> Reels
-                    </h3>
-                    <div id="video-grid">
-                        {filteredVideos.length === 0 ? (
-                            <p className="empty-state text-white visible">Нет видео в этой категории</p>
-                        ) : (
-                            filteredVideos.map((v, i) => (
+                {filteredVideos.length > 0 && (
+                    <div className="bg-black text-white p-4 md:p-12">
+                        <h3 className="font-display font-extralight text-2xl md:text-4xl uppercase mb-8 flex flex-wrap items-center gap-x-4 gap-y-2 visible">
+                            <i className="ri-movie-fill" /> <span>{titleMap[activeCategory] || "Portfolio"}</span> Reels
+                        </h3>
+                        <div id="video-grid">
+                            {filteredVideos.map((v, i) => (
                                 <VideoThumbnail key={i} v={v} index={i} onClick={() => openVideo(i)} />
-                            ))
-                        )}
+                            ))}
+                        </div>
                     </div>
-                </div>
+                )}
             </section>
 
             {/* Lightboxes */}

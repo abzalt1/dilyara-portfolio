@@ -1,6 +1,7 @@
 import { PortfolioContent } from "@/components/PortfolioContent";
 import fs from "fs";
 import path from "path";
+import { Suspense } from "react";
 
 /**
  * Server-side data fetching for SEO and Performance
@@ -9,6 +10,9 @@ async function getPortfolioData() {
   try {
     // In local development/build, we read from the public directory
     const filePath = path.join(process.cwd(), "public", "data.json");
+    if (!fs.existsSync(filePath)) {
+      return { photos: [], videos: [], siteImages: {} };
+    }
     const fileContent = fs.readFileSync(filePath, "utf-8");
     return JSON.parse(fileContent);
   } catch (err) {
@@ -20,5 +24,9 @@ async function getPortfolioData() {
 export default async function Home() {
   const data = await getPortfolioData();
 
-  return <PortfolioContent initialData={data} />;
+  return (
+    <Suspense fallback={<div className="min-h-screen bg-black" />}>
+      <PortfolioContent initialData={data} />
+    </Suspense>
+  );
 }
