@@ -636,7 +636,7 @@ export function PortfolioContent({ initialData }: { initialData: PortfolioData }
                     <span className="lb-close" onClick={(e) => { e.stopPropagation(); closeLightbox(); }}>✕</span>
                     <span className="lb-prev" onClick={(e) => { e.stopPropagation(); prevLightbox(); }}>‹</span>
                     <div id="video-lightbox-inner" onClick={(e) => e.stopPropagation()}>
-                        <video controls autoPlay playsInline src={filteredVideos[lightbox.index]?.src} poster={filteredVideos[lightbox.index]?.poster} />
+                        <video controls autoPlay playsInline preload="metadata" src={filteredVideos[lightbox.index]?.src} poster={filteredVideos[lightbox.index]?.poster} />
                     </div>
                     <span className="lb-next" onClick={(e) => { e.stopPropagation(); nextLightbox(); }}>›</span>
                     <span className="lb-counter" id="lb-video-counter">
