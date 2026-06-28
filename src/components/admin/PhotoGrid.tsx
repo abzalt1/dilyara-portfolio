@@ -4,7 +4,7 @@ import { useState } from "react";
 import { ReactSortable } from "react-sortablejs";
 import { FiUploadCloud, FiTrash2, FiMenu } from "react-icons/fi";
 
-const CATEGORIES = ["beauty", "streetwear", "commercial", "casual", "ugc", "food", "social"];
+import { CATEGORIES } from "@/lib/constants";
 
 export function PhotoGrid({ photos, onUpdatePhotos, onUploadPhoto }: { photos: { src: string; thumb?: string; category: string; alt?: string; }[]; onUpdatePhotos: (photos: { src: string; thumb?: string; category: string; alt?: string; }[]) => void; onUploadPhoto: (file: File) => Promise<void>; }) {
     const [isDragging, setIsDragging] = useState(false);
@@ -91,7 +91,7 @@ export function PhotoGrid({ photos, onUpdatePhotos, onUploadPhoto }: { photos: {
                                 <img src={formattedSrc} className="w-full h-full object-cover opacity-80 group-hover:opacity-100 transition" alt="Portfolio" />
 
                                 {/* Drag Handle Overlay - PINK AND ALWAYS VISIBLE FOR DISCOVERABILITY */}
-                                <div className="absolute top-2 right-2 z-50 drag-handle cursor-grab active:cursor-grabbing bg-pink-600 p-2 rounded-lg text-white shadow-xl hover:bg-pink-500 transition-colors flex items-center justify-center">
+                                <div className="absolute top-2 right-2 z-30 drag-handle cursor-grab active:cursor-grabbing bg-pink-600 p-2 rounded-lg text-white shadow-xl hover:bg-pink-500 transition-colors flex items-center justify-center">
                                     <FiMenu className="w-4 h-4" />
                                 </div>
 

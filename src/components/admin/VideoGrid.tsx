@@ -4,7 +4,7 @@ import { useState } from "react";
 import { ReactSortable } from "react-sortablejs";
 import { FiUploadCloud, FiTrash2, FiPlay, FiVideo, FiMenu } from "react-icons/fi";
 
-const CATEGORIES = ["beauty", "streetwear", "commercial", "casual", "ugc", "food", "social"];
+import { CATEGORIES } from "@/lib/constants";
 
 export function VideoGrid({ videos, onUpdateVideos, onUploadVideo, onUploadCover }: { videos: { src: string; video_url?: string; category: string; label?: string; poster?: string; }[]; onUpdateVideos: (videos: { src: string; video_url?: string; category: string; label?: string; poster?: string; }[]) => void; onUploadVideo: (file: File) => Promise<string | null | void>; onUploadCover: (file: File) => Promise<string | null>; }) {
     const [isDragging, setIsDragging] = useState(false);
@@ -113,12 +113,12 @@ export function VideoGrid({ videos, onUpdateVideos, onUploadVideo, onUploadCover
                                     <img src={formattedPoster || 'https://via.placeholder.com/300x533/111/555?text=NO+POSTER'} className="w-full h-full object-cover opacity-80 group-hover/poster:opacity-100 transition" alt="Video cover" />
 
                                     {/* Drag Handle Overlay - PINK AND ALWAYS VISIBLE FOR DISCOVERABILITY */}
-                                    <div className="absolute top-2 right-2 z-50 drag-handle cursor-grab active:cursor-grabbing bg-pink-600 p-2 rounded-lg text-white shadow-xl hover:bg-pink-500 transition-colors flex items-center justify-center">
+                                    <div className="absolute top-2 right-2 z-30 drag-handle cursor-grab active:cursor-grabbing bg-pink-600 p-2 rounded-lg text-white shadow-xl hover:bg-pink-500 transition-colors flex items-center justify-center">
                                         <FiMenu className="w-4 h-4" />
                                     </div>
 
                                     {video.src && (
-                                        <div className="absolute top-2 left-2 z-40">
+                                        <div className="absolute top-2 left-2 z-30">
                                             <button
                                                 onClick={(e) => { e.stopPropagation(); setPreviewVideo(video.src!); }}
                                                 onMouseDown={(e) => e.stopPropagation()}
@@ -129,7 +129,7 @@ export function VideoGrid({ videos, onUpdateVideos, onUploadVideo, onUploadCover
                                         </div>
                                     )}
 
-                                    <div className="absolute inset-0 flex items-center justify-center opacity-0 group-hover/poster:opacity-100 bg-black/50 transition-opacity z-30 pointer-events-none">
+                                    <div className="absolute inset-0 flex items-center justify-center opacity-0 group-hover/poster:opacity-100 bg-black/50 transition-opacity z-20 pointer-events-none">
                                         <label className="text-white text-[10px] font-bold uppercase tracking-wider bg-pink-600 px-3 py-1.5 rounded cursor-pointer pointer-events-auto hover:bg-pink-500 transition shadow-lg">
                                             Обложка
                                             <input 

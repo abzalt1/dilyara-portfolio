@@ -110,68 +110,7 @@ html {
     transform: translateY(0);
 }
 
-/* ── STICKY NAVIGATION ── */
-#sticky-nav {
-    position: fixed;
-    top: 0;
-    left: 0;
-    right: 0;
-    z-index: 100;
-    padding: 0 1.5rem;
-    height: 56px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    gap: 2rem;
-    background: rgba(0, 0, 0, 0.85);
-    backdrop-filter: blur(20px);
-    -webkit-backdrop-filter: blur(20px);
-    border-bottom: 1px solid rgba(255, 255, 255, 0.08);
-    transform: translateY(-100%);
-    opacity: 0;
-    transition: transform 0.5s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.5s ease;
-    pointer-events: none;
-}
 
-#sticky-nav.visible {
-    transform: translateY(0);
-    opacity: 1;
-    pointer-events: auto;
-}
-
-#sticky-nav a {
-    color: rgba(255, 255, 255, 0.6);
-    text-decoration: none;
-    font-size: 0.7rem;
-    font-weight: 300;
-    text-transform: uppercase;
-    letter-spacing: 0.25em;
-    transition: color 0.3s ease;
-    position: relative;
-}
-
-#sticky-nav a::after {
-    content: '';
-    position: absolute;
-    bottom: -4px;
-    left: 0;
-    width: 0;
-    height: 1px;
-    background: white;
-    transition: width 0.3s ease;
-}
-
-#sticky-nav a:hover {
-    color: white;
-}
-
-#sticky-nav a:hover::after {
-    width: 100%;
-}
-
-#sticky-nav a.active {
-    color: white;
-}
 
 /* ── FILTER BUTTONS ── */
 .filter-btn {
@@ -664,33 +603,7 @@ html {
     pointer-events: none;
 }
 
-/* ── EMPTY STATE ── */
-.empty-state {
-    display: none;
-    text-align: center;
-    padding: 3rem;
-    opacity: 0.4;
-    font-weight: bold;
-    text-transform: uppercase;
-    letter-spacing: 0.2em;
-    font-size: 0.8rem;
-}
 
-.empty-state.visible {
-    display: block;
-}
-
-/* ── ANIMATIONS ── */
-.fade-in-up {
-    opacity: 0;
-    transform: translateY(30px);
-    transition: opacity 0.8s ease-out, transform 0.8s ease-out;
-}
-
-.fade-in-up.visible {
-    opacity: 1;
-    transform: translateY(0);
-}
 
 .reveal-item {
     opacity: 0;
@@ -724,120 +637,7 @@ html {
     animation-play-state: paused;
 }
 
-/* ── LOADERS ── */
-.video-loader {
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    width: 48px;
-    height: 48px;
-    border: 4px solid rgba(255, 255, 255, 0.2);
-    border-top: 4px solid white;
-    border-radius: 50%;
-    animation: spin 1s linear infinite;
-    z-index: 20;
-    display: none;
-    pointer-events: none;
-}
 
-@keyframes spin {
-    0% {
-        transform: translate(-50%, -50%) rotate(0deg);
-    }
-
-    100% {
-        transform: translate(-50%, -50%) rotate(360deg);
-    }
-}
-
-/* ── ADMIN PANEL ── */
-#admin-panel {
-    display: none;
-    position: fixed;
-    bottom: 0;
-    left: 0;
-    right: 0;
-    background: #050505;
-    color: white;
-    padding: 24px;
-    z-index: 10001;
-    border-top: 1px solid #333;
-    font-family: 'Space Grotesk', sans-serif;
-    box-shadow: 0 -10px 40px rgba(0, 0, 0, 0.5);
-}
-
-#admin-panel.active {
-    display: block;
-}
-
-.drop-zone {
-    border: 2px dashed #333;
-    padding: 30px;
-    text-align: center;
-    margin-bottom: 16px;
-    cursor: pointer;
-    transition: all 0.2s;
-    border-radius: 8px;
-    background: #111;
-    color: #888;
-    text-transform: uppercase;
-    letter-spacing: 0.1em;
-    font-size: 0.8rem;
-}
-
-.drop-zone:hover,
-.drop-zone.dragover {
-    background: #1a1a1a;
-    border-color: #666;
-    color: white;
-}
-
-.admin-controls {
-    display: flex;
-    gap: 12px;
-    margin-bottom: 16px;
-}
-
-.admin-controls select,
-.admin-controls input {
-    background: #111;
-    border: 1px solid #333;
-    color: white;
-    padding: 8px 12px;
-    border-radius: 4px;
-    font-size: 0.9rem;
-    outline: none;
-}
-
-.admin-controls select:focus,
-.admin-controls input:focus {
-    border-color: #666;
-}
-
-#code-output {
-    width: 100%;
-    height: 80px;
-    background: #111;
-    border: 1px solid #333;
-    color: #00ff9d;
-    padding: 12px;
-    font-size: 11px;
-    font-family: monospace;
-    border-radius: 4px;
-    resize: none;
-    outline: none;
-}
-
-/* ── PARALLAX WRAPPER ── */
-.parallax-wrapper {
-    width: 100%;
-    height: 125%;
-    position: absolute;
-    top: -12.5%;
-    left: 0;
-    will-change: transform;
-}
 
 /* ── LOAD MORE BUTTON ── */
 #load-more-btn {

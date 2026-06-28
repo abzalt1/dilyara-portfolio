@@ -8,15 +8,7 @@ import { CropModal } from "@/components/admin/CropModal";
 
 
 
-interface PortfolioData {
-    siteImages: {
-        hero: string;
-        about1: string;
-        about2: string;
-    };
-    photos: { src: string; thumb?: string; category: string; alt?: string; }[];
-    videos: { src: string; video_url?: string; category: string; label?: string; poster?: string; }[];
-}
+import { PortfolioData } from "@/lib/constants";
 
 export default function AdminPage() {
     const [isAuthenticated, setIsAuthenticated] = useState(false);
@@ -246,7 +238,7 @@ export default function AdminPage() {
                     src: url,
                     video_url: "",
                     label: file.name,
-                    poster: url.replace(/\.[^/.]+$/, ".jpg")
+                    poster: ""
                 };
                 return { ...prev, videos: [newVideo, ...prev.videos] };
             });
@@ -358,8 +350,8 @@ export default function AdminPage() {
                         {/* Hero */}
                         <div className="bg-gray-900 rounded-lg p-4 border border-gray-800 flex flex-col gap-3 group relative">
                             <p className="text-xs uppercase tracking-widest text-gray-400 font-bold">Главная Обложка</p>
-                            <div className="relative w-full aspect-[4/5] bg-black rounded overflow-hidden">
-                                <img src={getImageUrl(data.siteImages.hero)} className="w-full h-full object-cover opacity-80" alt="Hero" />
+                            <div className="relative w-full max-w-[200px] mx-auto md:max-w-full aspect-[4/5] bg-black rounded overflow-hidden">
+                                <img src={getImageUrl(data.siteImages?.hero || "")} className="w-full h-full object-cover opacity-80" alt="Hero" />
                                 <div className="absolute inset-0 bg-black/50 opacity-0 group-hover:opacity-100 transition flex items-center justify-center">
                                     <label className="bg-white text-black px-4 py-2 font-bold uppercase text-xs rounded hover:bg-gray-200 cursor-pointer">
                                         Заменить
@@ -378,7 +370,7 @@ export default function AdminPage() {
                                                         onCrop: async (croppedFile) => {
                                                             const url = await uploadFileToR2(croppedFile, "image");
                                                             if (url) {
-                                                                const newData = { ...data, siteImages: { ...data.siteImages, hero: url } };
+                                                                const newData = { ...data, siteImages: { ...(data.siteImages || { hero: "", about1: "", about2: "" }), hero: url } };
                                                                 setData(newData);
                                                             }
                                                             setCropImage(null);
@@ -397,8 +389,8 @@ export default function AdminPage() {
                         {/* About 1 */}
                         <div className="bg-gray-900 rounded-lg p-4 border border-gray-800 flex flex-col gap-3 group relative">
                             <p className="text-xs uppercase tracking-widest text-gray-400 font-bold">О Модели (Фото 1)</p>
-                            <div className="relative w-full aspect-[2/3] bg-black rounded overflow-hidden">
-                                <img src={getImageUrl(data.siteImages.about1)} className="w-full h-full object-cover opacity-80" alt="About 1" />
+                            <div className="relative w-full max-w-[200px] mx-auto md:max-w-full aspect-[2/3] bg-black rounded overflow-hidden">
+                                <img src={getImageUrl(data.siteImages?.about1 || "")} className="w-full h-full object-cover opacity-80" alt="About 1" />
                                 <div className="absolute inset-0 bg-black/50 opacity-0 group-hover:opacity-100 transition flex items-center justify-center">
                                     <label className="bg-white text-black px-4 py-2 font-bold uppercase text-xs rounded hover:bg-gray-200 cursor-pointer">
                                         Заменить
@@ -417,7 +409,7 @@ export default function AdminPage() {
                                                         onCrop: async (croppedFile) => {
                                                             const url = await uploadFileToR2(croppedFile, "image");
                                                             if (url) {
-                                                                const newData = { ...data, siteImages: { ...data.siteImages, about1: url } };
+                                                                const newData = { ...data, siteImages: { ...(data.siteImages || { hero: "", about1: "", about2: "" }), about1: url } };
                                                                 setData(newData);
                                                             }
                                                             setCropImage(null);
@@ -436,8 +428,8 @@ export default function AdminPage() {
                         {/* About 2 */}
                         <div className="bg-gray-900 rounded-lg p-4 border border-gray-800 flex flex-col gap-3 group relative">
                             <p className="text-xs uppercase tracking-widest text-gray-400 font-bold">О Модели (Фото 2)</p>
-                            <div className="relative w-full aspect-[2/3] bg-black rounded overflow-hidden">
-                                <img src={getImageUrl(data.siteImages.about2)} className="w-full h-full object-cover opacity-80" alt="About 2" />
+                            <div className="relative w-full max-w-[200px] mx-auto md:max-w-full aspect-[2/3] bg-black rounded overflow-hidden">
+                                <img src={getImageUrl(data.siteImages?.about2 || "")} className="w-full h-full object-cover opacity-80" alt="About 2" />
                                 <div className="absolute inset-0 bg-black/50 opacity-0 group-hover:opacity-100 transition flex items-center justify-center">
                                     <label className="bg-white text-black px-4 py-2 font-bold uppercase text-xs rounded hover:bg-gray-200 cursor-pointer">
                                         Заменить
@@ -456,7 +448,7 @@ export default function AdminPage() {
                                                         onCrop: async (croppedFile) => {
                                                             const url = await uploadFileToR2(croppedFile, "image");
                                                             if (url) {
-                                                                const newData = { ...data, siteImages: { ...data.siteImages, about2: url } };
+                                                                const newData = { ...data, siteImages: { ...(data.siteImages || { hero: "", about1: "", about2: "" }), about2: url } };
                                                                 setData(newData);
                                                             }
                                                             setCropImage(null);

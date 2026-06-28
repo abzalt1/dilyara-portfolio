@@ -47,3 +47,6 @@ public/video/*.mp4
 public/video/*.MP4
 public/video/*.mov
 public/video/*.MOV
+ffmpeg
+temp_videos/
+public/optimized_videos/

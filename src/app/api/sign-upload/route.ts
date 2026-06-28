@@ -1,5 +1,5 @@
 import { NextResponse } from "next/server";
-import jwt from "jsonwebtoken";
+import { verifyAuthToken, unauthorizedResponse } from "@/lib/auth";
 import { S3Client, PutObjectCommand } from "@aws-sdk/client-s3";
 import { getSignedUrl } from "@aws-sdk/s3-request-presigner";
 
@@ -24,18 +24,8 @@ const PUBLIC_DOMAIN = process.env.R2_PUBLIC_DOMAIN || "https://pub-4288a2bf7b634
  */
 export async function GET(req: Request) {
     try {
-        const authHeader = req.headers.get("authorization");
-        if (!authHeader || !authHeader.startsWith("Bearer ")) {
-            return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
-        }
-
-        const token = authHeader.split(" ")[1];
-        const jwtSecret = process.env.JWT_SECRET || "fallback_secret_for_local_dev";
-
-        try {
-            jwt.verify(token, jwtSecret);
-        } catch (e) {
-            return NextResponse.json({ error: "Invalid token" }, { status: 401 });
+        if (!verifyAuthToken(req)) {
+            return unauthorizedResponse();
         }
 
         const url = new URL(req.url);

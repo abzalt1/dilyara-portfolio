@@ -53,25 +53,7 @@ const translations = {
     },
 };
 
-const titleMap: Record<string, string> = {
-    all: "All",
-    beauty: "Beauty",
-    streetwear: "Streetwear",
-    commercial: "Commercial",
-    casual: "Casual",
-    ugc: "UGC",
-    food: "Food & Bev",
-    "social": "Social Media Content",
-};
-
-const categoryOrder = ["beauty", "streetwear", "commercial", "casual", "ugc", "food", "social"];
-
-
-interface PortfolioData {
-    photos: { src: string; thumb?: string; category: string; alt?: string; }[];
-    videos: { src: string; video_url?: string; category: string; label?: string; poster?: string; }[];
-    siteImages?: { hero: string; about1: string; about2: string };
-}
+import { PortfolioData, CATEGORIES as categoryOrder, TITLE_MAP as titleMap } from "@/lib/constants";
 
 const VideoThumbnail = ({ v, index, onClick }: { v: any; index: number; onClick: () => void }) => {
     const [loaded, setLoaded] = useState(false);
@@ -282,6 +264,8 @@ export function PortfolioContent({ initialData }: { initialData: PortfolioData }
         return () => { document.body.style.overflow = ""; };
     }, [lightbox.type]);
 
+
+
     const openPhoto = (index: number) => {
         setLightbox({ type: "photo", index, isAbout: false });
         setIsZoomed(false);
@@ -304,20 +288,22 @@ export function PortfolioContent({ initialData }: { initialData: PortfolioData }
     const nextLightbox = () => {
         setIsZoomed(false);
         if (lightbox.type === "photo") {
-            const list = lightbox.isAbout ? aboutPhotos : filteredPhotos;
+            const list = lightbox.isAbout ? aboutPhotos : filteredPhotos.slice(0, photoLimit);
             setLightbox({ ...lightbox, index: (lightbox.index + 1) % list.length });
         } else if (lightbox.type === "video") {
-            setLightbox({ ...lightbox, index: (lightbox.index + 1) % filteredVideos.length });
+            const list = filteredVideos.slice(0, videoLimit);
+            setLightbox({ ...lightbox, index: (lightbox.index + 1) % list.length });
         }
     };
 
     const prevLightbox = () => {
         setIsZoomed(false);
         if (lightbox.type === "photo") {
-            const list = lightbox.isAbout ? aboutPhotos : filteredPhotos;
+            const list = lightbox.isAbout ? aboutPhotos : filteredPhotos.slice(0, photoLimit);
             setLightbox({ ...lightbox, index: (lightbox.index - 1 + list.length) % list.length });
         } else if (lightbox.type === "video") {
-            setLightbox({ ...lightbox, index: (lightbox.index - 1 + filteredVideos.length) % filteredVideos.length });
+            const list = filteredVideos.slice(0, videoLimit);
+            setLightbox({ ...lightbox, index: (lightbox.index - 1 + list.length) % list.length });
         }
     };
 
@@ -355,10 +341,11 @@ export function PortfolioContent({ initialData }: { initialData: PortfolioData }
         const photo = lightbox.isAbout ? aboutPhotos[lightbox.index] : filteredPhotos[lightbox.index];
         if (!photo) return;
 
+        const shareUrl = photo.src.startsWith('http') ? photo.src : window.location.origin + photo.src;
         const shareData = {
             title: "Dilyara Kunanbayeva Portfolio",
             text: photo.alt || "Check out this photo from Dilyara's portfolio!",
-            url: window.location.origin + photo.src,
+            url: shareUrl,
         };
 
         if (navigator.share) {
@@ -379,11 +366,7 @@ export function PortfolioContent({ initialData }: { initialData: PortfolioData }
 
     return (
         <>
-            <nav id="sticky-nav" className="hidden lg:flex">
-                <a href="#about">About</a>
-                <a href="#filters-section">Portfolio</a>
-                <a href="#booking">Contact</a>
-            </nav>
+
 
             <nav className="absolute top-0 w-full z-50 px-6 py-6 flex flex-col md:flex-row gap-4 md:gap-0 justify-end items-center text-white">
                 <div id="lang-switcher" className="flex gap-4 text-sm font-extralight uppercase drop-shadow-md bg-black/30 backdrop-blur-sm px-4 py-2 rounded-full hover:bg-black/60 visible pointer-events-auto">
@@ -537,7 +520,7 @@ export function PortfolioContent({ initialData }: { initialData: PortfolioData }
                         <div id="photo-grid">
                             {filteredPhotos.slice(0, photoLimit).map((p, i) => (
                                 <div key={i} className="media-item photo-thumb reveal-item visible" onClick={() => openPhoto(i)}>
-                                    <div className="parallax-wrapper relative aspect-[2/3]">
+                                    <div className="relative aspect-[2/3] h-full w-full">
                                         <Image
                                             src={p.src}
                                             alt={p.alt || "Portfolio Photo"}
@@ -626,7 +609,7 @@ export function PortfolioContent({ initialData }: { initialData: PortfolioData }
                     />
                     <span className="lb-next" onClick={(e) => { e.stopPropagation(); nextLightbox(); }}>›</span>
                     <span className="lb-counter" id="lb-photo-counter">
-                        {lightbox.index + 1} / {lightbox.isAbout ? aboutPhotos.length : filteredPhotos.length}
+                        {lightbox.index + 1} / {lightbox.isAbout ? aboutPhotos.length : filteredPhotos.slice(0, photoLimit).length}
                     </span>
                 </div>
             )}
@@ -640,7 +623,7 @@ export function PortfolioContent({ initialData }: { initialData: PortfolioData }
                     </div>
                     <span className="lb-next" onClick={(e) => { e.stopPropagation(); nextLightbox(); }}>›</span>
                     <span className="lb-counter" id="lb-video-counter">
-                        {lightbox.index + 1} / {filteredVideos.length}
+                        {lightbox.index + 1} / {filteredVideos.slice(0, videoLimit).length}
                     </span>
                 </div>
             )}
@@ -665,10 +648,10 @@ export function PortfolioContent({ initialData }: { initialData: PortfolioData }
                                 {t.booking}
                             </h2>
                             <div className="space-y-4">
-                                <a href="tg://resolve?domain=xiao_odi" className="text-xl md:text-4xl font-display font-extralight uppercase hover:underline flex items-center gap-4">
+                                <a href="tg://resolve?domain=xiao_odi" target="_blank" rel="noopener noreferrer" className="text-xl md:text-4xl font-display font-extralight uppercase hover:underline flex items-center gap-4">
                                     Telegram ↗
                                 </a>
-                                <a href="https://instagram.com/bydilyara" target="_blank" className="text-xl md:text-4xl font-display font-extralight uppercase hover:underline flex items-center gap-4">
+                                <a href="https://instagram.com/bydilyara" target="_blank" rel="noopener noreferrer" className="text-xl md:text-4xl font-display font-extralight uppercase hover:underline flex items-center gap-4">
                                     Instagram ↗
                                 </a>
                             </div>
@@ -687,7 +670,7 @@ export function PortfolioContent({ initialData }: { initialData: PortfolioData }
                         <p>© 2026 Dilyara Kunanbayeva</p>
                         <p>
                             Dev by{" "}
-                            <a href="https://abzalt1.github.io" target="_blank" className="hover:underline">
+                            <a href="https://abzalt1.github.io" target="_blank" rel="noopener noreferrer" className="hover:underline">
                                 Abzalt1.dev
                             </a>
                         </p>
