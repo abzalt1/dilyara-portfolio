@@ -55,8 +55,8 @@ export async function GET(req: Request) {
             publicUrl: `${PUBLIC_DOMAIN}/${uniqueKey}`,
         });
 
-    } catch (error: any) {
-        console.error("Sign-upload error:", error);
-        return NextResponse.json({ error: "Failed to generate presigned URL", details: error.message }, { status: 500 });
+    } catch (error: unknown) {
+        console.error("Error generating presigned URL:", error);
+        return NextResponse.json({ error: (error as Error).message }, { status: 500 });
     }
 }

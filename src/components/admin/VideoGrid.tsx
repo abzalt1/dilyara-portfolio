@@ -46,8 +46,8 @@ export function VideoGrid({ videos, onUpdateVideos, onUploadVideo, onUploadCover
     };
 
     const updateField = (index: number, field: string, value: string) => {
-        const newVideos: any[] = [...videos];
-        newVideos[index][field] = value;
+        const newVideos = [...videos];
+        newVideos[index] = { ...newVideos[index], [field]: value };
         onUpdateVideos(newVideos);
     };
 
@@ -94,14 +94,14 @@ export function VideoGrid({ videos, onUpdateVideos, onUploadVideo, onUploadCover
 
                 {/* Existing Videos */}
                 <ReactSortable
-                    list={videos as any}
-                    setList={onUpdateVideos as any}
+                    list={videos as unknown as {id: string}[]}
+                    setList={onUpdateVideos as unknown as (items: {id: string}[]) => void}
                     animation={150}
                     handle=".drag-handle"
                     className="contents"
                     ghostClass="opacity-50"
                 >
-                    {videos.map((video: { src: string; video_url?: string; category: string; label?: string; poster?: string; }, mappedIndex: number) => {
+                    {videos.map((video: { src: string; video_url?: string; category: string; label?: string; poster?: string; }) => {
                         const videoKey = video.src || video.video_url || `video-temp-${videos.indexOf(video)}`;
                         const formattedPoster = video.poster?.startsWith("./") ? video.poster.replace("./", "/") : video.poster;
 
@@ -178,7 +178,7 @@ export function VideoGrid({ videos, onUpdateVideos, onUploadVideo, onUploadCover
                                         onMouseDown={(e) => e.stopPropagation()}
                                         className="w-full bg-black border border-gray-700 rounded px-2 py-1 text-xs text-white focus:border-pink-500 outline-none uppercase tracking-wider"
                                     >
-                                        {CATEGORIES.map(c => (
+                                        {CATEGORIES.map((c: string) => (
                                             <option key={c} value={c}>{c}</option>
                                         ))}
                                     </select>

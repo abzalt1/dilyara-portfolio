@@ -15,7 +15,7 @@ export function verifyAuthToken(req: Request) {
 
     try {
         return jwt.verify(token, JWT_SECRET);
-    } catch (e) {
+    } catch {
         return null;
     }
 }

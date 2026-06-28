@@ -55,9 +55,9 @@ export async function GET(req: Request) {
 
         throw new Error("No content found in GitHub response");
 
-    } catch (error: any) {
-        console.error("Error fetching data from GitHub:", error);
-        return NextResponse.json({ error: "Failed to load data", details: error.message }, { status: 500 });
+    } catch (error: unknown) {
+        console.error("Error reading data from GitHub:", error);
+        return NextResponse.json({ error: "Failed to load data", details: (error as Error).message }, { status: 500 });
     }
 }
 
@@ -126,8 +126,8 @@ export async function POST(req: Request) {
             newSha: responseData.content.sha // Return new SHA so frontend can subsequent updates
         });
 
-    } catch (error) {
-        console.error("Error writing to GitHub:", error);
-        return NextResponse.json({ error: "Failed to save data" }, { status: 500 });
+    } catch (error: unknown) {
+        console.error("Error writing data:", error);
+        return NextResponse.json({ error: (error as Error).message }, { status: 500 });
     }
 }

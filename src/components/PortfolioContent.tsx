@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState, useRef, Suspense, useMemo } from "react";
+import { useEffect, useState, useRef, useMemo } from "react";
 import Image from "next/image";
 import { useSearchParams, useRouter, usePathname } from "next/navigation";
 
@@ -55,7 +55,7 @@ const translations = {
 
 import { PortfolioData, CATEGORIES as categoryOrder, TITLE_MAP as titleMap } from "@/lib/constants";
 
-const VideoThumbnail = ({ v, index, onClick }: { v: any; index: number; onClick: () => void }) => {
+const VideoThumbnail = ({ v, onClick }: { v: { src: string; video_url?: string; category: string; poster?: string; label?: string }; onClick: () => void }) => {
     const [loaded, setLoaded] = useState(false);
     const [isPlaying, setIsPlaying] = useState(false);
     const [shouldMountVideo, setShouldMountVideo] = useState(false);
@@ -132,7 +132,6 @@ const VideoThumbnail = ({ v, index, onClick }: { v: any; index: number; onClick:
             <div className={`absolute inset-0 z-0 transition-opacity duration-700 pointer-events-none ${loaded && isPlaying ? 'opacity-0' : 'opacity-100'}`}>
                 {v.poster ? (
                     <Image
-
                         src={v.poster}
                         alt="Video Cover"
                         fill
@@ -192,15 +191,19 @@ export function PortfolioContent({ initialData }: { initialData: PortfolioData }
     });
     const [isZoomed, setIsZoomed] = useState(false);
 
+    const isR2 = (url: string) => url.includes("r2.dev");
+
     const availableCategories = useMemo(() => {
         const activeCats = new Set<string>();
         if (data.photos) {
-            data.photos.forEach((p: any) => {
+            data.photos.forEach((p: { src: string; category: string }) => {
+                if (p.src && isR2(p.src)) p.src = p.src.replace(/\.(mov|MOV)$/, ".mp4");
                 p.category.split(" ").forEach((c: string) => activeCats.add(c));
             });
         }
         if (data.videos) {
-            data.videos.forEach((v: any) => {
+            data.videos.forEach((v: { src: string; category: string }) => {
+                if (v.src && isR2(v.src)) v.src = v.src.replace(/\.(mov|MOV)$/, ".mp4");
                 if (v.src) v.category.split(" ").forEach((c: string) => activeCats.add(c));
             });
         }
@@ -366,8 +369,6 @@ export function PortfolioContent({ initialData }: { initialData: PortfolioData }
 
     return (
         <>
-
-
             <nav className="absolute top-0 w-full z-50 px-6 py-6 flex flex-col md:flex-row gap-4 md:gap-0 justify-end items-center text-white">
                 <div id="lang-switcher" className="flex gap-4 text-sm font-extralight uppercase drop-shadow-md bg-black/30 backdrop-blur-sm px-4 py-2 rounded-full hover:bg-black/60 visible pointer-events-auto">
                     <button onClick={() => setLangState("en")} className={lang === "en" ? "lang-active" : "hover:opacity-70"}>EN</button>
@@ -380,7 +381,6 @@ export function PortfolioContent({ initialData }: { initialData: PortfolioData }
                 <div className="absolute inset-0 z-0">
                     <Image
                         id="header-img"
-
                         src={data.siteImages?.hero || "/img/IMG_6543.jpg"}
                         alt="Header"
                         fill
@@ -463,7 +463,6 @@ export function PortfolioContent({ initialData }: { initialData: PortfolioData }
                 <div className="md:col-span-6 grid grid-cols-2 gap-4">
                     <div className="aspect-[2/3] relative overflow-hidden transition-all duration-700 cursor-pointer group/about" onClick={() => openAboutPhoto(0)}>
                         <Image
-
                             src={data.siteImages?.about1 || "/img/IMG_7263.jpg"}
                             alt="Model"
                             fill
@@ -477,7 +476,6 @@ export function PortfolioContent({ initialData }: { initialData: PortfolioData }
                     </div>
                     <div className="aspect-[2/3] relative overflow-hidden mt-16 transition-all duration-700 cursor-pointer group/about" onClick={() => openAboutPhoto(1)}>
                         <Image
-
                             src={data.siteImages?.about2 || "/img/IMG_8558.jpg"}
                             alt="Model"
                             fill
@@ -556,7 +554,7 @@ export function PortfolioContent({ initialData }: { initialData: PortfolioData }
                         </h3>
                         <div id="video-grid">
                             {filteredVideos.slice(0, videoLimit).map((v, i) => (
-                                <VideoThumbnail key={i} v={v} index={i} onClick={() => openVideo(i)} />
+                                <VideoThumbnail key={i} v={v} onClick={() => openVideo(i)} />
                             ))}
                         </div>
                         {videoLimit < filteredVideos.length && (
@@ -598,14 +596,14 @@ export function PortfolioContent({ initialData }: { initialData: PortfolioData }
                     </span>
 
                     <span className="lb-prev" onClick={(e) => { e.stopPropagation(); prevLightbox(); }}>‹</span>
-                    {/* eslint-disable-next-line @next/next/no-img-element */}
                     <img
                         id="lightbox-img"
                         src={lightbox.isAbout ? aboutPhotos[lightbox.index]?.src : filteredPhotos[lightbox.index]?.src}
-                        alt="Lightbox"
-                        className={isZoomed ? "zoomed" : ""}
-                        style={{ opacity: 1, cursor: isZoomed ? "zoom-out" : "zoom-in" }}
+                        className={`lightbox-image max-h-[90vh] max-w-[90vw] object-contain transition-transform duration-300 select-none ${isZoomed ? "zoomed" : ""}`}
+                        alt="Zoomed"
                         onClick={toggleZoom}
+                        onMouseDown={(e) => e.preventDefault()}
+                        style={{ cursor: isZoomed ? "zoom-out" : "zoom-in" }}
                     />
                     <span className="lb-next" onClick={(e) => { e.stopPropagation(); nextLightbox(); }}>›</span>
                     <span className="lb-counter" id="lb-photo-counter">

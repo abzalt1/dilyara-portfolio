@@ -3,7 +3,6 @@
 import { useState } from "react";
 import { ReactSortable } from "react-sortablejs";
 import { FiUploadCloud, FiTrash2, FiMenu } from "react-icons/fi";
-
 import { CATEGORIES } from "@/lib/constants";
 
 export function PhotoGrid({ photos, onUpdatePhotos, onUploadPhoto }: { photos: { src: string; thumb?: string; category: string; alt?: string; }[]; onUpdatePhotos: (photos: { src: string; thumb?: string; category: string; alt?: string; }[]) => void; onUploadPhoto: (file: File) => Promise<void>; }) {
@@ -75,8 +74,8 @@ export function PhotoGrid({ photos, onUpdatePhotos, onUploadPhoto }: { photos: {
 
                 {/* Existing Photos */}
                 <ReactSortable
-                    list={photos as any}
-                    setList={onUpdatePhotos as any}
+                    list={photos as unknown as {id: string}[]}
+                    setList={onUpdatePhotos as unknown as (items: {id: string}[]) => void}
                     animation={150}
                     className="contents" // Critical to keep grid layout
                     ghostClass="opacity-50"

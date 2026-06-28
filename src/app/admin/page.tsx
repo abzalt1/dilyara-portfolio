@@ -1,7 +1,7 @@
 "use client";
 
 import { useState, useEffect } from "react";
-import Image from "next/image";
+
 import { PhotoGrid } from "@/components/admin/PhotoGrid";
 import { VideoGrid } from "@/components/admin/VideoGrid";
 import { CropModal } from "@/components/admin/CropModal";
@@ -32,7 +32,6 @@ export default function AdminPage() {
             setIsAuthenticated(true);
             initializeAdmin(token);
         }
-        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
 
     const initializeAdmin = async (token: string) => {
@@ -63,9 +62,9 @@ export default function AdminPage() {
             setOriginalData(jsonData.data);
             setFileSha(jsonData.sha);
 
-        } catch (err: any) {
+        } catch (err: unknown) {
             console.error("Failed to initialize admin", err);
-            alert(`Сетевая ошибка при загрузке данных: ${err.message}`);
+            alert(`Сетевая ошибка при загрузке данных: ${(err as Error).message}`);
         }
     };
 
@@ -91,7 +90,7 @@ export default function AdminPage() {
             } else {
                 setLoginError(json.error || "Login Failed");
             }
-        } catch (err) {
+        } catch {
             setLoginError("Connection error");
         } finally {
             setIsLoading(false);
@@ -147,9 +146,9 @@ export default function AdminPage() {
             setFileSha(json.newSha);
             setOriginalData(newData);
             setData(newData);
-        } catch (err: any) {
+        } catch (err: unknown) {
             console.error("Save error", err);
-            alert(`Ошибка сохранения: ${err.message}`);
+            alert(`Ошибка сохранения: ${(err as Error).message}`);
         } finally {
             setIsLoading(false);
         }
@@ -207,10 +206,10 @@ export default function AdminPage() {
 
             console.log("Upload successful:", publicUrl);
             return publicUrl;
-        } catch (err: any) {
+        } catch (err: unknown) {
             console.error("Upload Error Detail:", err);
             // Russian error for the user with technical details for debugging
-            alert(`Ошибка загрузки: ${err.message}\nПопробуйте другой браузер или проверьте размер файла.`);
+            alert(`Ошибка загрузки: ${(err as Error).message}\nПопробуйте другой браузер или проверьте размер файла.`);
             return null;
         } finally {
             setIsLoading(false);
@@ -246,15 +245,15 @@ export default function AdminPage() {
     };
 
 
-    const handlePhotosUpdate = (newPhotos: any[]) => {
+    const handlePhotosUpdate = (newPhotos: { src: string; thumb?: string; category: string; alt?: string; }[]) => {
         if (!data) return;
-        const cleanNew = newPhotos.map(({ src, category, alt, thumb }: any) => ({ src, category, alt, thumb }));
+        const cleanNew = newPhotos.map(({ src, category, alt, thumb }) => ({ src, category, alt, thumb }));
         setData({ ...data, photos: cleanNew });
     };
 
-    const handleVideosUpdate = (newVideos: any[]) => {
+    const handleVideosUpdate = (newVideos: { src: string; video_url?: string; category: string; label?: string; poster?: string; }[]) => {
         if (!data) return;
-        const cleanNew = newVideos.map(({ src, video_url, category, label, poster }: any) => ({ src, video_url, category, label, poster }));
+        const cleanNew = newVideos.map(({ src, video_url, category, label, poster }) => ({ src, video_url, category, label, poster }));
         setData({ ...data, videos: cleanNew });
     };
 
